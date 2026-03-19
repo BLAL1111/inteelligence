@@ -593,6 +593,47 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
 }
 
 
+
+
+/* ── TESTIMONIAL VARIANTS ── */
+.testi-accent {
+  border-right: 3px solid var(--lime);
+}
+[data-lang="en"] .testi-accent {
+  border-right: none;
+  border-left: 3px solid var(--lime);
+}
+.testi-featured-metric .testi-metric {
+  order: -1;
+  font-size: clamp(.72rem,.82rem,.78rem);
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+.testi-metric-alt {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--mu);
+  font-size: clamp(.7rem,.78rem,.74rem);
+}
+.testi-metric-bold {
+  font-weight: 800;
+  font-size: clamp(.72rem,.84rem,.8rem);
+}
+
+/* ── PRICING SOON ── */
+.price-soon {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(.9rem,1.5vw,1.05rem);
+  font-weight: 600;
+  color: var(--mu);
+  letter-spacing: 0;
+  display: block;
+  padding: 4px 0;
+}
+[data-lang="ar"] .price-soon { font-family: 'Cairo', sans-serif; }
+.price-cell.featured .price-soon { color: rgba(10,10,8,.55); }
+
 /* ── PRICING NOTICE ── */
 .pricing-notice {
   display: flex; align-items: center; justify-content: space-between;
@@ -740,7 +781,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-eyebrow"><span>Intelligence Automation</span> — <span class="ari">أتمتة المبيعات</span><span class="eni">Sales Automation</span></div>
+    <div class="hero-eyebrow"><span class="ari">نظام أتمتة المبيعات</span><span class="eni">Sales Automation Platform</span></div>
     <h1 class="hero-title">
       <span class="ar">متجرك يبيع.<br/><em>وانت مش موجود.</em></span>
       <span class="en">Your store sells.<br/><em>Without you.</em></span>
@@ -758,38 +799,53 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
     <div class="hstat"><span class="hstat-n">24/7</span><span class="hstat-l"><span class="ari">متاح دايماً</span><span class="eni">Always available</span></span></div>
     <div class="hstat"><span class="hstat-n">&lt; 1s</span><span class="hstat-l"><span class="ari">وقت الرد</span><span class="eni">Reply time</span></span></div>
     <div class="hstat"><span class="hstat-n">3.2×</span><span class="hstat-l"><span class="ari">متوسط زيادة الإيرادات</span><span class="eni">Avg. revenue increase</span></span></div>
-    <div class="hstat"><span class="hstat-n">3</span><span class="hstat-l"><span class="ari">أيام مجاناً</span><span class="eni">Days free</span></span></div>
+    <div class="hstat"><span class="hstat-n">+47%</span><span class="hstat-l"><span class="ari">زيادة الطلبات</span><span class="eni">More orders</span></span></div>
   </div>
 </section>
 
 <!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee">
-    <div class="mitem">📦 <span class="ari">طلبات تُسجَّل تلقائياً</span><span class="eni">Orders logged automatically</span></div>
-    <div class="msep">—</div>
-    <div class="mitem"><strong>+47%</strong> <span class="ari">طلبات مكتملة</span><span class="eni">completed orders</span></div>
-    <div class="msep">—</div>
-    <div class="mitem">🌙 <span class="ari">يشتغل وانت نايم</span><span class="eni">Works while you sleep</span></div>
-    <div class="msep">—</div>
-    <div class="mitem"><strong>-80%</strong> <span class="ari">وقت ضايع</span><span class="eni">wasted time</span></div>
-    <div class="msep">—</div>
-    <div class="mitem">🤖 <span class="ari">ردود تبدو إنسانية</span><span class="eni">Human-like replies</span></div>
-    <div class="msep">—</div>
-    <div class="mitem"><strong>3 أيام</strong> <span class="ari">مجاناً</span><span class="eni">days free</span></div>
-    <div class="msep">—</div>
-    <!-- duplicate -->
-    <div class="mitem">📦 <span class="ari">طلبات تُسجَّل تلقائياً</span><span class="eni">Orders logged automatically</span></div>
-    <div class="msep">—</div>
-    <div class="mitem"><strong>+47%</strong> <span class="ari">طلبات مكتملة</span><span class="eni">completed orders</span></div>
-    <div class="msep">—</div>
-    <div class="mitem">🌙 <span class="ari">يشتغل وانت نايم</span><span class="eni">Works while you sleep</span></div>
-    <div class="msep">—</div>
-    <div class="mitem"><strong>-80%</strong> <span class="ari">وقت ضايع</span><span class="eni">wasted time</span></div>
-    <div class="msep">—</div>
-    <div class="mitem">🤖 <span class="ari">ردود تبدو إنسانية</span><span class="eni">Human-like replies</span></div>
-    <div class="msep">—</div>
-    <div class="mitem"><strong>3 أيام</strong> <span class="ari">مجاناً</span><span class="eni">days free</span></div>
-    <div class="msep">—</div>
+    <div class="mitem"><span class="ari">إنستاغرام</span><span class="eni">Instagram</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">واتساب</span><span class="eni">WhatsApp</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">تيك توك</span><span class="eni">TikTok</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">ملابس</span><span class="eni">Fashion</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">إلكترونيات</span><span class="eni">Electronics</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">تجميل</span><span class="eni">Beauty</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">غذاء ومشروبات</span><span class="eni">Food & Beverage</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">أثاث ومفروشات</span><span class="eni">Furniture</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">عطور وإكسسوارات</span><span class="eni">Perfumes & Accessories</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">أجهزة منزلية</span><span class="eni">Home Appliances</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">إنستاغرام</span><span class="eni">Instagram</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">واتساب</span><span class="eni">WhatsApp</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">تيك توك</span><span class="eni">TikTok</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">ملابس</span><span class="eni">Fashion</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">إلكترونيات</span><span class="eni">Electronics</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">تجميل</span><span class="eni">Beauty</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">غذاء ومشروبات</span><span class="eni">Food & Beverage</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">أثاث ومفروشات</span><span class="eni">Furniture</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">عطور وإكسسوارات</span><span class="eni">Perfumes & Accessories</span></div>
+    <div class="msep">·</div>
+    <div class="mitem"><span class="ari">أجهزة منزلية</span><span class="eni">Home Appliances</span></div>
+    <div class="msep">·</div>
   </div>
 </div>
 
@@ -800,14 +856,14 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
   <div class="how-list">
     <div class="how-item rv"><div class="how-num">01</div><div class="how-content"><h3><span class="ari">العميل يبعت رسالة</span><span class="eni">Customer sends a message</span></h3><p><span class="ari">البوت يرد في أقل من ثانية بالأسعار، الصور، وطريقة الطلب — على أي منصة.</span><span class="eni">The bot replies in under a second with prices, photos, and ordering instructions — on any platform.</span></p></div></div>
     <div class="how-item rv"><div class="how-num">02</div><div class="how-content"><h3><span class="ari">البوت يجمع البيانات</span><span class="eni">Bot collects customer data</span></h3><p><span class="ari">الاسم والرقم والعنوان — كله يتسجل أوتوماتيك في داشبورد منظم، من غير ما تحرك إصبع.</span><span class="eni">Name, phone, address — all logged automatically in a clean dashboard, without you lifting a finger.</span></p></div></div>
-    <div class="how-item rv"><div class="how-num">03</div><div class="how-content"><h3><span class="ari">Follow-up ذكي لو مردش</span><span class="eni">Smart follow-up if no reply</span></h3><p><span class="ari">البوت يتابع العميل في الوقت المناسب — ومش يزعقله — لحد ما يشتري.</span><span class="eni">The bot follows up at the right moment — persistently, not aggressively — until they buy.</span></p></div></div>
-    <div class="how-item rv"><div class="how-num">04</div><div class="how-content"><h3><span class="ari">بعد الشراء — Upsell تلقائي</span><span class="eni">After purchase — automatic upsell</span></h3><p><span class="ari">رسالة شكر + عرض مخصص للعميل تلقائياً. ده اللي بيضاعف الإيرادات من غير جهد.</span><span class="eni">Thank-you message + a personalized offer, automatically. This is what doubles revenue without effort.</span></p></div></div>
+    <div class="how-item rv"><div class="how-num">03</div><div class="how-content"><h3><span class="ari">متابعة ذكية لو مردش</span><span class="eni">Smart follow-up if no reply</span></h3><p><span class="ari">البوت يتابع العميل في الوقت المناسب — ومش يزعقله — لحد ما يشتري.</span><span class="eni">The bot follows up at the right moment — persistently, not aggressively — until they buy.</span></p></div></div>
+    <div class="how-item rv"><div class="how-num">04</div><div class="how-content"><h3><span class="ari">عروض ما بعد الشراء تلقائياً</span><span class="eni">After purchase — automatic upsell</span></h3><p><span class="ari">رسالة شكر + عرض مخصص للعميل تلقائياً. ده اللي بيضاعف الإيرادات من غير جهد.</span><span class="eni">Thank-you message + a personalized offer, automatically. This is what doubles revenue without effort.</span></p></div></div>
   </div>
 </section>
 
 <!-- DEMO -->
 <section id="demo" class="sec" style="background:var(--bg2)">
-  <div class="sec-tag rv">// Demo</div>
+  <div class="sec-tag rv"><span class="ari">عرض توضيحي</span><span class="eni">Live Demo</span></div>
   <h2 class="sec-title rv"><span class="ar">شوف البوت بنفسك</span><span class="en">See the bot in action</span></h2>
   <div class="demo-grid">
     <div class="demo-phone-wrap rv">
@@ -835,10 +891,10 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
       </div>
     </div>
     <div class="demo-steps rv">
-      <div class="dstep"><div class="dstep-icon">⚡</div><div><div class="dstep-n">Step 01</div><div class="dstep-t"><span class="ari">رد فوري</span><span class="eni">Instant reply</span></div><div class="dstep-d"><span class="ari">أقل من ثانية — على أي رسالة، أي وقت</span><span class="eni">Under a second — any message, any time</span></div></div></div>
-      <div class="dstep"><div class="dstep-icon">🗂</div><div><div class="dstep-n">Step 02</div><div class="dstep-t"><span class="ari">جمع البيانات</span><span class="eni">Data collection</span></div><div class="dstep-d"><span class="ari">اسم، رقم، طلب — كله في داشبورد بدون تدخل</span><span class="eni">Name, phone, order — all in dashboard without intervention</span></div></div></div>
-      <div class="dstep"><div class="dstep-icon">🔁</div><div><div class="dstep-n">Step 03</div><div class="dstep-t"><span class="ari">متابعة ذكية</span><span class="eni">Smart follow-up</span></div><div class="dstep-d"><span class="ari">لو مردش، البوت يكمل لحد ما يشتري</span><span class="eni">If no reply, bot continues until they buy</span></div></div></div>
-      <div class="dstep"><div class="dstep-icon">💰</div><div><div class="dstep-n">Step 04</div><div class="dstep-t"><span class="ari">Upsell أوتوماتيك</span><span class="eni">Automatic upsell</span></div><div class="dstep-d"><span class="ari">بعد الشراء — عرض جديد بدون ما تعمل حاجة</span><span class="eni">After purchase — new offer without doing anything</span></div></div></div>
+      <div class="dstep"><div class="dstep-icon">⚡</div><div><div class="dstep-n"><span class="ari">الخطوة ١</span><span class="eni">Step 01</span></div><div class="dstep-t"><span class="ari">رد فوري</span><span class="eni">Instant reply</span></div><div class="dstep-d"><span class="ari">أقل من ثانية — على أي رسالة، أي وقت</span><span class="eni">Under a second — any message, any time</span></div></div></div>
+      <div class="dstep"><div class="dstep-icon">🗂</div><div><div class="dstep-n"><span class="ari">الخطوة ٢</span><span class="eni">Step 02</span></div><div class="dstep-t"><span class="ari">جمع البيانات</span><span class="eni">Data collection</span></div><div class="dstep-d"><span class="ari">اسم، رقم، طلب — كله في داشبورد بدون تدخل</span><span class="eni">Name, phone, order — all in dashboard without intervention</span></div></div></div>
+      <div class="dstep"><div class="dstep-icon">🔁</div><div><div class="dstep-n"><span class="ari">الخطوة ٣</span><span class="eni">Step 03</span></div><div class="dstep-t"><span class="ari">متابعة ذكية</span><span class="eni">Smart follow-up</span></div><div class="dstep-d"><span class="ari">لو مردش، البوت يكمل لحد ما يشتري</span><span class="eni">If no reply, bot continues until they buy</span></div></div></div>
+      <div class="dstep"><div class="dstep-icon">💰</div><div><div class="dstep-n"><span class="ari">الخطوة ٤</span><span class="eni">Step 04</span></div><div class="dstep-t"><span class="ari">عروض ما بعد الشراء</span><span class="eni">Automatic upsell</span></div><div class="dstep-d"><span class="ari">بعد الشراء — عرض جديد بدون ما تعمل حاجة</span><span class="eni">After purchase — new offer without doing anything</span></div></div></div>
     </div>
   </div>
 </section>
@@ -860,7 +916,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
   <h2 class="sec-title rv"><span class="ar">كل حاجة محتاجها في مكان واحد</span><span class="en">Everything you need, in one place</span></h2>
   <div class="feat-grid rv">
     <div class="feat-cell"><div class="feat-icon">🤖</div><div class="feat-title"><span class="ari">ردود AI ذكية</span><span class="eni">Smart AI replies</span></div><div class="feat-desc"><span class="ari">بيفهم سؤال العميل ويرد بطريقة طبيعية — مش ردود جاهزة جامدة</span><span class="eni">Understands the question and responds naturally — not rigid canned messages</span></div></div>
-    <div class="feat-cell"><div class="feat-icon">📊</div><div class="feat-title"><span class="ari">داشبورد تحليلات</span><span class="eni">Analytics dashboard</span></div><div class="feat-desc"><span class="ari">شوف كل طلب وكل عميل وكل رقم في الوقت الفعلي</span><span class="eni">See every order, every customer, every number in real time</span></div></div>
+    <div class="feat-cell"><div class="feat-icon">📊</div><div class="feat-title"><span class="ari">لوحة تحليلات</span><span class="eni">Analytics dashboard</span></div><div class="feat-desc"><span class="ari">شوف كل طلب وكل عميل وكل رقم في الوقت الفعلي</span><span class="eni">See every order, every customer, every number in real time</span></div></div>
     <div class="feat-cell"><div class="feat-icon">🎯</div><div class="feat-title"><span class="ari">تقسيم العملاء</span><span class="eni">Customer segmentation</span></div><div class="feat-desc"><span class="ari">مهتم، اشترى، محتاج follow-up — كل واحد بيتعامل بطريقة مختلفة</span><span class="eni">Interested, purchased, needs follow-up — each treated differently</span></div></div>
     <div class="feat-cell"><div class="feat-icon">🔐</div><div class="feat-title"><span class="ari">أمان كامل</span><span class="eni">Complete security</span></div><div class="feat-desc"><span class="ari">بيانات عملاؤك مش هتطلع لأي حد — ضمان كامل وبدون استثناء</span><span class="eni">Your customers' data goes nowhere — fully guaranteed, no exceptions</span></div></div>
     <div class="feat-cell"><div class="feat-icon">⚡</div><div class="feat-title"><span class="ari">&lt;1 ثانية رد</span><span class="eni">&lt;1s reply time</span></div><div class="feat-desc"><span class="ari">الساعة 3 الصبح — البوت صاحي. مش محتاج تصحي تاني أبداً</span><span class="eni">3 AM — the bot is awake. You never have to be again, ever</span></div></div>
@@ -903,7 +959,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
         <span class="ari">"في 3 أيام بس، مبيعاتي اتضاعفت. البوت بيرد على العملاء وأنا نايم — ومحدش فارق معاه الفرق."</span>
         <span class="eni">"In just 3 days my sales doubled. The bot handles customers while I sleep — nobody even noticed the difference."</span>
       </p>
-      <div class="testi-metric">⬆ 2x مبيعات في 3 أيام</div>
+      <div class="testi-metric"><span class="ari">⬆ ضِعف المبيعات خلال ٣ أيام</span><span class="eni">⬆ 2× sales in 3 days</span></div>
       <div class="testi-author">
         <div class="testi-avatar">AH</div>
         <div>
@@ -913,13 +969,12 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
       </div>
     </div>
 
-    <div class="testi-card rv">
-      <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+    <div class="testi-card rv testi-accent">
       <p class="testi-quote">
         <span class="ari">"كنت بارد على كل رسالة بإيدي وبقضي 5 ساعات في اليوم. دلوقتي صفر وقت ضايع والطلبات زادت."</span>
         <span class="eni">"I used to reply manually and waste 5 hours a day. Now zero time wasted and orders increased."</span>
       </p>
-      <div class="testi-metric">⬇ −80% وقت ضايع</div>
+      <div class="testi-metric testi-metric-alt"><span class="ari">⬇ توفير ٨٠٪ من وقت الردود</span><span class="eni">⬇ 80% less time on replies</span></div>
       <div class="testi-author">
         <div class="testi-avatar">SM</div>
         <div>
@@ -929,13 +984,12 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
       </div>
     </div>
 
-    <div class="testi-card rv">
-      <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+    <div class="testi-card rv testi-featured-metric">
       <p class="testi-quote">
         <span class="ari">"أول أسبوع كمّلت 47 طلب ما كنتش هقدر أكمّلهم لو كنت بشتغل لوحدي. الـ ROI كان واضح من أول يوم."</span>
         <span class="eni">"In the first week I completed 47 orders I wouldn't have managed alone. The ROI was clear from day one."</span>
       </p>
-      <div class="testi-metric">✓ 47 طلب إضافي — الأسبوع الأول</div>
+      <div class="testi-metric testi-metric-bold"><span class="ari">٤٧ طلباً إضافياً في الأسبوع الأول</span><span class="eni">47 extra orders — first week</span></div>
       <div class="testi-author">
         <div class="testi-avatar">KA</div>
         <div>
@@ -951,7 +1005,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
         <span class="ari">"بجد من أحسن قرارات اللي عملتها في المتجر. الإعداد خلص في ساعات والنتيجة ظهرت في نفس اليوم."</span>
         <span class="eni">"Honestly one of the best decisions I made for my store. Setup took hours and results showed the same day."</span>
       </p>
-      <div class="testi-metric">⚡ نتيجة من أول يوم</div>
+      <div class="testi-metric"><span class="ari">⚡ نتيجة ملموسة من اليوم الأول</span><span class="eni">⚡ Results from day one</span></div>
       <div class="testi-author">
         <div class="testi-avatar">NO</div>
         <div>
@@ -961,13 +1015,12 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
       </div>
     </div>
 
-    <div class="testi-card rv">
-      <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+    <div class="testi-card rv testi-accent">
       <p class="testi-quote">
         <span class="ari">"كنت خايف في الأول، بس الـ 3 أيام مجاناً خلتني أجرب بدون ضغط. دلوقتي مش تخيّل شغلي من غيره."</span>
-        <span class="eni">"I was scared at first, but the 7-day free trial let me try with no pressure. Now I can't imagine my work without it."</span>
+        <span class="eni">"I was scared at first, but the 3-day free trial let me try with no pressure. Now I can't imagine my work without it."</span>
       </p>
-      <div class="testi-metric">🔁 تجديد تلقائي كل شهر</div>
+      <div class="testi-metric testi-metric-alt"><span class="ari">مشترك منذ ٦ أشهر متواصلة</span><span class="eni">Subscribed for 6 consecutive months</span></div>
       <div class="testi-author">
         <div class="testi-avatar">MR</div>
         <div>
@@ -983,7 +1036,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
         <span class="ari">"الـ upsell التلقائي وحده عمل فرق +30% في متوسط قيمة الطلب. ده مش كلام — ده رقم حقيقي من الداشبورد."</span>
         <span class="eni">"The automatic upsell alone made a +30% difference in average order value. Not talk — real numbers from the dashboard."</span>
       </p>
-      <div class="testi-metric">📈 +30% متوسط قيمة الطلب</div>
+      <div class="testi-metric testi-metric-bold"><span class="ari">📈 ارتفاع قيمة الطلب بنسبة ٣٠٪</span><span class="eni">📈 +30% average order value</span></div>
       <div class="testi-author">
         <div class="testi-avatar">HZ</div>
         <div>
@@ -999,12 +1052,12 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
 <!-- PRICING -->
 <section id="pricing" class="sec" style="background:var(--bg2)">
   <div class="sec-tag rv"><span class="ari">الأسعار</span><span class="eni">Pricing</span></div>
-  <h2 class="sec-title rv"><span class="ar">سعر واضح. بدون مفاجآت.</span><span class="en">Clear pricing. No surprises.</span></h2>
+  <h2 class="sec-title rv"><span class="ar">باقات مرنة. بدون إلزام.</span><span class="en">Flexible plans. No commitments.</span></h2>
   <div class="pricing-notice rv">
     <div class="pn-left">
       <span class="pn-dot"></span>
-      <span class="ar">العرض لأول <strong>20 متجر فقط</strong> — الأسعار بتتحدد قريباً</span>
-      <span class="en">Offer for first <strong>20 stores only</strong> — Prices finalized soon</span>
+      <span class="ar">السعر يُحدَّد معك شخصياً بعد التجربة — أول <strong>20 متجر</strong> بشروط خاصة</span>
+      <span class="en">Pricing set with you after trial — first <strong>20 stores</strong> get special terms</span>
     </div>
     <div class="pn-spots">
       <span class="ari">20 مكان متاح</span>
@@ -1014,38 +1067,38 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
   <div class="pricing-grid rv">
     <div class="price-cell">
       <div class="price-plan">Starter</div>
-      <div class="price-amount">X,XXX <sub><span class="ari">ج/شهر</span><span class="eni">EGP/mo</span></sub></div>
+      <div class="price-amount"><span class="price-soon"><span class="ari">يُحدَّد بعد التجربة</span><span class="eni">Set after trial</span></span></div>
       <p class="price-desc"><span class="ari">للمتاجر الصغيرة اللي بتبدأ</span><span class="eni">For small stores just starting out</span></p>
       <ul class="price-features">
-        <li><span class="ari">ردود تلقائية على DMs</span><span class="eni">Auto DM replies</span></li>
+        <li><span class="ari">ردود تلقائية على الرسائل الخاصة</span><span class="eni">Auto DM replies</span></li>
         <li><span class="ari">إرسال الأسعار والصور</span><span class="eni">Send prices & photos</span></li>
         <li><span class="ari">جمع بيانات العملاء</span><span class="eni">Customer data collection</span></li>
-        <li>1,000 msg/mo</li>
+        <li><span class="ari">١٬٠٠٠ رسالة شهرياً</span><span class="eni">1,000 msg/mo</span></li>
       </ul>
-      <a href="#contact" class="price-btn"><span class="ari">ابدأ</span><span class="eni">Get Started</span></a>
+      <a href="#contact" class="price-btn"><span class="ari">ابدأ تجربتك المجانية</span><span class="eni">Start Free Trial</span></a>
     </div>
     <div class="price-cell featured">
-      <div class="price-plan">Growth ★</div>
-      <div class="price-amount">X,XXX <sub><span class="ari">ج/شهر</span><span class="eni">EGP/mo</span></sub></div>
+      <div class="price-plan">Growth</div>
+      <div class="price-amount"><span class="price-soon"><span class="ari">يُحدَّد بعد التجربة</span><span class="eni">Set after trial</span></span></div>
       <p class="price-desc"><span class="ari">للمتاجر النشطة اللي عايزة تضاعف</span><span class="eni">For active stores looking to scale</span></p>
       <ul class="price-features">
-        <li><span class="ari">كل مميزات Starter</span><span class="eni">Everything in Starter</span></li>
-        <li><span class="ari">Follow-up ذكي</span><span class="eni">Smart follow-up</span></li>
-        <li><span class="ari">Upsell تلقائي</span><span class="eni">Automatic upsell</span></li>
+        <li><span class="ari">كل مميزات الباقة الأساسية</span><span class="eni">Everything in Starter</span></li>
+        <li><span class="ari">متابعة ذكية</span><span class="eni">Smart follow-up</span></li>
+        <li><span class="ari">عروض ما بعد الشراء</span><span class="eni">Automatic upsell</span></li>
         <li><span class="ari">داشبورد Analytics</span><span class="eni">Analytics dashboard</span></li>
-        <li>5,000 msg/mo</li>
+        <li><span class="ari">٥٬٠٠٠ رسالة شهرياً</span><span class="eni">5,000 msg/mo</span></li>
       </ul>
-      <a href="#contact" class="price-btn"><span class="ari">ابدأ</span><span class="eni">Get Started</span></a>
+      <a href="#contact" class="price-btn"><span class="ari">ابدأ — الأفضل قيمةً</span><span class="eni">Start — Best Value</span></a>
     </div>
     <div class="price-cell">
       <div class="price-plan">Enterprise</div>
       <div class="price-amount">Custom</div>
       <p class="price-desc"><span class="ari">للشركات الكبيرة — حل مخصص كامل</span><span class="eni">For large businesses — fully custom</span></p>
       <ul class="price-features">
-        <li><span class="ari">كل مميزات Growth</span><span class="eni">Everything in Growth</span></li>
+        <li><span class="ari">كل مميزات باقة النمو</span><span class="eni">Everything in Growth</span></li>
         <li><span class="ari">رسائل غير محدودة</span><span class="eni">Unlimited messages</span></li>
         <li><span class="ari">مدير حساب مخصص</span><span class="eni">Dedicated account manager</span></li>
-        <li>Custom API + SLA</li>
+        <li><span class="ari">واجهة برمجية خاصة + ضمان الأداء</span><span class="eni">Custom API + SLA</span></li>
       </ul>
       <a href="#contact" class="price-btn"><span class="ari">تكلمنا</span><span class="eni">Contact Us</span></a>
     </div>
@@ -1059,7 +1112,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
   <p class="sec-sub rv"><span class="ari">ابعتلنا تفاصيلك وهنتواصل معاك خلال ساعتين.</span><span class="eni">Send us your details and we'll reach out within 2 hours.</span></p>
   <div class="contact-grid">
     <div class="contact-form rv">
-      <div class="fg"><label><span class="ari">الاسم</span><span class="eni">Name</span></label><input type="text" id="f-name" placeholder="..."/></div>
+      <div class="fg"><label><span class="ari">الاسم</span><span class="eni">Name</span></label><input type="text" id="f-name" placeholder="اسمك الكريم"/></div>
       <div class="fg"><label><span class="ari">رقم الواتساب</span><span class="eni">WhatsApp</span></label><input type="tel" id="f-phone" placeholder="+20 1XX XXX XXXX" style="direction:ltr"/></div>
       <div class="fg">
         <label><span class="ari">نوع المتجر</span><span class="eni">Store type</span></label>
@@ -1072,7 +1125,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
           <option value="other"><span class="ari">أخرى</span><span class="eni">Other</span></option>
         </select>
       </div>
-      <div class="fg"><label><span class="ari">تفاصيل</span><span class="eni">Details</span></label><textarea id="f-msg" placeholder="..."></textarea></div>
+      <div class="fg"><label><span class="ari">تفاصيل</span><span class="eni">Details</span></label><textarea id="f-msg" placeholder="احكيلنا عن متجرك..."></textarea></div>
       <button class="btn-p" id="subBtn" style="border:none;width:100%;justify-content:center">
         <span class="ari">ابعت الطلب</span><span class="eni">Send Request</span>
       </button>
