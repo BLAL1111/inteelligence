@@ -265,55 +265,89 @@ nav {
 .sec-sub { color: var(--mu); font-size: clamp(.86rem,1.3vw,1rem); line-height: 1.75; max-width: 480px; }
 
 
-/* ── HOW TITLE INTEGRATED ── */
-.how-sec { padding-top: 0; }
-.how-title-item {
-  padding: clamp(40px,7vw,80px) 0 clamp(28px,4vw,44px) !important;
-  border-top: none !important;
+/* ── HOW IT WORKS ── */
+.how-sec { padding-bottom: clamp(48px,8vw,96px); }
+
+.how-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: end;
+  gap: clamp(24px,4vw,48px);
+  padding-bottom: clamp(32px,5vw,56px);
+  border-bottom: 1px solid var(--bd);
 }
+.how-header-left { display: flex; flex-direction: column; }
 .how-tag {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(.62rem,.72rem,.68rem);
-  font-weight: 600; letter-spacing: .15em;
-  text-transform: uppercase; color: var(--mu);
-  padding-top: 0 !important;
-  align-self: flex-start;
-  padding-top: clamp(8px,1vw,12px) !important;
+  font-size: clamp(.6rem,.7rem,.66rem); font-weight: 600;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--mu);
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-bottom: clamp(12px,1.8vw,18px);
+  width: fit-content;
 }
-[data-lang="ar"] .how-tag { font-family: 'Cairo', sans-serif; letter-spacing: .08em; }
+.how-tag::before { content: ''; width: 20px; height: 1px; background: var(--lime); display: inline-block; flex-shrink: 0; }
+[data-lang="ar"] .how-tag { font-family: 'Cairo', sans-serif; letter-spacing: .08em; flex-direction: row-reverse; }
+[data-lang="ar"] .how-tag::before { display: none; }
+[data-lang="ar"] .how-tag::after { content: ''; width: 20px; height: 1px; background: var(--lime); display: inline-block; flex-shrink: 0; }
 .how-main-title {
   font-family: 'Outfit', sans-serif; font-weight: 800;
-  font-size: clamp(2.2rem,5.5vw,4.4rem); letter-spacing: -.03em;
-  line-height: 1.08; color: var(--txt);
+  font-size: clamp(2rem,5vw,4rem); letter-spacing: -.03em;
+  line-height: 1.06; color: var(--txt);
 }
-[data-lang="ar"] .how-main-title {
-  font-family: 'Cairo', sans-serif; font-weight: 900;
-  letter-spacing: -.01em; line-height: 1.32;
-}
+[data-lang="ar"] .how-main-title { font-family: 'Cairo', sans-serif; font-weight: 900; letter-spacing: -.01em; line-height: 1.28; }
 .how-main-title em { font-style: normal; color: var(--lime); }
+.how-header-sub {
+  font-size: clamp(.8rem,.95rem,.9rem); color: var(--mu);
+  line-height: 1.7; max-width: 280px; flex-shrink: 0;
+}
 
-/* ── HOW IT WORKS — big numbered list ── */
-.how-list { margin-top: clamp(32px,5vw,56px); display: flex; flex-direction: column; gap: 0; }
-.how-item {
-  display: grid; grid-template-columns: clamp(40px,6vw,56px) 1fr;
-  gap: clamp(16px,3vw,28px); padding: clamp(20px,3vw,32px) 0;
-  border-top: 1px solid var(--bd); align-items: start;
-  transition: background .18s;
+.how-steps {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 0; border-right: 1px solid var(--bd); border-bottom: 1px solid var(--bd);
 }
-.how-item:first-child { border-top: none; }
-.how-num {
+[data-lang="en"] .how-steps { border-right: none; border-left: 1px solid var(--bd); }
+.how-step {
+  padding: clamp(28px,4vw,48px) clamp(24px,3.5vw,40px);
+  border-top: 1px solid var(--bd); border-left: 1px solid var(--bd);
+  position: relative; overflow: hidden; transition: background .22s; cursor: default;
+}
+[data-lang="en"] .how-step { border-left: none; border-right: 1px solid var(--bd); }
+.how-step::after {
+  content: ''; position: absolute; bottom: 0; right: 0;
+  width: 0; height: 2px; background: var(--lime); transition: width .35s ease;
+}
+[data-lang="en"] .how-step::after { right: auto; left: 0; }
+.how-step:hover { background: var(--bg2); }
+.how-step:hover::after { width: 100%; }
+.how-step-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: clamp(14px,2vw,20px); }
+.how-step-num {
   font-family: 'Outfit', sans-serif; font-weight: 800;
-  font-size: clamp(1.1rem,2.5vw,1.6rem); color: var(--lime);
-  letter-spacing: -.03em; padding-top: 2px;
+  font-size: clamp(2rem,4vw,3rem); letter-spacing: -.06em;
+  color: var(--bd2); line-height: 1; transition: color .22s;
 }
-.how-content h3 {
+.how-step:hover .how-step-num { color: var(--lime); }
+.how-step-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--bg2); border: 1px solid var(--bd);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: border-color .22s, background .22s;
+}
+.how-step:hover .how-step-icon { border-color: var(--lime); background: rgba(200,240,0,.07); }
+.how-step h3 {
   font-family: 'Outfit', sans-serif; font-weight: 700;
-  font-size: clamp(.95rem,1.8vw,1.2rem); letter-spacing: -.02em;
-  margin-bottom: 6px;
+  font-size: clamp(.92rem,1.6vw,1.1rem); letter-spacing: -.02em;
+  color: var(--txt); margin-bottom: 8px; line-height: 1.3;
 }
-[data-lang="ar"] .how-content h3 { font-family: 'Cairo', sans-serif; letter-spacing: -.01em; line-height: 1.5; }
-.how-content p { font-size: clamp(.8rem,.9rem,.88rem); color: var(--mu); line-height: 1.7; }
+[data-lang="ar"] .how-step h3 { font-family: 'Cairo', sans-serif; font-weight: 800; letter-spacing: -.01em; line-height: 1.45; }
+.how-step p { font-size: clamp(.76rem,.88rem,.84rem); color: var(--mu); line-height: 1.72; }
+
+@media(max-width:620px){
+  .how-steps { grid-template-columns: 1fr; border-right: none; border-left: none; }
+  .how-step { border-left: none; border-right: none; }
+  [data-lang="en"] .how-step { border-left: none; border-right: none; }
+  .how-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .how-header-sub { max-width: 100%; }
+}
 
 /* ── CHAT DEMO — horizontal ── */
 .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px,4vw,48px); align-items: center; margin-top: clamp(32px,5vw,52px); }
@@ -884,41 +918,61 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
 
 <!-- HOW IT WORKS -->
 <section id="how" class="sec how-sec">
-  <div class="how-list">
-    <div class="how-item how-title-item rv">
-      <div class="how-num how-tag"><span class="ari">كيف يشتغل</span><span class="eni">How It Works</span></div>
-      <div class="how-content">
-        <h2 class="how-main-title"><span class="ar">من أول رسالة<br>لحد ما يدفع —<br><em>بدون تدخل.</em></span><span class="en">From first message<br>to payment —<br><em>without you.</em></span></h2>
-      </div>
+
+  <!-- Header -->
+  <div class="how-header rv">
+    <div class="how-header-left">
+      <div class="how-tag"><span class="ari">كيف يشتغل</span><span class="eni">How It Works</span></div>
+      <h2 class="how-main-title">
+        <span class="ar">من أول رسالة<br>لحد ما يدفع —<br><em>بدون تدخل.</em></span>
+        <span class="en">From first message<br>to payment —<br><em>without you.</em></span>
+      </h2>
     </div>
-    <div class="how-item rv">
-      <div class="how-num">01</div>
-      <div class="how-content">
-        <h3><span class="ari">رسالة واحدة تبدأ كل شيء</span><span class="eni">One message starts everything</span></h3>
-        <p><span class="ari">في اللحظة اللي يبعت فيها العميل رسالة، البوت يرد فوراً بمعلومات المنتج والسعر وطريقة الطلب — بشكل طبيعي تماماً، كأن موظفك هو اللي بيرد.</span><span class="eni">The moment a customer messages, the bot responds instantly with product info, pricing, and how to order — naturally, as if a real person replied.</span></p>
+    <p class="how-header-sub">
+      <span class="ari">أربع خطوات بس تفصلك عن متجر بيبيع وحده — على مدار الساعة، بدون أي تدخل منك.</span>
+      <span class="eni">Four steps between you and a store that sells itself — around the clock, without you.</span>
+    </p>
+  </div>
+
+  <!-- Steps Grid -->
+  <div class="how-steps">
+
+    <div class="how-step rv">
+      <div class="how-step-top">
+        <div class="how-step-num">01</div>
+        <div class="how-step-icon">💬</div>
       </div>
+      <h3><span class="ari">رسالة واحدة تبدأ كل شيء</span><span class="eni">One message starts everything</span></h3>
+      <p><span class="ari">في اللحظة اللي يبعت فيها العميل رسالة، البوت يرد فوراً بمعلومات المنتج والسعر وطريقة الطلب — بشكل طبيعي تماماً، كأن موظفك هو اللي بيرد.</span><span class="eni">The moment a customer messages, the bot responds instantly with product info, pricing, and how to order — naturally, as if a real person replied.</span></p>
     </div>
-    <div class="how-item rv">
-      <div class="how-num">02</div>
-      <div class="how-content">
-        <h3><span class="ari">بيانات منظمة بدون أي جهد منك</span><span class="eni">Organized data, zero effort from you</span></h3>
-        <p><span class="ari">الاسم والرقم ونوع الطلب — كله بيتسجل تلقائياً في لوحة تحكم واضحة. مش محتاج تكتب حاجة أو تتابع أي محادثة.</span><span class="eni">Name, phone, and order details — all recorded automatically in a clean dashboard. No manual entry, no follow-up needed.</span></p>
+
+    <div class="how-step rv">
+      <div class="how-step-top">
+        <div class="how-step-num">02</div>
+        <div class="how-step-icon">🗂️</div>
       </div>
+      <h3><span class="ari">بيانات منظمة بدون أي جهد منك</span><span class="eni">Organized data, zero effort</span></h3>
+      <p><span class="ari">الاسم والرقم ونوع الطلب — كله بيتسجل تلقائياً في لوحة تحكم واضحة. مش محتاج تكتب حاجة أو تتابع أي محادثة.</span><span class="eni">Name, phone, and order details — all recorded automatically in a clean dashboard. No manual entry, no follow-up needed.</span></p>
     </div>
-    <div class="how-item rv">
-      <div class="how-num">03</div>
-      <div class="how-content">
-        <h3><span class="ari">لو سكت — البوت يكمّل</span><span class="eni">If they go quiet — the bot follows through</span></h3>
-        <p><span class="ari">مش كل عميل بيرد من أول مرة. البوت بيعرف إمتى يتواصل تاني، وبيعمل كده بأسلوب لطيف ومناسب — من غير ما يُلحّ أو يُزعج.</span><span class="eni">Not every customer replies immediately. The bot knows when to reach out again, and does so thoughtfully — never pushy, always on time.</span></p>
+
+    <div class="how-step rv">
+      <div class="how-step-top">
+        <div class="how-step-num">03</div>
+        <div class="how-step-icon">🔁</div>
       </div>
+      <h3><span class="ari">لو سكت — البوت يكمّل</span><span class="eni">If they go quiet — bot follows through</span></h3>
+      <p><span class="ari">مش كل عميل بيرد من أول مرة. البوت بيعرف إمتى يتواصل تاني، وبيعمل كده بأسلوب لطيف ومناسب — من غير ما يُلحّ أو يُزعج.</span><span class="eni">Not every customer replies immediately. The bot knows when to reach out again — never pushy, always on time.</span></p>
     </div>
-    <div class="how-item rv">
-      <div class="how-num">04</div>
-      <div class="how-content">
-        <h3><span class="ari">بعد البيع — العلاقة بتستمر</span><span class="eni">After the sale — the relationship continues</span></h3>
-        <p><span class="ari">كل عملية شراء بتنتهي برسالة شكر شخصية وعرض مخصص للعميل. هذه اللحظة وحدها كفيلة بزيادة متوسط قيمة الطلب.</span><span class="eni">Every purchase ends with a personal thank-you and a tailored offer. This single moment consistently raises average order value.</span></p>
+
+    <div class="how-step rv">
+      <div class="how-step-top">
+        <div class="how-step-num">04</div>
+        <div class="how-step-icon">💰</div>
       </div>
+      <h3><span class="ari">بعد البيع — العلاقة بتستمر</span><span class="eni">After the sale — relationship continues</span></h3>
+      <p><span class="ari">كل عملية شراء بتنتهي برسالة شكر شخصية وعرض مخصص للعميل. هذه اللحظة وحدها كفيلة بزيادة متوسط قيمة الطلب.</span><span class="eni">Every purchase ends with a personal thank-you and a tailored offer — consistently raises average order value.</span></p>
     </div>
+
   </div>
 </section>
 
