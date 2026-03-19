@@ -127,10 +127,16 @@ nav {
 /* ── HERO ── */
 .hero {
   position: relative; min-height: 100svh;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: clamp(80px,12vw,120px) clamp(16px,6vw,64px) clamp(40px,6vw,80px);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: clamp(80px,12vw,120px) clamp(16px,6vw,64px) 0;
   border-bottom: 1px solid var(--bd);
   overflow: hidden;
+}
+/* group: eyebrow + title + sub + actions */
+.hero-content {
+  display: flex; flex-direction: column;
+  justify-content: center; flex: 1;
+  padding-bottom: clamp(24px,4vw,40px);
 }
 /* subtle grain overlay */
 .hero::after {
@@ -161,9 +167,9 @@ nav {
 .hero-sub {
   font-size: clamp(.9rem,1.6vw,1.15rem); color: var(--txt2);
   max-width: 520px; line-height: 1.75; margin-bottom: clamp(28px,4vw,40px);
-  font-weight: 400; animation: fu .5s .16s ease both;
+  font-weight: 400;
 }
-.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; animation: fu .5s .22s ease both; }
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
 .btn-p {
   background: var(--lime); color: #0a0a08; border: none;
@@ -187,13 +193,14 @@ nav {
 .btn-s:hover { border-color: var(--txt2); color: var(--txt); }
 [data-lang="ar"] .btn-s { font-family: 'Cairo', sans-serif; }
 
-/* hero big number */
+/* hero big number — static flow, always at bottom */
 .hero-stat-row {
-  position: absolute; bottom: clamp(24px,4vw,40px); left: clamp(16px,6vw,64px); right: clamp(16px,6vw,64px);
-  display: flex; gap: clamp(20px,4vw,48px); flex-wrap: wrap; border-top: 1px solid var(--bd);
-  padding-top: clamp(16px,2.5vw,24px);
+  position: static;
+  display: flex; gap: clamp(20px,4vw,48px); flex-wrap: wrap;
+  border-top: 1px solid var(--bd);
+  padding: clamp(16px,2.5vw,24px) 0 clamp(20px,3vw,32px);
+  flex-shrink: 0;
 }
-[data-lang="en"] .hero-stat-row { left: clamp(16px,6vw,64px); right: clamp(16px,6vw,64px); }
 .hstat { display: flex; flex-direction: column; }
 .hstat-n {
   font-family: 'Outfit', sans-serif; font-weight: 800;
@@ -505,7 +512,7 @@ footer {
 
 /* push nav down when ann bar present */
 body.has-ann nav { top: var(--ann-h, 37px); }
-body.has-ann .hero { padding-top: clamp(130px,16vw,170px); }
+body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
 
 /* ── TESTIMONIALS ── */
 .testi-grid {
@@ -582,6 +589,19 @@ body.has-ann .hero { padding-top: clamp(130px,16vw,170px); }
 }
 [data-lang="ar"] .pn-spots,[data-lang="ar"] .pn-left { font-family: 'Cairo', sans-serif; }
 
+
+/* ── HERO VISIBILITY FIX ── */
+/* Prevent opacity:0 trap when lang/theme changes */
+.hero-eyebrow, .hero-title, .hero-sub, .hero-actions, .hero-stat-row {
+  opacity: 1;
+  transform: none;
+}
+/* Only animate on first load using @starting-style alternative */
+.hero-eyebrow { animation: fu .45s ease both; }
+.hero-title   { animation: fu .45s .06s ease both; }
+.hero-sub     { animation: fu .45s .12s ease both; }
+.hero-actions { animation: fu .45s .18s ease both; }
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   .demo-grid, .contact-grid { grid-template-columns: 1fr; }
@@ -606,8 +626,8 @@ body.has-ann .hero { padding-top: clamp(130px,16vw,170px); }
   .results-grid .res-cell { border-right: none; border-bottom: 1px solid var(--bd); grid-column: unset; }
   .results-grid .res-cell:last-child { border-bottom: none; }
   footer { grid-template-columns: 1fr; }
-  .hero-stat-row { position: static; border-top: none; padding-top: clamp(28px,5vw,40px); margin-top: 0; }
-  .hero { padding-bottom: clamp(24px,4vw,32px); }
+  .hero-stat-row { border-top: none; padding-top: clamp(20px,4vw,32px); }
+  /* hero padding handled by hero-content */
   .nc .nav-cta { display: none; }
   .hero-actions { flex-direction: column; }
   .hero-actions a { width: 100%; justify-content: center; }
@@ -620,7 +640,7 @@ body.has-ann .hero { padding-top: clamp(130px,16vw,170px); }
   .sec { padding: clamp(36px,6vw,72px) clamp(14px,5vw,48px); }
   .trial-box { padding: clamp(24px,5vw,40px) clamp(18px,5vw,32px); }
   body.has-ann nav { top: var(--ann-h, 52px); }
-  body.has-ann .hero { padding-top: clamp(150px,20vw,190px); }
+  body.has-ann .hero { padding-top: clamp(120px,18vw,160px); }
 }
 @media(max-width:380px){
   .ls { display: none; }
@@ -666,18 +686,20 @@ body.has-ann .hero { padding-top: clamp(130px,16vw,170px); }
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-eyebrow"><span>Intelligence Automation</span> — <span class="ari">أتمتة المبيعات</span><span class="eni">Sales Automation</span></div>
-  <h1 class="hero-title">
-    <span class="ar">متجرك يبيع.<br/><em>وانت مش موجود.</em></span>
-    <span class="en">Your store sells.<br/><em>Without you.</em></span>
-  </h1>
-  <p class="hero-sub">
-    <span class="ari">بوت ذكي يرد على عملاؤك، يجمع بياناتهم، ويقفل الصفقة — أوتوماتيك على مدار الساعة.</span>
-    <span class="eni">An intelligent bot that replies to customers, collects their data, and closes deals — automatically, around the clock.</span>
-  </p>
-  <div class="hero-actions">
-    <a href="#contact" class="btn-p"><span class="ari">جرّب 7 أيام مجاناً</span><span class="eni">Try Free for 7 Days</span></a>
-    <a href="#how" class="btn-s"><span class="ari">شوف كيف يشتغل</span><span class="eni">See how it works</span></a>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span>Intelligence Automation</span> — <span class="ari">أتمتة المبيعات</span><span class="eni">Sales Automation</span></div>
+    <h1 class="hero-title">
+      <span class="ar">متجرك يبيع.<br/><em>وانت مش موجود.</em></span>
+      <span class="en">Your store sells.<br/><em>Without you.</em></span>
+    </h1>
+    <p class="hero-sub">
+      <span class="ari">بوت ذكي يرد على عملاؤك، يجمع بياناتهم، ويقفل الصفقة — أوتوماتيك على مدار الساعة.</span>
+      <span class="eni">An intelligent bot that replies to customers, collects their data, and closes deals — automatically, around the clock.</span>
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-p"><span class="ari">جرّب 7 أيام مجاناً</span><span class="eni">Try Free for 7 Days</span></a>
+      <a href="#how" class="btn-s"><span class="ari">شوف كيف يشتغل</span><span class="eni">See how it works</span></a>
+    </div>
   </div>
   <div class="hero-stat-row">
     <div class="hstat"><span class="hstat-n">24/7</span><span class="hstat-l"><span class="ari">متاح دايماً</span><span class="eni">Always available</span></span></div>
@@ -1071,6 +1093,15 @@ function applyLang(l){
   document.title=l==='ar'?'Intelligence — أتمتة مبيعاتك':'Intelligence — Automate Your Sales';
   bAr.classList.toggle('active',l==='ar');bEn.classList.toggle('active',l==='en');
   localStorage.setItem('iq-lang',l);
+  // Force visibility — belt + suspenders for inline spans
+  document.querySelectorAll('.ari,.eni').forEach(el=>{
+    const isAr=el.classList.contains('ari');
+    el.style.display=(l==='ar'?isAr:!isAr)?'inline':'none';
+  });
+  document.querySelectorAll('.ar,.en').forEach(el=>{
+    const isAr=el.classList.contains('ar');
+    el.style.display=(l==='ar'?isAr:!isAr)?'block':'none';
+  });
 }
 applyLang(localStorage.getItem('iq-lang')||'ar');
 bAr.addEventListener('click',()=>applyLang('ar'));
