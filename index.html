@@ -93,7 +93,7 @@ nav {
 .nl { display: flex; align-items: center; list-style: none; gap: clamp(16px,2.5vw,28px); }
 .nl a { color: var(--mu); font-size: clamp(.76rem,1.3vw,.88rem); font-weight: 500; transition: color .18s; letter-spacing: .01em; }
 .nl a:hover { color: var(--txt); }
-.nc { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.nc { display: flex; align-items: center; gap: 6px; flex-shrink: 0; min-width: 0; }
 
 /* LANG TOGGLE */
 .ls { display: flex; background: var(--su); border: 1px solid var(--bd); border-radius: 6px; overflow: hidden; }
@@ -126,7 +126,7 @@ nav {
 
 /* ── HERO ── */
 .hero {
-  position: relative; min-height: 100svh;
+  position: relative; min-height: min(100svh, 900px);
   display: flex; flex-direction: column; justify-content: space-between;
   padding: clamp(80px,12vw,120px) clamp(16px,6vw,64px) 0;
   border-bottom: 1px solid var(--bd);
@@ -149,19 +149,18 @@ nav {
   font-family: 'Outfit', sans-serif; font-size: clamp(.68rem,.8rem,.75rem);
   font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
   color: var(--mu); margin-bottom: clamp(20px,3vw,28px);
-  animation: fu .5s ease both;
 }
 .hero-eyebrow span { color: var(--lime); }
 @keyframes fu { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
 
 .hero-title {
   font-family: 'Outfit', sans-serif; font-weight: 800;
-  font-size: clamp(1.9rem,5.5vw,4.8rem); line-height: 1.5; letter-spacing: -.03em;
+  font-size: clamp(1.9rem,5.5vw,4.8rem); line-height: 1.1; letter-spacing: -.03em;
   max-width: 900px; margin-bottom: clamp(20px,3vw,28px);
   animation: fu .5s .08s ease both;
 
 }
-[data-lang="ar"] .hero-title { font-family: 'Cairo', sans-serif; font-weight: 800; letter-spacing: -.01em; }
+[data-lang="ar"] .hero-title { font-family: 'Cairo', sans-serif; font-weight: 800; letter-spacing: -.01em; line-height: 1.35; }
 .hero-title em { font-style: normal; color: var(--lime); }
 
 .hero-sub {
@@ -193,20 +192,37 @@ nav {
 .btn-s:hover { border-color: var(--txt2); color: var(--txt); }
 [data-lang="ar"] .btn-s { font-family: 'Cairo', sans-serif; }
 
-/* hero big number — static flow, always at bottom */
+/* hero big number — centered */
 .hero-stat-row {
   position: static;
-  display: flex; gap: clamp(20px,4vw,48px); flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
   border-top: 1px solid var(--bd);
-  padding: clamp(16px,2.5vw,24px) 0 clamp(20px,3vw,32px);
+  padding: clamp(20px,3vw,36px) 0 clamp(24px,4vw,40px);
+  flex-shrink: 0;
+  gap: 0;
+}
+.hstat {
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  padding: 0 clamp(20px,4vw,52px);
+  border-right: 1px solid var(--bd);
   flex-shrink: 0;
 }
-.hstat { display: flex; flex-direction: column; }
+.hstat:last-child { border-right: none; }
+[data-lang="en"] .hstat:first-child { border-right: 1px solid var(--bd); }
 .hstat-n {
   font-family: 'Outfit', sans-serif; font-weight: 800;
-  font-size: clamp(1.4rem,3.5vw,2.4rem); letter-spacing: -.03em; color: var(--txt); line-height: 1;
+  font-size: clamp(1.6rem,4vw,2.8rem); letter-spacing: -.04em;
+  color: var(--lime); line-height: 1;
 }
-.hstat-l { font-size: clamp(.7rem,.82rem,.78rem); color: var(--mu); margin-top: 3px; }
+.hstat-l {
+  font-size: clamp(.68rem,.78rem,.75rem); color: var(--mu);
+  margin-top: 6px; white-space: nowrap;
+}
+[data-lang="ar"] .hstat-l { font-family: 'Cairo', sans-serif; }
 
 /* ── MARQUEE ── */
 .marquee-wrap {
@@ -240,7 +256,7 @@ nav {
   line-height: 1.12; max-width: 720px; margin-bottom: clamp(12px,2vw,16px);
   transition: color var(--spd);
 }
-[data-lang="ar"] .sec-title { font-family: 'Cairo', sans-serif; font-weight: 900; letter-spacing: -.01em; }
+[data-lang="ar"] .sec-title { font-family: 'Cairo', sans-serif; font-weight: 900; letter-spacing: -.01em; line-height: 1.38; }
 .sec-sub { color: var(--mu); font-size: clamp(.86rem,1.3vw,1rem); line-height: 1.75; max-width: 480px; }
 
 /* ── HOW IT WORKS — big numbered list ── */
@@ -262,7 +278,7 @@ nav {
   font-size: clamp(.95rem,1.8vw,1.2rem); letter-spacing: -.02em;
   margin-bottom: 6px;
 }
-[data-lang="ar"] .how-content h3 { font-family: 'Cairo', sans-serif; letter-spacing: -.01em; }
+[data-lang="ar"] .how-content h3 { font-family: 'Cairo', sans-serif; letter-spacing: -.01em; line-height: 1.5; }
 .how-content p { font-size: clamp(.8rem,.9rem,.88rem); color: var(--mu); line-height: 1.7; }
 
 /* ── CHAT DEMO — horizontal ── */
@@ -348,21 +364,37 @@ nav {
 [data-lang="ar"] .feat-title { font-family: 'Cairo', sans-serif; }
 .feat-desc { font-size: clamp(.74rem,.82rem,.8rem); color: var(--mu); line-height: 1.65; }
 
-/* ── RESULTS — big numbers ── */
-.results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1px,.1vw,1px); margin-top: clamp(32px,5vw,52px); border: 1px solid var(--bd); border-radius: var(--rad); overflow: hidden; }
+/* ── RESULTS — centered big numbers ── */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: clamp(32px,5vw,52px);
+  border: 1px solid var(--bd);
+  border-radius: var(--rad);
+  overflow: hidden;
+  text-align: center;
+}
 .res-cell {
-  padding: clamp(24px,4vw,40px) clamp(18px,3vw,28px);
-  background: var(--su); border-right: 1px solid var(--bd);
+  padding: clamp(28px,5vw,52px) clamp(16px,3vw,28px);
+  background: var(--su);
+  border-right: 1px solid var(--bd);
   transition: background .18s;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
 }
 .res-cell:last-child { border-right: none; }
 .res-cell:hover { background: var(--su2); }
 .res-num {
   font-family: 'Outfit', sans-serif; font-weight: 800;
-  font-size: clamp(2rem,5vw,3.5rem); letter-spacing: -.04em;
-  color: var(--lime); display: block; line-height: 1; margin-bottom: 8px;
+  font-size: clamp(2.8rem,7vw,5rem); letter-spacing: -.05em;
+  color: var(--lime); display: block; line-height: 1; margin-bottom: 10px;
 }
-.res-label { font-size: clamp(.78rem,.88rem,.84rem); color: var(--mu); line-height: 1.5; }
+.res-label {
+  font-size: clamp(.78rem,.9rem,.86rem); color: var(--mu);
+  line-height: 1.5; max-width: 140px;
+}
+[data-lang="ar"] .res-label { font-family: 'Cairo', sans-serif; }
 
 /* ── TRIAL ── */
 .trial-box {
@@ -378,7 +410,7 @@ nav {
   font-size: clamp(1.4rem,3.5vw,2.6rem); letter-spacing: -.03em;
   line-height: 1.1; margin-bottom: clamp(10px,1.5vw,14px);
 }
-[data-lang="ar"] .trial-left h2 { font-family: 'Cairo', sans-serif; font-weight: 900; letter-spacing: -.01em; }
+[data-lang="ar"] .trial-left h2 { font-family: 'Cairo', sans-serif; font-weight: 900; letter-spacing: -.01em; line-height: 1.4; }
 .trial-left p { font-size: clamp(.82rem,1.1vw,.95rem); color: var(--mu); line-height: 1.7; }
 .trial-checks { display: flex; flex-direction: column; gap: 8px; margin-top: clamp(14px,2vw,18px); }
 .trial-check { display: flex; align-items: center; gap: 9px; font-size: clamp(.78rem,.86rem,.82rem); color: var(--txt2); }
@@ -608,28 +640,43 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
   .trial-box { grid-template-columns: 1fr; text-align: center; }
   .trial-right { order: -1; }
   .trial-checks { align-items: center; }
-  .results-grid { grid-template-columns: 1fr 1fr; }
-  .results-grid .res-cell:last-child { border-right: none; grid-column: 1/-1; border-top: 1px solid var(--bd); }
+  .results-grid { grid-template-columns: repeat(3,1fr); }
   footer { grid-template-columns: 1fr 1fr; }
   .footer-brand { grid-column: 1/-1; }
   .pricing-grid { grid-template-columns: 1fr; }
   .price-cell { border-right: none; border-bottom: 1px solid var(--bd); }
   .price-cell:last-child { border-bottom: none; }
   .testi-grid { grid-template-columns: 1fr 1fr; }
+  .pfeat { transform: none; }
 }
 @media(max-width:620px){
   .nl { display: none; }
   .feat-grid { grid-template-columns: 1fr; }
   .feat-cell:nth-child(2n) { border-right: 1px solid var(--bd); }
   .feat-cell { border-right: none; }
-  .results-grid { grid-template-columns: 1fr; }
-  .results-grid .res-cell { border-right: none; border-bottom: 1px solid var(--bd); grid-column: unset; }
-  .results-grid .res-cell:last-child { border-bottom: none; }
+  .results-grid { grid-template-columns: 1fr 1fr; }
+  .results-grid .res-cell { border-right: 1px solid var(--bd); border-bottom: 1px solid var(--bd); }
+  .results-grid .res-cell:nth-child(2) { border-right: none; }
+  .results-grid .res-cell:last-child { grid-column: 1/-1; border-right: none; border-bottom: none; border-top: 1px solid var(--bd); }
   footer { grid-template-columns: 1fr; }
-  .hero-stat-row { border-top: none; padding-top: clamp(20px,4vw,32px); }
+  .hero-stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--bd);
+    padding: clamp(16px,3vw,28px) 0 clamp(20px,3vw,32px);
+    gap: 0;
+  }
+  .hstat {
+    padding: clamp(12px,2vw,18px) clamp(12px,3vw,20px);
+    border-right: 1px solid var(--bd);
+    border-bottom: 1px solid var(--bd);
+  }
+  .hstat:nth-child(2) { border-right: none; }
+  .hstat:nth-child(3) { border-bottom: none; }
+  .hstat:last-child { border-right: none; border-bottom: none; }
   /* hero padding handled by hero-content */
   .nc .nav-cta { display: none; }
-  .hero-actions { flex-direction: column; }
+  .hero-actions { flex-direction: column; align-items: flex-start; }
   .hero-actions a { width: 100%; justify-content: center; }
   .testi-grid { grid-template-columns: 1fr; }
   .ann-bar { font-size: .7rem; gap: 6px; }
@@ -641,6 +688,12 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
   .trial-box { padding: clamp(24px,5vw,40px) clamp(18px,5vw,32px); }
   body.has-ann nav { top: var(--ann-h, 52px); }
   body.has-ann .hero { padding-top: clamp(120px,18vw,160px); }
+}
+@media(max-width:480px){
+  .demo-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .demo-phone { width: 100%; max-width: 280px; }
+  .ann-bar { flex-wrap: wrap; gap: 4px; padding: 6px 12px; }
 }
 @media(max-width:380px){
   .ls { display: none; }
@@ -654,9 +707,9 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
 
 <!-- ANNOUNCEMENT BAR -->
 <div class="ann-bar" id="annBar">
-  <span class="ann-badge"><span class="ari">🎉 عيد</span><span class="eni">🎉 EID</span></span>
-  <span class="ar">العرض لأول <strong>20 متجر فقط</strong> من بداية العيد — احجز مكانك الآن</span>
-  <span class="en">Offer for first <strong>20 stores only</strong> starting Eid — reserve your spot now</span>
+  <span class="ann-badge"><span class="ari">🎉 3 أيام مجاناً</span><span class="eni">🎉 3 Days Free</span></span>
+  <span class="ar">جرّب مجاناً 3 أيام — العرض لأول <strong>20 متجر</strong> من بداية العيد</span>
+  <span class="en">3 Days Free Trial — Offer for first <strong>20 stores</strong> starting Eid</span>
   <span class="ann-sep">|</span>
   <a href="#contact" style="text-decoration:underline;color:inherit;font-weight:800"><span class="ari">ابدأ مجاناً ←</span><span class="eni">Start Free ←</span></a>
 </div>
@@ -697,7 +750,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
       <span class="eni">An intelligent bot that replies to customers, collects their data, and closes deals — automatically, around the clock.</span>
     </p>
     <div class="hero-actions">
-      <a href="#contact" class="btn-p"><span class="ari">جرّب 7 أيام مجاناً</span><span class="eni">Try Free for 7 Days</span></a>
+      <a href="#contact" class="btn-p"><span class="ari">جرّب 3 أيام مجاناً</span><span class="eni">Try Free for 3 Days</span></a>
       <a href="#how" class="btn-s"><span class="ari">شوف كيف يشتغل</span><span class="eni">See how it works</span></a>
     </div>
   </div>
@@ -705,7 +758,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
     <div class="hstat"><span class="hstat-n">24/7</span><span class="hstat-l"><span class="ari">متاح دايماً</span><span class="eni">Always available</span></span></div>
     <div class="hstat"><span class="hstat-n">&lt; 1s</span><span class="hstat-l"><span class="ari">وقت الرد</span><span class="eni">Reply time</span></span></div>
     <div class="hstat"><span class="hstat-n">3.2×</span><span class="hstat-l"><span class="ari">متوسط زيادة الإيرادات</span><span class="eni">Avg. revenue increase</span></span></div>
-    <div class="hstat"><span class="hstat-n">7</span><span class="hstat-l"><span class="ari">أيام مجاناً</span><span class="eni">Days free</span></span></div>
+    <div class="hstat"><span class="hstat-n">3</span><span class="hstat-l"><span class="ari">أيام مجاناً</span><span class="eni">Days free</span></span></div>
   </div>
 </section>
 
@@ -722,7 +775,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
     <div class="msep">—</div>
     <div class="mitem">🤖 <span class="ari">ردود تبدو إنسانية</span><span class="eni">Human-like replies</span></div>
     <div class="msep">—</div>
-    <div class="mitem"><strong>7 أيام</strong> <span class="ari">مجاناً</span><span class="eni">days free</span></div>
+    <div class="mitem"><strong>3 أيام</strong> <span class="ari">مجاناً</span><span class="eni">days free</span></div>
     <div class="msep">—</div>
     <!-- duplicate -->
     <div class="mitem">📦 <span class="ari">طلبات تُسجَّل تلقائياً</span><span class="eni">Orders logged automatically</span></div>
@@ -735,7 +788,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
     <div class="msep">—</div>
     <div class="mitem">🤖 <span class="ari">ردود تبدو إنسانية</span><span class="eni">Human-like replies</span></div>
     <div class="msep">—</div>
-    <div class="mitem"><strong>7 أيام</strong> <span class="ari">مجاناً</span><span class="eni">days free</span></div>
+    <div class="mitem"><strong>3 أيام</strong> <span class="ari">مجاناً</span><span class="eni">days free</span></div>
     <div class="msep">—</div>
   </div>
 </div>
@@ -821,7 +874,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
   <div class="trial-box rv">
     <div class="trial-left">
       <h2><span class="ar">جرّب بدون مخاطرة.</span><span class="en">Try with zero risk.</span></h2>
-      <p><span class="ari">هنركّبلك السيستم كامل وتشتغل عليه 7 أيام فعلية. لو ماشفتش فرق ملموس — مش هتدفع قرش. مضمون.</span><span class="eni">We'll set up the full system and you run it for 7 real days. If you don't see a tangible difference — you pay nothing. Guaranteed.</span></p>
+      <p><span class="ari">هنركّبلك السيستم كامل وتشتغل عليه 3 أيام فعلية. لو ماشفتش فرق ملموس — مش هتدفع قرش. مضمون.</span><span class="eni">We'll set up the full system and you run it for 3 real days. If you don't see a tangible difference — you pay nothing. Guaranteed.</span></p>
       <div class="trial-checks">
         <div class="trial-check"><span class="ari">إعداد كامل بدون تقنية</span><span class="eni">Full setup, no tech needed</span></div>
         <div class="trial-check"><span class="ari">Demo حقيقي قبل التشغيل</span><span class="eni">Real demo before going live</span></div>
@@ -830,7 +883,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
       </div>
     </div>
     <div class="trial-right">
-      <span class="trial-days">7</span>
+      <span class="trial-days">3</span>
       <div class="trial-days-label"><span class="ari">أيام مجاناً</span><span class="eni">days free</span></div>
       <a href="#contact" class="btn-p"><span class="ari">ابدأ الآن</span><span class="eni">Start Now</span></a>
     </div>
@@ -911,7 +964,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
     <div class="testi-card rv">
       <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
       <p class="testi-quote">
-        <span class="ari">"كنت خايف في الأول، بس الـ 7 أيام مجاناً خلتني أجرب بدون ضغط. دلوقتي مش تخيّل شغلي من غيره."</span>
+        <span class="ari">"كنت خايف في الأول، بس الـ 3 أيام مجاناً خلتني أجرب بدون ضغط. دلوقتي مش تخيّل شغلي من غيره."</span>
         <span class="eni">"I was scared at first, but the 7-day free trial let me try with no pressure. Now I can't imagine my work without it."</span>
       </p>
       <div class="testi-metric">🔁 تجديد تلقائي كل شهر</div>
@@ -1031,7 +1084,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
       <div class="cinfo-item"><div class="cinfo-icon">⏱</div><div><h4><span class="ari">وقت الرد</span><span class="eni">Response time</span></h4><p><span class="ari">أقل من ساعتين دايماً</span><span class="eni">Under 2 hours, always</span></p></div></div>
       <div class="cinfo-item" style="border-color:var(--lime)">
         <div class="cinfo-icon">→</div>
-        <div><h4><span class="ari">7 أيام مجاناً</span><span class="eni">7 days free</span></h4><p><span class="ari">بدون بطاقة. لو مرضيتش — مش هتدفع.</span><span class="eni">No card. Not satisfied — you don't pay.</span></p></div>
+        <div><h4><span class="ari">3 أيام مجاناً</span><span class="eni">3 days free</span></h4><p><span class="ari">بدون بطاقة. لو مرضيتش — مش هتدفع.</span><span class="eni">No card. Not satisfied — you don't pay.</span></p></div>
       </div>
     </div>
   </div>
