@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="icon" type="image/png" href="Logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Syne:wght@600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root{
   --lime:#c8f000; --lime2:#a8cc00; --lime-glow:rgba(200,240,0,.18);
@@ -163,9 +163,9 @@ main{
 @keyframes pu{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.5)}}
 
 .al-title{
-  font-family:'Syne',sans-serif;font-weight:800;
+  font-family:'Syne',sans-serif;font-weight:700;
   font-size:clamp(2rem,3.8vw,3.2rem);
-  letter-spacing:-.04em;line-height:1.05;
+  letter-spacing:-.03em;line-height:1.05;
   color:var(--txt);margin-bottom:clamp(14px,2vw,20px);
 }
 [data-lang="ar"] .al-title{
@@ -309,8 +309,8 @@ main{
   background:var(--lime);color:#080809;border:none;
   padding:clamp(13px,1.8vw,16px);border-radius:var(--rad);
   font-family:'Syne',sans-serif;font-size:clamp(.88rem,1vw,.96rem);
-  font-weight:800;cursor:pointer;width:100%;
-  letter-spacing:-.01em;
+  font-weight:700;cursor:pointer;width:100%;
+  letter-spacing:.01em;
   position:relative;overflow:hidden;
   transition:transform .2s,box-shadow .2s;
 }
@@ -452,14 +452,14 @@ main{
           <label><span class="ari">البريد الإلكتروني</span><span class="eni">Email address</span></label>
           <div class="inp-wrap">
             <span class="inp-icon">@</span>
-            <input type="email" required id="l-email" placeholder="you@example.com" autocomplete="email"/>
+            <input type="email" id="l-email" placeholder="you@example.com" autocomplete="email"/>
           </div>
         </div>
         <div class="fg">
           <label><span class="ari">كلمة المرور</span><span class="eni">Password</span></label>
           <div class="inp-wrap">
             <span class="inp-icon">••</span>
-            <input type="password" required id="l-pass" placeholder="••••••••" autocomplete="current-password"/>
+            <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password"/>
             <button type="button" class="show-pw" onclick="togglePw('l-pass',this)">👁</button>
           </div>
         </div>
