@@ -1,80 +1,953 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark" data-lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة التحكم - Intelligence</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;900&family=Outfit:wght@400;500;800&family=Space+Mono&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/dashboard.css">
-</head>
-<body class="dark-mode">
-  <div class="dashboard-layout">
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <img src="assets/images/logo-dark.svg" alt="Intelligence" class="logo-dark">
-        <img src="assets/images/logo-light.svg" alt="Intelligence" class="logo-light">
-      </div>
-      <nav class="sidebar-nav">
-        <a href="#" class="active">الرئيسية</a>
-        <a href="#">العملاء</a>
-        <a href="#">الطلبات</a>
-        <a href="#">الإعدادات</a>
-      </nav>
-      <button class="logout-btn" id="logoutBtn">تسجيل خروج</button>
-    </aside>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Intelligence — لوحة التحكم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="icon" type="image/png" href="Logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --lime:#c8f000;--lime-bg:rgba(200,240,0,.08);--lime-border:rgba(200,240,0,.2);
+  --spd:.22s;--rad:10px;
+  --sb:220px;
+}
+[data-theme="dark"]{
+  --bg:#0a0a08;--su:#111110;--su2:#181816;--su3:#1f1f1c;
+  --bd:#242420;--bd2:#2e2e28;
+  --txt:#f0ece4;--txt2:#a8a49c;--mu:#5e5a54;
+  --nb:rgba(10,10,8,.96);--sh:0 2px 20px rgba(0,0,0,.5);
+  --row-hover:#161613;
+}
+[data-theme="light"]{
+  --bg:#f4f1ec;--su:#ffffff;--su2:#f8f5f0;--su3:#eeebe4;
+  --bd:#dedad2;--bd2:#ccc8be;
+  --txt:#0f0e0a;--txt2:#4a4740;--mu:#8a8680;
+  --nb:rgba(244,241,236,.97);--sh:0 2px 16px rgba(0,0,0,.06);
+  --row-hover:#f9f6f1;
+}
 
-    <main class="dashboard-main">
-      <header class="dashboard-header">
-        <h1>مرحباً، أحمد</h1>
-        <div class="header-actions">
-          <div class="lang-toggle">
-            <button class="lang-btn active" data-lang="ar">AR</button>
-            <button class="lang-btn" data-lang="en">EN</button>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{min-height:100%}
+body{
+  background:var(--bg);color:var(--txt);
+  font-family:'Cairo',sans-serif;
+  min-height:100svh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  transition:background var(--spd),color var(--spd);
+}
+[data-lang="en"] body{font-family:'Outfit',sans-serif}
+a{text-decoration:none;color:inherit}
+
+/* LANG HELPERS */
+.ar{display:block}.en{display:none}
+.ari{display:inline}.eni{display:none}
+[data-lang="en"] .ar{display:none!important}
+[data-lang="en"] .en{display:block!important}
+[data-lang="en"] .ari{display:none!important}
+[data-lang="en"] .eni{display:inline!important}
+
+/* ══════════════════════════════════
+   LAYOUT — sidebar + main
+══════════════════════════════════ */
+.layout{display:flex;min-height:100svh}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sb);flex-shrink:0;
+  background:var(--su);
+  border-left:1px solid var(--bd);
+  display:flex;flex-direction:column;
+  position:fixed;top:0;right:0;bottom:0;
+  z-index:200;
+  transition:transform var(--spd),background var(--spd);
+}
+[data-lang="en"] .sidebar{right:auto;left:0;border-left:none;border-right:1px solid var(--bd)}
+
+.sb-logo{
+  padding:20px 20px 0;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--bd);
+  padding-bottom:20px;
+  flex-shrink:0;
+}
+.sb-logo-mark{
+  width:30px;height:30px;border-radius:8px;
+  background:var(--lime);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.sb-logo-mark svg{width:14px;height:14px;fill:#080808}
+.sb-logo-text{
+  font-family:'Outfit',sans-serif;font-weight:800;
+  font-size:.96rem;letter-spacing:-.03em;color:var(--txt);
+}
+.sb-logo-badge{
+  margin-right:auto;
+  font-family:'DM Mono',monospace;font-size:.56rem;
+  color:var(--lime);background:var(--lime-bg);
+  border:1px solid var(--lime-border);
+  border-radius:4px;padding:2px 6px;
+}
+[data-lang="en"] .sb-logo-badge{margin-right:0;margin-left:auto}
+
+/* NAV */
+.sb-nav{flex:1;padding:12px 10px;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
+.nav-section-label{
+  font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--mu);padding:8px 10px 4px;margin-top:8px;
+  font-family:'DM Mono',monospace;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 12px;border-radius:8px;
+  font-size:.84rem;font-weight:600;color:var(--txt2);
+  cursor:pointer;border:none;background:none;width:100%;
+  text-align:right;
+  transition:background .15s,color .15s;
+  position:relative;
+}
+[data-lang="en"] .nav-item{text-align:left}
+.nav-item:hover{background:var(--su2);color:var(--txt)}
+.nav-item.active{background:var(--lime-bg);color:var(--lime)}
+.nav-item.active::before{
+  content:'';position:absolute;right:0;top:20%;bottom:20%;
+  width:3px;border-radius:4px 0 0 4px;
+  background:var(--lime);
+}
+[data-lang="en"] .nav-item.active::before{right:auto;left:0;border-radius:0 4px 4px 0}
+.nav-icon{
+  width:18px;height:18px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;opacity:.75;
+}
+.nav-item.active .nav-icon{opacity:1}
+.nav-badge{
+  margin-right:auto;font-family:'DM Mono',monospace;
+  font-size:.6rem;font-weight:500;
+  background:var(--lime);color:#080808;
+  border-radius:100px;padding:1px 7px;min-width:20px;text-align:center;
+}
+[data-lang="en"] .nav-badge{margin-right:0;margin-left:auto}
+
+/* SIDEBAR BOTTOM */
+.sb-bottom{
+  padding:12px 10px;border-top:1px solid var(--bd);
+  display:flex;flex-direction:column;gap:6px;
+}
+.sb-user{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;border-radius:8px;
+  cursor:pointer;
+  transition:background .15s;
+}
+.sb-user:hover{background:var(--su2)}
+.sb-avatar{
+  width:32px;height:32px;border-radius:8px;
+  background:var(--lime);color:#080808;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.78rem;flex-shrink:0;
+  font-family:'Outfit',sans-serif;
+}
+.sb-user-info{flex:1;min-width:0}
+.sb-user-name{font-size:.8rem;font-weight:700;color:var(--txt);line-height:1.2;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-user-plan{font-size:.68rem;color:var(--mu)}
+
+/* controls in sidebar bottom */
+.sb-controls{
+  display:flex;align-items:center;gap:6px;padding:4px 10px;
+}
+.ls{display:flex;background:var(--su2);border:1px solid var(--bd);border-radius:6px;overflow:hidden;padding:2px;gap:2px}
+.lb{
+  padding:3px 9px;font-size:.62rem;font-weight:700;letter-spacing:.06em;
+  cursor:pointer;color:var(--mu);border:none;background:transparent;
+  font-family:'DM Mono',monospace;border-radius:4px;
+  transition:background .15s,color .15s;
+}
+.lb.active{background:var(--txt);color:var(--bg)}
+.tt{
+  width:38px;height:22px;border-radius:100px;
+  background:var(--su2);border:1px solid var(--bd);
+  cursor:pointer;position:relative;flex-shrink:0;
+}
+.tt input{display:none}
+.tt-knob{
+  position:absolute;top:3px;left:3px;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--lime);
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 0 6px rgba(200,240,0,.3);
+}
+[data-theme="light"] .tt-knob{transform:translateX(16px)}
+
+/* ── MAIN CONTENT ── */
+.main{
+  flex:1;
+  margin-right:var(--sb);
+  min-height:100svh;
+  display:flex;flex-direction:column;
+}
+[data-lang="en"] .main{margin-right:0;margin-left:var(--sb)}
+
+/* TOPBAR */
+.topbar{
+  height:58px;padding:0 clamp(20px,3vw,40px);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;
+  border-bottom:1px solid var(--bd);
+  background:var(--nb);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  position:sticky;top:0;z-index:100;
+}
+.tb-title{
+  font-family:'Outfit',sans-serif;font-weight:700;
+  font-size:clamp(.88rem,1.5vw,1rem);
+  letter-spacing:-.02em;
+}
+[data-lang="ar"] .tb-title{font-family:'Cairo',sans-serif;font-weight:800}
+.tb-right{display:flex;align-items:center;gap:10px}
+.tb-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:8px;
+  background:var(--lime);color:#080808;
+  font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:700;
+  border:none;cursor:pointer;
+  transition:box-shadow .18s,transform .18s;
+}
+[data-lang="ar"] .tb-btn{font-family:'Cairo',sans-serif}
+.tb-btn:hover{box-shadow:0 4px 16px rgba(200,240,0,.3);transform:translateY(-1px)}
+.tb-icon-btn{
+  width:36px;height:36px;border-radius:8px;
+  background:var(--su2);border:1px solid var(--bd);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:.9rem;color:var(--txt2);
+  transition:background .15s,color .15s;
+}
+.tb-icon-btn:hover{background:var(--bd);color:var(--txt)}
+.notif-wrap{position:relative}
+.notif-dot{
+  position:absolute;top:6px;right:6px;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--lime);
+  box-shadow:0 0 6px var(--lime);
+}
+
+/* ── PAGE BODY ── */
+.page{padding:clamp(24px,3vw,36px) clamp(20px,3vw,40px);display:flex;flex-direction:column;gap:clamp(20px,2.5vw,28px)}
+
+/* ── STATS GRID ── */
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+  border:1px solid var(--bd);border-radius:12px;
+  overflow:hidden;
+  background:var(--su);
+}
+.stat-card{
+  padding:clamp(18px,2.5vw,28px) clamp(16px,2vw,24px);
+  border-left:1px solid var(--bd);
+  position:relative;overflow:hidden;
+  transition:background .18s;
+}
+.stat-card:last-child{border-left:none}
+[data-lang="en"] .stat-card{border-left:none;border-right:1px solid var(--bd)}
+[data-lang="en"] .stat-card:last-child{border-right:none}
+.stat-card:hover{background:var(--su2)}
+.stat-label{
+  font-size:.72rem;font-weight:600;color:var(--mu);
+  letter-spacing:.02em;margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;
+}
+.stat-icon{
+  width:22px;height:22px;border-radius:6px;
+  background:var(--su3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;
+}
+.stat-val{
+  font-family:'DM Mono',monospace;font-weight:500;
+  font-size:clamp(1.5rem,2.5vw,2rem);
+  letter-spacing:-.04em;color:var(--txt);
+  line-height:1;
+}
+.stat-val em{font-style:normal;color:var(--lime)}
+.stat-sub{
+  font-size:.68rem;color:var(--mu);margin-top:8px;
+  display:flex;align-items:center;gap:4px;
+}
+.stat-sub.up{color:#69db7c}
+.stat-sub.dn{color:#ff8787}
+.stat-trend{font-size:.65rem;margin-inline-start:2px}
+
+/* ── 2-COL ROW ── */
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,24px)}
+.row-3-1{display:grid;grid-template-columns:2fr 1fr;gap:clamp(16px,2vw,24px)}
+
+/* ── PANEL ── */
+.panel{
+  background:var(--su);border:1px solid var(--bd);
+  border-radius:12px;overflow:hidden;
+}
+.panel-head{
+  padding:clamp(14px,2vw,20px) clamp(16px,2vw,22px);
+  border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.panel-title{
+  font-family:'Outfit',sans-serif;font-weight:700;
+  font-size:clamp(.84rem,.95rem,.9rem);letter-spacing:-.02em;
+}
+[data-lang="ar"] .panel-title{font-family:'Cairo',sans-serif;font-weight:800}
+.panel-action{
+  font-size:.72rem;color:var(--mu);cursor:pointer;
+  font-family:'DM Mono',monospace;
+  transition:color .15s;
+  background:none;border:none;padding:4px 8px;
+  border-radius:6px;
+}
+.panel-action:hover{color:var(--lime);background:var(--lime-bg)}
+
+/* ── CONTACTS TABLE ── */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead th{
+  padding:10px clamp(14px,2vw,20px);
+  text-align:right;
+  font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--mu);font-family:'DM Mono',monospace;
+  border-bottom:1px solid var(--bd);
+  white-space:nowrap;
+}
+[data-lang="en"] thead th{text-align:left}
+tbody tr{
+  border-bottom:1px solid var(--bd);
+  transition:background .12s;cursor:pointer;
+}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--row-hover)}
+tbody td{
+  padding:clamp(12px,1.5vw,16px) clamp(14px,2vw,20px);
+  font-size:.82rem;color:var(--txt2);
+  white-space:nowrap;
+  vertical-align:middle;
+}
+.td-name{
+  font-weight:700;color:var(--txt);
+  display:flex;align-items:center;gap:10px;
+}
+.td-avatar{
+  width:30px;height:30px;border-radius:8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:800;font-family:'Outfit',sans-serif;
+}
+
+/* STATUS BADGES */
+.badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:100px;
+  font-size:.66rem;font-weight:700;letter-spacing:.04em;
+  font-family:'DM Mono',monospace;
+}
+.badge-new{background:rgba(116,192,252,.1);color:#74c0fc;border:1px solid rgba(116,192,252,.2)}
+.badge-contacted{background:rgba(200,240,0,.08);color:var(--lime);border:1px solid var(--lime-border)}
+.badge-converted{background:rgba(105,219,124,.1);color:#69db7c;border:1px solid rgba(105,219,124,.2)}
+.badge-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* ── ACTIVITY FEED ── */
+.feed{display:flex;flex-direction:column}
+.feed-item{
+  padding:clamp(12px,1.5vw,16px) clamp(16px,2vw,22px);
+  border-bottom:1px solid var(--bd);
+  display:flex;align-items:flex-start;gap:12px;
+  transition:background .12s;
+}
+.feed-item:last-child{border-bottom:none}
+.feed-item:hover{background:var(--row-hover)}
+.feed-dot{
+  width:8px;height:8px;border-radius:50%;flex-shrink:0;
+  margin-top:5px;
+}
+.feed-dot-lime{background:var(--lime);box-shadow:0 0 8px var(--lime)}
+.feed-dot-blue{background:#74c0fc}
+.feed-dot-green{background:#69db7c}
+.feed-dot-red{background:#ff8787}
+.feed-body{flex:1;min-width:0}
+.feed-text{font-size:.8rem;color:var(--txt2);line-height:1.5}
+.feed-text strong{color:var(--txt);font-weight:700}
+.feed-time{
+  font-size:.65rem;color:var(--mu);margin-top:3px;
+  font-family:'DM Mono',monospace;
+}
+
+/* ── MINI CHART BAR ── */
+.chart-wrap{padding:clamp(14px,2vw,20px) clamp(16px,2vw,22px)}
+.chart-bars{
+  display:flex;align-items:flex-end;gap:6px;
+  height:80px;
+}
+.chart-bar{
+  flex:1;border-radius:4px 4px 0 0;
+  background:var(--bd2);
+  transition:background .2s;
+  cursor:pointer;
+  position:relative;
+}
+.chart-bar.active,.chart-bar:hover{background:var(--lime)}
+.chart-bar::after{
+  content:attr(data-val);
+  position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);
+  font-size:.6rem;font-family:'DM Mono',monospace;color:var(--mu);
+  opacity:0;transition:opacity .15s;white-space:nowrap;
+}
+.chart-bar:hover::after{opacity:1}
+.chart-labels{
+  display:flex;gap:6px;margin-top:8px;
+}
+.chart-label{flex:1;text-align:center;font-size:.6rem;color:var(--mu);font-family:'DM Mono',monospace}
+
+/* ── BOT STATUS ── */
+.bot-status{
+  display:flex;align-items:center;gap:10px;
+  padding:clamp(14px,2vw,20px) clamp(16px,2vw,22px);
+  border-bottom:1px solid var(--bd);
+}
+.bot-online{
+  width:10px;height:10px;border-radius:50%;
+  background:#69db7c;flex-shrink:0;
+  box-shadow:0 0 10px rgba(105,219,124,.5);
+  animation:pulse-g 2s ease infinite;
+}
+@keyframes pulse-g{0%,100%{opacity:1}50%{opacity:.4}}
+.bot-info{flex:1}
+.bot-name{font-size:.84rem;font-weight:700;color:var(--txt)}
+.bot-desc{font-size:.7rem;color:var(--mu);margin-top:1px}
+.bot-tag{
+  font-family:'DM Mono',monospace;font-size:.62rem;
+  color:#69db7c;background:rgba(105,219,124,.08);
+  border:1px solid rgba(105,219,124,.2);
+  border-radius:100px;padding:3px 10px;
+}
+
+/* ── QUICK STATS MINI ── */
+.mini-stats{display:flex;flex-direction:column;gap:0}
+.mini-stat{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:clamp(10px,1.4vw,14px) clamp(16px,2vw,22px);
+  border-bottom:1px solid var(--bd);
+}
+.mini-stat:last-child{border-bottom:none}
+.mini-stat-label{font-size:.78rem;color:var(--txt2);font-weight:600}
+.mini-stat-val{
+  font-family:'DM Mono',monospace;font-size:.9rem;
+  font-weight:500;color:var(--txt);
+}
+.mini-stat-val.lime{color:var(--lime)}
+
+/* ── EMPTY STATE ── */
+.empty{
+  padding:40px 20px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.empty-icon{font-size:2rem;opacity:.3}
+.empty-text{font-size:.82rem;color:var(--mu)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  :root{--sb:0px}
+  .sidebar{
+    transform:translateX(100%);
+    box-shadow:-4px 0 30px rgba(0,0,0,.4);
+  }
+  [data-lang="en"] .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)!important}
+  .main{margin-right:0!important;margin-left:0!important}
+  .topbar{padding:0 16px}
+  .hamburger{display:flex}
+  .row-3-1,.row-2{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-card:nth-child(2){border-left:none}
+  .stat-card:nth-child(3){border-top:1px solid var(--bd)}
+  .stat-card:nth-child(3),.stat-card:nth-child(4){border-left:1px solid var(--bd)}
+  .stat-card:nth-child(4){border-left:none}
+  [data-lang="en"] .stat-card:nth-child(2){border-right:none;border-left:none}
+  [data-lang="en"] .stat-card:nth-child(3),.stat-card:nth-child(4){border-right:1px solid var(--bd);border-left:none}
+}
+@media(max-width:520px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .page{padding:16px}
+  .tb-btn span{display:none}
+}
+.hamburger{
+  display:none;width:36px;height:36px;border-radius:8px;
+  background:var(--su2);border:1px solid var(--bd);
+  align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.1rem;flex-shrink:0;
+}
+.overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);
+  z-index:150;backdrop-filter:blur(2px);
+}
+.overlay.open{display:block}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+
+  <!-- ══════ SIDEBAR ══════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sb-logo">
+      <div class="sb-logo-mark">
+        <svg viewBox="0 0 16 16"><path d="M8 1L1 5v6l7 4 7-4V5L8 1zm0 2l5 2.8V10L8 12.8 3 10V5.8L8 3z"/></svg>
+      </div>
+      <span class="sb-logo-text">Intelligence</span>
+      <span class="sb-logo-badge"><span class="ari">الإصدار</span><span class="eni">v</span>1.0</span>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="nav-section-label"><span class="ari">الرئيسية</span><span class="eni">Main</span></div>
+
+      <button class="nav-item active" onclick="setPage('overview')">
+        <span class="nav-icon">⬛</span>
+        <span class="ari">نظرة عامة</span><span class="eni">Overview</span>
+      </button>
+
+      <button class="nav-item" onclick="setPage('contacts')">
+        <span class="nav-icon">👥</span>
+        <span class="ari">العملاء</span><span class="eni">Contacts</span>
+        <span class="nav-badge" id="contactsBadge">12</span>
+      </button>
+
+      <button class="nav-item" onclick="setPage('conversations')">
+        <span class="nav-icon">💬</span>
+        <span class="ari">المحادثات</span><span class="eni">Conversations</span>
+        <span class="nav-badge">3</span>
+      </button>
+
+      <button class="nav-item" onclick="setPage('orders')">
+        <span class="nav-icon">📦</span>
+        <span class="ari">الطلبات</span><span class="eni">Orders</span>
+      </button>
+
+      <div class="nav-section-label"><span class="ari">الإعدادات</span><span class="eni">Settings</span></div>
+
+      <button class="nav-item" onclick="setPage('bot')">
+        <span class="nav-icon">🤖</span>
+        <span class="ari">إعداد البوت</span><span class="eni">Bot Setup</span>
+      </button>
+
+      <button class="nav-item" onclick="setPage('analytics')">
+        <span class="nav-icon">📊</span>
+        <span class="ari">التحليلات</span><span class="eni">Analytics</span>
+      </button>
+
+      <button class="nav-item" onclick="setPage('settings')">
+        <span class="nav-icon">⚙️</span>
+        <span class="ari">الإعدادات</span><span class="eni">Settings</span>
+      </button>
+    </nav>
+
+    <div class="sb-bottom">
+      <div class="sb-user">
+        <div class="sb-avatar" id="sbAvatar">أ</div>
+        <div class="sb-user-info">
+          <div class="sb-user-name" id="sbName"><span class="ari">أحمد محمد</span><span class="eni">Ahmed Mohamed</span></div>
+          <div class="sb-user-plan"><span class="ari">خطة النمو</span><span class="eni">Growth Plan</span></div>
+        </div>
+      </div>
+      <div class="sb-controls">
+        <div class="ls">
+          <button class="lb active" id="bAr">AR</button>
+          <button class="lb" id="bEn">EN</button>
+        </div>
+        <label class="tt" onclick="toggleTheme()">
+          <input type="checkbox" id="tTog"/>
+          <div class="tt-knob"></div>
+        </label>
+        <button class="tb-btn" onclick="doLogout()" style="padding:6px 10px;font-size:.7rem;margin-right:auto">
+          <span class="ari">خروج</span><span class="eni">Logout</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══════ MAIN ══════ -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="hamburger" id="hamburger" onclick="openSidebar()">☰</button>
+        <div class="tb-title" id="pageTitle">
+          <span class="ari">نظرة عامة</span><span class="eni">Overview</span>
+        </div>
+      </div>
+      <div class="tb-right">
+        <div class="notif-wrap">
+          <div class="tb-icon-btn">🔔</div>
+          <div class="notif-dot"></div>
+        </div>
+        <button class="tb-btn" onclick="refreshData()">
+          <span>↻</span>
+          <span class="ari">تحديث</span><span class="eni">Refresh</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PAGE CONTENT -->
+    <div class="page" id="pageContent">
+
+      <!-- ── STATS ── -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">
+            <div class="stat-icon">👥</div>
+            <span class="ari">إجمالي العملاء</span><span class="eni">Total Contacts</span>
           </div>
-          <div class="theme-toggle">
-            <button class="theme-btn">
-              <span class="light-icon">☀️</span>
-              <span class="dark-icon">🌙</span>
+          <div class="stat-val" id="totalContacts">—</div>
+          <div class="stat-sub up">
+            <span class="stat-trend">↑</span>
+            <span class="ari">+3 هذا الأسبوع</span><span class="eni">+3 this week</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">
+            <div class="stat-icon">✅</div>
+            <span class="ari">صفقات مغلقة</span><span class="eni">Converted</span>
+          </div>
+          <div class="stat-val" id="converted">—</div>
+          <div class="stat-sub up">
+            <span class="stat-trend">↑</span>
+            <span class="ari">معدل التحويل 47%</span><span class="eni">47% conv. rate</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">
+            <div class="stat-icon">⚡</div>
+            <span class="ari">وقت الرد</span><span class="eni">Reply Time</span>
+          </div>
+          <div class="stat-val"><em>&lt;1</em><span style="font-size:.9rem;color:var(--txt2)">s</span></div>
+          <div class="stat-sub">
+            <span class="ari">متوسط اليوم</span><span class="eni">Today's avg</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">
+            <div class="stat-icon">💬</div>
+            <span class="ari">رسائل اليوم</span><span class="eni">Messages Today</span>
+          </div>
+          <div class="stat-val" id="msgToday">—</div>
+          <div class="stat-sub up">
+            <span class="stat-trend">↑</span>
+            <span class="ari">+12 عن أمس</span><span class="eni">+12 vs yesterday</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ROW: contacts table + activity ── -->
+      <div class="row-3-1">
+
+        <!-- CONTACTS TABLE -->
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-title"><span class="ari">آخر العملاء</span><span class="eni">Latest Contacts</span></div>
+            <button class="panel-action" onclick="setPage('contacts')">
+              <span class="ari">عرض الكل ←</span><span class="eni">View all →</span>
             </button>
           </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th><span class="ari">الاسم</span><span class="eni">Name</span></th>
+                  <th><span class="ari">رقم الهاتف</span><span class="eni">Phone</span></th>
+                  <th><span class="ari">نوع المتجر</span><span class="eni">Store Type</span></th>
+                  <th><span class="ari">الحالة</span><span class="eni">Status</span></th>
+                  <th><span class="ari">التاريخ</span><span class="eni">Date</span></th>
+                </tr>
+              </thead>
+              <tbody id="contactsBody">
+                <tr>
+                  <td colspan="5"><div class="empty"><div class="empty-icon">⏳</div><div class="empty-text"><span class="ari">جاري التحميل...</span><span class="eni">Loading...</span></div></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </header>
 
-      <div class="dashboard-stats">
-        <div class="stat-card">
-          <h3>إجمالي العملاء</h3>
-          <div class="number">124</div>
-        </div>
-        <div class="stat-card">
-          <h3>طلبات جديدة</h3>
-          <div class="number">18</div>
-        </div>
-        <div class="stat-card">
-          <h3>صفقات مكتملة</h3>
-          <div class="number">47</div>
+        <!-- RIGHT COLUMN -->
+        <div style="display:flex;flex-direction:column;gap:clamp(16px,2vw,24px)">
+
+          <!-- BOT STATUS -->
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title"><span class="ari">حالة البوت</span><span class="eni">Bot Status</span></div>
+            </div>
+            <div class="bot-status">
+              <div class="bot-online"></div>
+              <div class="bot-info">
+                <div class="bot-name">Intelligence Bot</div>
+                <div class="bot-desc"><span class="ari">يعمل منذ 3 أيام</span><span class="eni">Running for 3 days</span></div>
+              </div>
+              <div class="bot-tag"><span class="ari">نشط</span><span class="eni">Active</span></div>
+            </div>
+            <div class="mini-stats">
+              <div class="mini-stat">
+                <span class="mini-stat-label"><span class="ari">المنصة</span><span class="eni">Platform</span></span>
+                <span class="mini-stat-val">Instagram</span>
+              </div>
+              <div class="mini-stat">
+                <span class="mini-stat-label"><span class="ari">رسائل منذ البداية</span><span class="eni">Total messages</span></span>
+                <span class="mini-stat-val lime">1,247</span>
+              </div>
+              <div class="mini-stat">
+                <span class="mini-stat-label"><span class="ari">انتهاء التجربة</span><span class="eni">Trial ends</span></span>
+                <span class="mini-stat-val" id="trialEnd">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MINI CHART -->
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title"><span class="ari">طلبات الأسبوع</span><span class="eni">Weekly Orders</span></div>
+            </div>
+            <div class="chart-wrap">
+              <div class="chart-bars" id="chartBars"></div>
+              <div class="chart-labels" id="chartLabels"></div>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <div class="contacts-table">
-        <table>
-          <thead>
-            <tr>
-              <th>الاسم</th>
-              <th>الهاتف</th>
-              <th>نوع المتجر</th>
-              <th>الحالة</th>
-              <th>تاريخ</th>
-            </tr>
-          </thead>
-          <tbody id="contactsBody">
-            <!-- تملأ بـ JS -->
-          </tbody>
-        </table>
+      <!-- ── ACTIVITY FEED ── -->
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title"><span class="ari">آخر الأحداث</span><span class="eni">Recent Activity</span></div>
+          <span style="font-size:.68rem;color:var(--mu);font-family:'DM Mono',monospace">live</span>
+        </div>
+        <div class="feed" id="feedWrap"></div>
       </div>
-    </main>
-  </div>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/dashboard.js"></script>
+
+    </div><!-- end .page -->
+  </div><!-- end .main -->
+</div><!-- end .layout -->
+
+<script>
+const R=document.documentElement;
+const API='http://127.0.0.1:8000/api';
+const token=()=>localStorage.getItem('iq-token');
+
+/* ── GUARD ── */
+if(!localStorage.getItem('iq-token')){window.location.href='login.html'}
+
+/* ── THEME ── */
+function setTheme(t){R.setAttribute('data-theme',t);document.getElementById('tTog').checked=t==='light';localStorage.setItem('iq-theme',t)}
+function toggleTheme(){setTheme(R.getAttribute('data-theme')==='dark'?'light':'dark')}
+setTheme(localStorage.getItem('iq-theme')||'dark');
+
+/* ── LANG ── */
+const bAr=document.getElementById('bAr'),bEn=document.getElementById('bEn');
+function applyLang(l){
+  R.setAttribute('data-lang',l);R.setAttribute('lang',l);
+  R.setAttribute('dir',l==='ar'?'rtl':'ltr');
+  document.title=l==='ar'?'Intelligence — لوحة التحكم':'Intelligence — Dashboard';
+  bAr.classList.toggle('active',l==='ar');bEn.classList.toggle('active',l==='en');
+  localStorage.setItem('iq-lang',l);
+  document.querySelectorAll('.ari,.eni').forEach(el=>{
+    el.style.display=(l==='ar'?el.classList.contains('ari'):el.classList.contains('eni'))?'inline':'none';
+  });
+  document.querySelectorAll('.ar,.en').forEach(el=>{
+    el.style.display=(l==='ar'?el.classList.contains('ar'):el.classList.contains('en'))?'block':'none';
+  });
+}
+applyLang(localStorage.getItem('iq-lang')||'ar');
+bAr.addEventListener('click',()=>applyLang('ar'));
+bEn.addEventListener('click',()=>applyLang('en'));
+
+/* ── SIDEBAR MOBILE ── */
+function openSidebar(){
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+/* ── PAGE NAV (stub) ── */
+function setPage(p){
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  closeSidebar();
+}
+
+/* ── LOGOUT ── */
+function doLogout(){
+  localStorage.clear();
+  window.location.href='login.html';
+}
+
+/* ── USER INFO ── */
+const user=JSON.parse(localStorage.getItem('iq-user')||'{}');
+if(user.name){
+  document.getElementById('sbName').textContent=user.name;
+  document.getElementById('sbAvatar').textContent=user.name.charAt(0).toUpperCase();
+}
+
+/* ── TRIAL COUNTDOWN ── */
+(function(){
+  const stored=localStorage.getItem('iq-trial-start');
+  const start=stored?new Date(stored):(()=>{const d=new Date();localStorage.setItem('iq-trial-start',d.toISOString());return d})();
+  const end=new Date(start);end.setDate(end.getDate()+7);
+  const diff=Math.max(0,Math.ceil((end-new Date())/(1000*60*60*24)));
+  const el=document.getElementById('trialEnd');
+  const l=R.getAttribute('data-lang');
+  el.textContent=diff>0?(l==='ar'?`${diff} أيام متبقية`:`${diff} days left`):(l==='ar'?'انتهت التجربة':'Trial ended');
+  if(diff<=2)el.style.color='#ff8787';
+  else el.classList.add('lime');
+})();
+
+/* ── CHART ── */
+(function(){
+  const l=R.getAttribute('data-lang');
+  const daysAr=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  const daysEn=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const today=new Date().getDay();
+  const vals=[4,7,3,9,6,11,8];
+  const bars=document.getElementById('chartBars');
+  const labels=document.getElementById('chartLabels');
+  const max=Math.max(...vals);
+  vals.forEach((v,i)=>{
+    const bar=document.createElement('div');
+    bar.className='chart-bar'+(i===today?' active':'');
+    bar.style.height=`${(v/max)*100}%`;
+    bar.setAttribute('data-val',v);
+    bars.appendChild(bar);
+    const lbl=document.createElement('div');
+    lbl.className='chart-label';
+    lbl.textContent=(l==='ar'?daysAr:daysEn)[(today-6+i+7)%7].slice(0,3);
+    labels.appendChild(lbl);
+  });
+})();
+
+/* ── MOCK ACTIVITY FEED ── */
+const activities_ar=[
+  {dot:'lime',text:'<strong>محمد أحمد</strong> أرسل رسالة جديدة عبر إنستاغرام',time:'منذ دقيقتين'},
+  {dot:'green',text:'تم إغلاق صفقة مع <strong>سارة محمود</strong> — قيمة 349 ج',time:'منذ 8 دقائق'},
+  {dot:'blue',text:'<strong>خالد عمر</strong> طلب معلومات عن المنتج VIP',time:'منذ 23 دقيقة'},
+  {dot:'lime',text:'متابعة تلقائية أُرسلت لـ <strong>نورا حسن</strong>',time:'منذ ساعة'},
+  {dot:'green',text:'تم تسجيل عميل جديد: <strong>عمر سامي</strong>',time:'منذ ساعتين'},
+  {dot:'red',text:'لم يرد <strong>أحمد علي</strong> — جُدولت متابعة',time:'منذ 3 ساعات'},
+];
+const activities_en=[
+  {dot:'lime',text:'<strong>Mohamed Ahmed</strong> sent a new message via Instagram',time:'2 min ago'},
+  {dot:'green',text:'Deal closed with <strong>Sara Mahmoud</strong> — 349 EGP',time:'8 min ago'},
+  {dot:'blue',text:'<strong>Khaled Omar</strong> asked about VIP product',time:'23 min ago'},
+  {dot:'lime',text:'Auto follow-up sent to <strong>Nora Hassan</strong>',time:'1h ago'},
+  {dot:'green',text:'New contact registered: <strong>Omar Sami</strong>',time:'2h ago'},
+  {dot:'red',text:'<strong>Ahmed Ali</strong> didn\'t reply — follow-up scheduled',time:'3h ago'},
+];
+function renderFeed(){
+  const l=R.getAttribute('data-lang');
+  const acts=l==='ar'?activities_ar:activities_en;
+  const feed=document.getElementById('feedWrap');
+  feed.innerHTML=acts.map(a=>`
+    <div class="feed-item">
+      <div class="feed-dot feed-dot-${a.dot}"></div>
+      <div class="feed-body">
+        <div class="feed-text">${a.text}</div>
+        <div class="feed-time">${a.time}</div>
+      </div>
+    </div>
+  `).join('');
+}
+renderFeed();
+
+/* ── LOAD CONTACTS ── */
+const mockContacts=[
+  {name:'محمد أحمد',name_en:'Mohamed Ahmed',phone:'010XXXXXXXX',store:'ملابس',store_en:'Fashion',status:'converted',date:'2025-04-18'},
+  {name:'سارة محمود',name_en:'Sara Mahmoud',phone:'011XXXXXXXX',store:'إكسسوارات',store_en:'Accessories',status:'converted',date:'2025-04-18'},
+  {name:'خالد عمر',name_en:'Khaled Omar',phone:'012XXXXXXXX',store:'إلكترونيات',store_en:'Electronics',status:'contacted',date:'2025-04-17'},
+  {name:'نورا حسن',name_en:'Nora Hassan',phone:'015XXXXXXXX',store:'تجميل',store_en:'Beauty',status:'contacted',date:'2025-04-17'},
+  {name:'عمر سامي',name_en:'Omar Sami',phone:'010XXXXXXXX',store:'أثاث',store_en:'Furniture',status:'new',date:'2025-04-16'},
+  {name:'لمياء طه',name_en:'Lamia Taha',phone:'011XXXXXXXX',store:'عطور',store_en:'Perfumes',status:'new',date:'2025-04-16'},
+];
+const avatarColors=['#c8f000','#74c0fc','#ff8787','#ffa94d','#69db7c','#da77f2'];
+
+function statusBadge(s,l){
+  const map={
+    new:{ar:'جديد',en:'New',cls:'badge-new'},
+    contacted:{ar:'تم التواصل',en:'Contacted',cls:'badge-contacted'},
+    converted:{ar:'مكتمل',en:'Converted',cls:'badge-converted'},
+  };
+  const m=map[s]||map.new;
+  return `<span class="badge ${m.cls}"><span class="badge-dot"></span>${l==='ar'?m.ar:m.en}</span>`;
+}
+
+function renderContacts(contacts){
+  const l=R.getAttribute('data-lang');
+  const tbody=document.getElementById('contactsBody');
+  if(!contacts||!contacts.length){
+    tbody.innerHTML=`<tr><td colspan="5"><div class="empty"><div class="empty-icon">📭</div><div class="empty-text"><span>${l==='ar'?'لا يوجد عملاء بعد':'No contacts yet'}</span></div></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML=contacts.map((c,i)=>{
+    const name=l==='ar'?(c.name||c.name_en):(c.name_en||c.name);
+    const store=l==='ar'?(c.store_type||c.store||c.store_en):(c.store_en||c.store_type||c.store);
+    const color=avatarColors[i%avatarColors.length];
+    const initials=name.charAt(0).toUpperCase();
+    return `<tr>
+      <td><div class="td-name">
+        <div class="td-avatar" style="background:${color}20;color:${color};border:1px solid ${color}40">${initials}</div>
+        ${name}
+      </div></td>
+      <td style="font-family:'DM Mono',monospace;font-size:.76rem">${c.phone||'—'}</td>
+      <td>${store||'—'}</td>
+      <td>${statusBadge(c.status||'new',l)}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:.72rem;color:var(--mu)">${(c.date||c.created_at||'').slice(0,10)}</td>
+    </tr>`;
+  }).join('');
+}
+
+async function loadContacts(){
+  try{
+    const res=await fetch(`${API}/contacts`,{
+      headers:{Authorization:`Bearer ${token()}`,'Accept':'application/json'}
+    });
+    if(!res.ok)throw new Error();
+    const data=await res.json();
+    const contacts=data.data||data;
+    document.getElementById('totalContacts').textContent=contacts.length;
+    const conv=contacts.filter(c=>c.status==='converted').length;
+    document.getElementById('converted').textContent=conv;
+    document.getElementById('msgToday').textContent=Math.floor(contacts.length*3.2);
+    document.getElementById('contactsBadge').textContent=contacts.filter(c=>c.status==='new').length||'';
+    renderContacts(contacts.slice(0,6));
+  }catch(e){
+    // fallback to mock
+    document.getElementById('totalContacts').textContent=mockContacts.length;
+    document.getElementById('converted').textContent=mockContacts.filter(c=>c.status==='converted').length;
+    document.getElementById('msgToday').textContent=34;
+    document.getElementById('contactsBadge').textContent=mockContacts.filter(c=>c.status==='new').length;
+    renderContacts(mockContacts);
+  }
+}
+
+function refreshData(){
+  document.getElementById('contactsBody').innerHTML=`<tr><td colspan="5"><div class="empty"><div class="empty-icon">⏳</div><div class="empty-text"><span class="ari">جاري التحديث...</span><span class="eni">Refreshing...</span></div></div></td></tr>`;
+  setTimeout(loadContacts,600);
+}
+
+loadContacts();
+</script>
 </body>
 </html>
