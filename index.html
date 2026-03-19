@@ -6,6 +6,7 @@
 <title>Intelligence — أتمتة مبيعاتك</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="icon" type="image/png" href="Logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 /* ══════════════════════════════════════
@@ -101,6 +102,10 @@ nav {
   padding: 4px 11px; font-size: .68rem; font-weight: 600; letter-spacing: .06em;
   cursor: pointer; color: var(--mu); border: none; background: transparent;
   font-family: inherit; transition: background .18s, color .18s;
+}
+@media(max-width:400px){
+  .lb { padding: 3px 8px; font-size: .62rem; letter-spacing: .04em; }
+  .nav-cta { padding: 6px 10px; font-size: .72rem; }
 }
 .lb.active { background: var(--txt); color: var(--bg); }
 
@@ -258,6 +263,35 @@ nav {
 }
 [data-lang="ar"] .sec-title { font-family: 'Cairo', sans-serif; font-weight: 900; letter-spacing: -.01em; line-height: 1.38; }
 .sec-sub { color: var(--mu); font-size: clamp(.86rem,1.3vw,1rem); line-height: 1.75; max-width: 480px; }
+
+
+/* ── HOW TITLE INTEGRATED ── */
+.how-sec { padding-top: 0; }
+.how-title-item {
+  padding: clamp(40px,7vw,80px) 0 clamp(28px,4vw,44px) !important;
+  border-top: none !important;
+  align-items: end;
+}
+.how-tag {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(.62rem,.72rem,.68rem);
+  font-weight: 600; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--mu);
+  padding-top: 0 !important;
+  align-self: flex-start;
+  padding-top: clamp(8px,1vw,12px) !important;
+}
+[data-lang="ar"] .how-tag { font-family: 'Cairo', sans-serif; letter-spacing: .08em; }
+.how-main-title {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(2.2rem,5.5vw,4.4rem); letter-spacing: -.03em;
+  line-height: 1.08; color: var(--txt);
+}
+[data-lang="ar"] .how-main-title {
+  font-family: 'Cairo', sans-serif; font-weight: 900;
+  letter-spacing: -.01em; line-height: 1.32;
+}
+.how-main-title em { font-style: normal; color: var(--lime); }
 
 /* ── HOW IT WORKS — big numbered list ── */
 .how-list { margin-top: clamp(32px,5vw,56px); display: flex; flex-direction: column; gap: 0; }
@@ -737,8 +771,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
   .ann-bar { flex-wrap: wrap; gap: 4px; padding: 6px 12px; }
 }
 @media(max-width:380px){
-  .ls { display: none; }
-  .nc { gap: 5px; }
+  .nc { gap: 4px; }
   .ann-bar .ann-badge { display: none; }
   .ann-bar { padding: 6px 10px; font-size: .68rem; }
 }
@@ -850,10 +883,14 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
 </div>
 
 <!-- HOW IT WORKS -->
-<section id="how" class="sec">
-  <div class="sec-tag rv"><span class="ari">كيف يشتغل</span><span class="eni">How It Works</span></div>
-  <h2 class="sec-title rv"><span class="ar">من أول رسالة لحد ما يدفع — بدون تدخل</span><span class="en">From first message to payment — without you.</span></h2>
+<section id="how" class="sec how-sec">
   <div class="how-list">
+    <div class="how-item how-title-item rv">
+      <div class="how-num how-tag"><span class="ari">كيف يشتغل</span><span class="eni">How It Works</span></div>
+      <div class="how-content">
+        <h2 class="how-main-title"><span class="ar">من أول رسالة<br>لحد ما يدفع —<br><em>بدون تدخل.</em></span><span class="en">From first message<br>to payment —<br><em>without you.</em></span></h2>
+      </div>
+    </div>
     <div class="how-item rv">
       <div class="how-num">01</div>
       <div class="how-content">
