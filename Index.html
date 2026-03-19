@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark" data-lang="ar">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Intelligence — أتمتة مبيعاتك</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ══════════════════════════════════════
+   DESIGN SYSTEM
+   Palette: Warm Ink · Cream · Electric Lime
+   Feel: Editorial · Confident · Stripe-quiet
+══════════════════════════════════════ */
+:root {
+  --lime: #c8f000;
+  --lime2: #a8cc00;
+  --spd: .25s;
+  --rad: 8px;
+}
+[data-theme="dark"] {
+  --bg:    #0a0a08;
+  --bg2:   #0f0f0c;
+  --su:    #141410;
+  --su2:   #1a1a15;
+  --bd:    #2a2a22;
+  --bd2:   #3a3a2e;
+  --txt:   #f0ece4;
+  --txt2:  #c8c4bc;
+  --mu:    #6e6a62;
+  --nb:    rgba(10,10,8,.92);
+  --inv:   #0a0a08;
+  --sh:    rgba(0,0,0,.7);
+}
+[data-theme="light"] {
+  --bg:    #faf7f2;
+  --bg2:   #f2ede4;
+  --su:    #ffffff;
+  --su2:   #f5f0e8;
+  --bd:    #ddd8ce;
+  --bd2:   #c8c2b6;
+  --txt:   #0f0e0a;
+  --txt2:  #3a3830;
+  --mu:    #8a8680;
+  --nb:    rgba(250,247,242,.94);
+  --inv:   #faf7f2;
+  --sh:    rgba(0,0,0,.08);
+}
+
+/* ── RESET ── */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--txt);
+  font-family: 'Cairo', sans-serif;
+  overflow-x: hidden; min-width: 300px;
+  transition: background var(--spd), color var(--spd);
+  -webkit-font-smoothing: antialiased;
+}
+[data-lang="en"] body { font-family: 'Outfit', sans-serif; }
+a { text-decoration: none; color: inherit; }
+
+/* LANG */
+.ar { display: block; } .en { display: none; }
+.ari { display: inline; } .eni { display: none; }
+[data-lang="en"] .ar { display: none !important; }
+[data-lang="en"] .en { display: block !important; }
+[data-lang="en"] .ari { display: none !important; }
+[data-lang="en"] .eni { display: inline !important; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 999;
+  height: 58px; padding: 0 clamp(16px,5vw,48px);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: var(--nb); border-bottom: 1px solid var(--bd);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  transition: background var(--spd), border-color var(--spd);
+}
+.logo {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(.88rem, 2.2vw, 1.05rem);
+  letter-spacing: -.02em; color: var(--txt); flex-shrink: 0;
+  display: flex; align-items: center; gap: 8px;
+}
+.logo-dot {
+  width: 8px; height: 8px; background: var(--lime); border-radius: 50%;
+  box-shadow: 0 0 10px var(--lime); animation: pu 1.6s ease infinite;
+}
+@keyframes pu { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
+
+.nl { display: flex; align-items: center; list-style: none; gap: clamp(16px,2.5vw,28px); }
+.nl a { color: var(--mu); font-size: clamp(.76rem,1.3vw,.88rem); font-weight: 500; transition: color .18s; letter-spacing: .01em; }
+.nl a:hover { color: var(--txt); }
+.nc { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+/* LANG TOGGLE */
+.ls { display: flex; background: var(--su); border: 1px solid var(--bd); border-radius: 6px; overflow: hidden; }
+.lb {
+  padding: 4px 11px; font-size: .68rem; font-weight: 600; letter-spacing: .06em;
+  cursor: pointer; color: var(--mu); border: none; background: transparent;
+  font-family: inherit; transition: background .18s, color .18s;
+}
+.lb.active { background: var(--txt); color: var(--bg); }
+
+/* THEME TOGGLE */
+.tt { position: relative; width: 44px; height: 24px; cursor: pointer; flex-shrink: 0; }
+.tt input { opacity: 0; width: 0; height: 0; position: absolute; }
+.tt-track { position: absolute; inset: 0; border-radius: 50px; background: var(--su2); border: 1px solid var(--bd); transition: background var(--spd); }
+.tt-thumb {
+  position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--lime); transition: transform .28s cubic-bezier(.34,1.56,.64,1);
+  display: flex; align-items: center; justify-content: center; font-size: 8px;
+}
+[data-theme="light"] .tt-thumb { transform: translateX(20px); }
+.tt-thumb::before { content: '●'; color: var(--bg); font-size: 7px; }
+
+.nav-cta {
+  background: var(--lime); color: #0a0a08 !important; padding: 7px 16px;
+  border-radius: var(--rad); font-weight: 700; font-size: clamp(.72rem,1.2vw,.82rem);
+  white-space: nowrap; transition: transform .18s, box-shadow .18s;
+  font-family: 'Outfit', sans-serif; letter-spacing: -.01em;
+}
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(200,240,0,.3); }
+
+/* ── HERO ── */
+.hero {
+  position: relative; min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(80px,12vw,120px) clamp(16px,6vw,64px) clamp(40px,6vw,80px);
+  border-bottom: 1px solid var(--bd);
+  overflow: hidden;
+}
+/* subtle grain overlay */
+.hero::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: .5;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Outfit', sans-serif; font-size: clamp(.68rem,.8rem,.75rem);
+  font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--mu); margin-bottom: clamp(20px,3vw,28px);
+  animation: fu .5s ease both;
+}
+.hero-eyebrow span { color: var(--lime); }
+@keyframes fu { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+
+.hero-title {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(1.9rem,5.5vw,4.8rem); line-height: 1.5; letter-spacing: -.03em;
+  max-width: 900px; margin-bottom: clamp(20px,3vw,28px);
+  animation: fu .5s .08s ease both;
+
+}
+[data-lang="ar"] .hero-title { font-family: 'Cairo', sans-serif; font-weight: 800; letter-spacing: -.01em; }
+.hero-title em { font-style: normal; color: var(--lime); }
+
+.hero-sub {
+  font-size: clamp(.9rem,1.6vw,1.15rem); color: var(--txt2);
+  max-width: 520px; line-height: 1.75; margin-bottom: clamp(28px,4vw,40px);
+  font-weight: 400; animation: fu .5s .16s ease both;
+}
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; animation: fu .5s .22s ease both; }
+
+.btn-p {
+  background: var(--lime); color: #0a0a08; border: none;
+  padding: clamp(11px,2vw,14px) clamp(20px,3.5vw,28px);
+  border-radius: var(--rad); font-family: 'Outfit', sans-serif;
+  font-size: clamp(.84rem,1.4vw,.95rem); font-weight: 700; cursor: pointer;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 7px;
+  transition: transform .18s, box-shadow .18s; letter-spacing: -.01em;
+}
+.btn-p:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(200,240,0,.3); }
+[data-lang="ar"] .btn-p { font-family: 'Cairo', sans-serif; }
+
+.btn-s {
+  background: transparent; color: var(--txt2); border: 1px solid var(--bd2);
+  padding: clamp(11px,2vw,14px) clamp(20px,3.5vw,28px);
+  border-radius: var(--rad); font-family: 'Outfit', sans-serif;
+  font-size: clamp(.84rem,1.4vw,.95rem); font-weight: 500; cursor: pointer;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 7px;
+  transition: border-color .18s, color .18s;
+}
+.btn-s:hover { border-color: var(--txt2); color: var(--txt); }
+[data-lang="ar"] .btn-s { font-family: 'Cairo', sans-serif; }
+
+/* hero big number */
+.hero-stat-row {
+  position: absolute; bottom: clamp(24px,4vw,40px); left: clamp(16px,6vw,64px); right: clamp(16px,6vw,64px);
+  display: flex; gap: clamp(20px,4vw,48px); flex-wrap: wrap; border-top: 1px solid var(--bd);
+  padding-top: clamp(16px,2.5vw,24px);
+}
+[data-lang="en"] .hero-stat-row { left: clamp(16px,6vw,64px); right: clamp(16px,6vw,64px); }
+.hstat { display: flex; flex-direction: column; }
+.hstat-n {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(1.4rem,3.5vw,2.4rem); letter-spacing: -.03em; color: var(--txt); line-height: 1;
+}
+.hstat-l { font-size: clamp(.7rem,.82rem,.78rem); color: var(--mu); margin-top: 3px; }
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  overflow: hidden; border-bottom: 1px solid var(--bd);
+  padding: clamp(12px,2vw,16px) 0; background: var(--bg2);
+  transition: background var(--spd);
+}
+.marquee { display: flex; gap: clamp(32px,5vw,56px); animation: marquee 20s linear infinite; width: max-content; }
+.marquee-wrap:hover .marquee { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+.mitem {
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  font-family: 'Outfit', sans-serif; font-size: clamp(.74rem,.84rem,.8rem);
+  font-weight: 500; color: var(--mu); white-space: nowrap;
+}
+[data-lang="ar"] .mitem { font-family: 'Cairo', sans-serif; }
+.mitem strong { color: var(--lime); font-weight: 700; }
+.msep { color: var(--bd2); }
+
+/* ── SECTIONS ── */
+.sec { padding: clamp(48px,8vw,96px) clamp(16px,6vw,64px); border-bottom: 1px solid var(--bd); }
+.sec-tag {
+  font-family: 'Outfit', sans-serif; font-size: clamp(.62rem,.72rem,.68rem);
+  font-weight: 600; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--mu); margin-bottom: clamp(12px,2vw,16px);
+}
+[data-lang="ar"] .sec-tag { font-family: 'Cairo', sans-serif; letter-spacing: .08em; }
+.sec-title {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(1.6rem,4vw,3.2rem); letter-spacing: -.03em;
+  line-height: 1.12; max-width: 720px; margin-bottom: clamp(12px,2vw,16px);
+  transition: color var(--spd);
+}
+[data-lang="ar"] .sec-title { font-family: 'Cairo', sans-serif; font-weight: 900; letter-spacing: -.01em; }
+.sec-sub { color: var(--mu); font-size: clamp(.86rem,1.3vw,1rem); line-height: 1.75; max-width: 480px; }
+
+/* ── HOW IT WORKS — big numbered list ── */
+.how-list { margin-top: clamp(32px,5vw,56px); display: flex; flex-direction: column; gap: 0; }
+.how-item {
+  display: grid; grid-template-columns: clamp(40px,6vw,56px) 1fr;
+  gap: clamp(16px,3vw,28px); padding: clamp(20px,3vw,32px) 0;
+  border-top: 1px solid var(--bd); align-items: start;
+  transition: background .18s;
+}
+.how-item:first-child { border-top: none; }
+.how-num {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(1.1rem,2.5vw,1.6rem); color: var(--lime);
+  letter-spacing: -.03em; padding-top: 2px;
+}
+.how-content h3 {
+  font-family: 'Outfit', sans-serif; font-weight: 700;
+  font-size: clamp(.95rem,1.8vw,1.2rem); letter-spacing: -.02em;
+  margin-bottom: 6px;
+}
+[data-lang="ar"] .how-content h3 { font-family: 'Cairo', sans-serif; letter-spacing: -.01em; }
+.how-content p { font-size: clamp(.8rem,.9rem,.88rem); color: var(--mu); line-height: 1.7; }
+
+/* ── CHAT DEMO — horizontal ── */
+.demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px,4vw,48px); align-items: center; margin-top: clamp(32px,5vw,52px); }
+.demo-phone-wrap { display: flex; justify-content: center; }
+.demo-phone {
+  width: clamp(220px,55vw,260px);
+  background: var(--su); border: 1px solid var(--bd);
+  border-radius: 24px; overflow: hidden;
+  box-shadow: 0 32px 64px var(--sh);
+  transition: background var(--spd), border-color var(--spd);
+}
+.dp-header {
+  background: var(--su2); border-bottom: 1px solid var(--bd);
+  padding: 10px 14px; display: flex; align-items: center; gap: 9px;
+}
+.dp-av {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--lime); display: flex; align-items: center;
+  justify-content: center; font-size: .7rem; font-weight: 800;
+  color: #0a0a08; flex-shrink: 0; font-family: 'Outfit', sans-serif;
+}
+.dp-name { font-size: .78rem; font-weight: 700; }
+.dp-status { font-size: .62rem; color: var(--lime); }
+.dp-body { padding: 12px; display: flex; flex-direction: column; gap: 9px; min-height: 280px; }
+.dm {
+  max-width: 85%; padding: 8px 11px; border-radius: 12px;
+  font-size: clamp(.68rem,.74rem,.72rem); line-height: 1.55;
+  animation: dmi .35s ease both;
+}
+@keyframes dmi { from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none} }
+.dm-u { background: var(--su2); align-self: flex-start; border-bottom-right-radius: 3px; }
+[data-lang="en"] .dm-u { border-bottom-right-radius: 12px; border-bottom-left-radius: 3px; }
+.dm-b {
+  background: var(--lime); color: #0a0a08;
+  align-self: flex-end; border-bottom-left-radius: 3px;
+  font-weight: 600;
+}
+[data-lang="en"] .dm-b { border-bottom-left-radius: 12px; border-bottom-right-radius: 3px; }
+.dm-t { font-size: .58rem; color: var(--mu); margin-top: 2px; }
+.dm-card {
+  background: rgba(200,240,0,.08); border: 1px solid rgba(200,240,0,.2);
+  border-radius: 8px; padding: 8px; margin-top: 4px;
+}
+.dm-row { display: flex; justify-content: space-between; font-size: .64rem; color: var(--mu); margin-bottom: 2px; }
+.dm-val { color: var(--lime); font-weight: 700; }
+.d1{animation-delay:.5s}.d2{animation-delay:1s}.d3{animation-delay:1.5s}
+
+.demo-steps { display: flex; flex-direction: column; gap: clamp(12px,2vw,16px); }
+.dstep {
+  padding: clamp(14px,2.5vw,20px) clamp(14px,3vw,22px);
+  border: 1px solid var(--bd); border-radius: var(--rad);
+  background: var(--su); transition: border-color .18s, background var(--spd);
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.dstep:hover { border-color: var(--lime); }
+.dstep-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+.dstep-n {
+  font-family: 'Outfit', sans-serif; font-size: .6rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--lime); margin-bottom: 3px;
+}
+.dstep-t { font-size: clamp(.82rem,.9rem,.88rem); font-weight: 700; margin-bottom: 3px; }
+[data-lang="ar"] .dstep-t { font-family: 'Cairo', sans-serif; }
+.dstep-d { font-size: clamp(.74rem,.8rem,.78rem); color: var(--mu); line-height: 1.6; }
+
+/* ── FEATURES — 2-col editorial ── */
+.feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1px,0.1vw,1px); margin-top: clamp(32px,5vw,52px); border: 1px solid var(--bd); border-radius: var(--rad); overflow: hidden; }
+.feat-cell {
+  padding: clamp(20px,3vw,32px) clamp(18px,3vw,28px);
+  border-right: 1px solid var(--bd); border-bottom: 1px solid var(--bd);
+  background: var(--su); transition: background .18s;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.feat-cell:nth-child(2n) { border-right: none; }
+.feat-cell:nth-last-child(-n+2) { border-bottom: none; }
+.feat-cell:hover { background: var(--su2); }
+.feat-icon {
+  width: 36px; height: 36px; border: 1px solid var(--bd);
+  border-radius: 8px; display: flex; align-items: center;
+  justify-content: center; font-size: .95rem; background: var(--bg);
+}
+.feat-title { font-size: clamp(.86rem,.95rem,.92rem); font-weight: 700; letter-spacing: -.01em; }
+[data-lang="ar"] .feat-title { font-family: 'Cairo', sans-serif; }
+.feat-desc { font-size: clamp(.74rem,.82rem,.8rem); color: var(--mu); line-height: 1.65; }
+
+/* ── RESULTS — big numbers ── */
+.results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1px,.1vw,1px); margin-top: clamp(32px,5vw,52px); border: 1px solid var(--bd); border-radius: var(--rad); overflow: hidden; }
+.res-cell {
+  padding: clamp(24px,4vw,40px) clamp(18px,3vw,28px);
+  background: var(--su); border-right: 1px solid var(--bd);
+  transition: background .18s;
+}
+.res-cell:last-child { border-right: none; }
+.res-cell:hover { background: var(--su2); }
+.res-num {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(2rem,5vw,3.5rem); letter-spacing: -.04em;
+  color: var(--lime); display: block; line-height: 1; margin-bottom: 8px;
+}
+.res-label { font-size: clamp(.78rem,.88rem,.84rem); color: var(--mu); line-height: 1.5; }
+
+/* ── TRIAL ── */
+.trial-box {
+  border: 1px solid var(--bd); border-radius: var(--rad);
+  padding: clamp(32px,6vw,64px) clamp(24px,6vw,64px);
+  display: grid; grid-template-columns: 1fr auto;
+  gap: clamp(24px,4vw,48px); align-items: center;
+  background: var(--su); transition: background var(--spd), border-color var(--spd);
+  margin-top: clamp(32px,5vw,52px);
+}
+.trial-left h2 {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(1.4rem,3.5vw,2.6rem); letter-spacing: -.03em;
+  line-height: 1.1; margin-bottom: clamp(10px,1.5vw,14px);
+}
+[data-lang="ar"] .trial-left h2 { font-family: 'Cairo', sans-serif; font-weight: 900; letter-spacing: -.01em; }
+.trial-left p { font-size: clamp(.82rem,1.1vw,.95rem); color: var(--mu); line-height: 1.7; }
+.trial-checks { display: flex; flex-direction: column; gap: 8px; margin-top: clamp(14px,2vw,18px); }
+.trial-check { display: flex; align-items: center; gap: 9px; font-size: clamp(.78rem,.86rem,.82rem); color: var(--txt2); }
+.trial-check::before { content: '✓'; color: var(--lime); font-weight: 700; font-family: 'Outfit', sans-serif; }
+.trial-right { text-align: center; flex-shrink: 0; }
+.trial-days {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(3.5rem,8vw,6rem); letter-spacing: -.05em;
+  color: var(--lime); display: block; line-height: 1;
+}
+.trial-days-label { font-size: clamp(.72rem,.82rem,.78rem); color: var(--mu); margin-bottom: clamp(12px,2vw,16px); text-transform: uppercase; letter-spacing: .1em; font-family: 'Outfit', sans-serif; }
+
+/* ── PRICING ── */
+.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border: 1px solid var(--bd); border-radius: var(--rad); overflow: hidden; margin-top: clamp(32px,5vw,52px); }
+.price-cell {
+  padding: clamp(20px,3vw,32px) clamp(18px,3vw,26px);
+  background: var(--su); border-right: 1px solid var(--bd);
+  transition: background .18s;
+  display: flex; flex-direction: column; gap: 0;
+}
+.price-cell:last-child { border-right: none; }
+.price-cell.featured { background: var(--lime); }
+.price-cell.featured .price-plan { color: rgba(0,0,0,.5); }
+.price-cell.featured .price-amount { color: #0a0a08; }
+.price-cell.featured .price-desc { color: rgba(0,0,0,.6); }
+.price-cell.featured .price-features li { color: #0a0a08; }
+.price-cell.featured .price-features li::before { color: #0a0a08; }
+.price-plan { font-family: 'Outfit', sans-serif; font-size: .65rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--mu); margin-bottom: 12px; }
+.price-amount {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(1.6rem,3.5vw,2.2rem); letter-spacing: -.03em;
+  color: var(--txt); margin-bottom: 4px;
+}
+.price-amount sub { font-size: .5em; font-weight: 500; vertical-align: middle; letter-spacing: 0; }
+.price-desc { font-size: clamp(.74rem,.82rem,.8rem); color: var(--mu); margin-bottom: 20px; line-height: 1.55; }
+.price-features { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 24px; flex: 1; }
+.price-features li { font-size: clamp(.74rem,.82rem,.8rem); display: flex; align-items: flex-start; gap: 8px; }
+.price-features li::before { content: '→'; color: var(--lime); font-weight: 700; flex-shrink: 0; }
+.price-cell.featured .price-features li::before { color: #0a0a08; }
+.price-btn {
+  margin-top: auto; padding: 10px; border-radius: var(--rad); border: 1px solid var(--bd);
+  background: transparent; color: var(--txt); font-family: 'Outfit', sans-serif;
+  font-size: .82rem; font-weight: 600; cursor: pointer; text-align: center;
+  transition: background .18s, border-color .18s; text-decoration: none; display: block;
+}
+.price-btn:hover { background: var(--su2); }
+.price-cell.featured .price-btn { background: #0a0a08; color: var(--lime); border-color: #0a0a08; }
+.price-cell.featured .price-btn:hover { background: #1a1a10; }
+[data-lang="ar"] .price-btn { font-family: 'Cairo', sans-serif; }
+
+/* ── CONTACT ── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px,5vw,64px); margin-top: clamp(32px,5vw,52px); align-items: start; }
+.contact-form { display: flex; flex-direction: column; gap: clamp(12px,2vw,16px); }
+.fg { display: flex; flex-direction: column; gap: 6px; }
+.fg label { font-size: clamp(.74rem,.82rem,.8rem); font-weight: 600; color: var(--txt2); }
+.fg input, .fg textarea, .fg select {
+  background: var(--su); border: 1px solid var(--bd);
+  border-radius: var(--rad); padding: clamp(10px,1.8vw,12px) 13px;
+  color: var(--txt); font-family: inherit; font-size: clamp(.82rem,.9rem,.88rem);
+  outline: none; direction: inherit; width: 100%;
+  transition: border-color .18s, background var(--spd), color var(--spd);
+}
+.fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--lime); }
+.fg textarea { resize: vertical; min-height: 90px; }
+[data-lang="en"] .fg input,[data-lang="en"] .fg textarea,[data-lang="en"] .fg select { direction: ltr; }
+.contact-info { display: flex; flex-direction: column; gap: clamp(10px,1.5vw,14px); }
+.cinfo-item {
+  padding: clamp(14px,2.5vw,20px) clamp(14px,3vw,22px);
+  border: 1px solid var(--bd); border-radius: var(--rad);
+  background: var(--su); transition: border-color .18s, background var(--spd);
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.cinfo-item:hover { border-color: var(--lime); }
+.cinfo-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+.cinfo-item h4 { font-size: clamp(.82rem,.9rem,.88rem); font-weight: 700; margin-bottom: 2px; }
+.cinfo-item p { font-size: clamp(.74rem,.8rem,.78rem); color: var(--mu); }
+#f-status { font-size: .8rem; padding: 9px 12px; border-radius: 6px; display: none; }
+#f-status.ok { background: rgba(200,240,0,.1); border: 1px solid rgba(200,240,0,.3); color: var(--lime); }
+#f-status.err { background: rgba(255,100,100,.08); border: 1px solid rgba(255,100,100,.2); color: #ff8585; }
+
+/* ── FOOTER ── */
+footer {
+  padding: clamp(28px,5vw,48px) clamp(16px,6vw,64px) clamp(20px,3vw,28px);
+  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: clamp(24px,4vw,40px);
+  border-bottom: none; transition: background var(--spd);
+}
+.footer-brand .logo { margin-bottom: 10px; }
+.footer-brand p { font-size: clamp(.74rem,.82rem,.8rem); color: var(--mu); line-height: 1.7; max-width: 260px; }
+.footer-col h5 { font-family: 'Outfit', sans-serif; font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--mu); margin-bottom: 12px; }
+[data-lang="ar"] .footer-col h5 { font-family: 'Cairo', sans-serif; letter-spacing: .05em; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-col ul li a { font-size: clamp(.74rem,.82rem,.8rem); color: var(--mu); transition: color .18s; }
+.footer-col ul li a:hover { color: var(--txt); }
+.footer-bottom {
+  padding: clamp(14px,2vw,18px) clamp(16px,6vw,64px);
+  border-top: 1px solid var(--bd); display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  font-size: clamp(.68rem,.76rem,.72rem); color: var(--mu);
+  transition: border-color var(--spd);
+}
+.footer-bottom a { color: var(--lime); }
+
+/* ── REVEAL ── */
+.rv { opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .5s ease; }
+.rv.on { opacity: 1; transform: none; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--bd2); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--lime); }
+
+/* ── ANNOUNCEMENT BAR ── */
+.ann-bar {
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  background: var(--lime); color: #0a0a08;
+  padding: 8px clamp(12px,4vw,32px);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: 'Cairo', sans-serif; font-size: clamp(.72rem,.88rem,.82rem);
+  font-weight: 700; text-align: center;
+  animation: fu .4s ease both;
+}
+.ann-bar .ann-badge {
+  background: #0a0a08; color: var(--lime);
+  padding: 2px 9px; border-radius: 50px;
+  font-size: clamp(.62rem,.72rem,.68rem); font-weight: 800;
+  letter-spacing: .04em; white-space: nowrap; flex-shrink: 0;
+}
+.ann-bar .ann-sep { opacity: .4; }
+[data-lang="en"] .ann-bar { font-family: 'Outfit', sans-serif; }
+
+/* push nav down when ann bar present */
+body.has-ann nav { top: var(--ann-h, 37px); }
+body.has-ann .hero { padding-top: clamp(130px,16vw,170px); }
+
+/* ── TESTIMONIALS ── */
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(10px,1.5vw,14px);
+  margin-top: clamp(32px,5vw,52px);
+}
+.testi-card {
+  background: var(--su); border: 1px solid var(--bd);
+  border-radius: var(--rad); padding: clamp(18px,3vw,26px) clamp(16px,2.5vw,22px);
+  display: flex; flex-direction: column; gap: 14px;
+  transition: border-color .2s, transform .2s, background var(--spd);
+  position: relative; overflow: hidden;
+}
+.testi-card::before {
+  content: '"'; position: absolute; top: 8px; right: 16px;
+  font-family: 'Outfit', sans-serif; font-size: 4rem; font-weight: 900;
+  color: var(--lime); opacity: .12; line-height: 1; pointer-events: none;
+}
+[data-lang="en"] .testi-card::before { right: auto; left: 16px; }
+.testi-card:hover { border-color: var(--lime); transform: translateY(-2px); }
+.testi-stars { display: flex; gap: 2px; }
+.testi-stars span { color: var(--lime); font-size: .85rem; }
+.testi-quote {
+  font-size: clamp(.8rem,.9rem,.86rem); color: var(--txt2);
+  line-height: 1.7; flex: 1;
+}
+.testi-author { display: flex; align-items: center; gap: 10px; padding-top: 10px; border-top: 1px solid var(--bd); }
+.testi-avatar {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  background: var(--su2); border: 1px solid var(--bd);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: .78rem; color: var(--lime);
+}
+.testi-name { font-size: clamp(.8rem,.88rem,.85rem); font-weight: 700; line-height: 1.2; }
+.testi-role { font-size: clamp(.68rem,.74rem,.72rem); color: var(--mu); margin-top: 1px; }
+.testi-metric {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(200,240,0,.1); border: 1px solid rgba(200,240,0,.22);
+  color: var(--lime); border-radius: 50px;
+  padding: 3px 9px; font-size: clamp(.62rem,.7rem,.67rem); font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  margin-top: 6px; width: fit-content;
+}
+
+
+/* ── PRICING NOTICE ── */
+.pricing-notice {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+  background: var(--su); border: 1px solid var(--bd);
+  border-radius: var(--rad); padding: 12px clamp(14px,2.5vw,20px);
+  margin-top: clamp(20px,3vw,32px); margin-bottom: 0;
+  transition: background var(--spd), border-color var(--spd);
+}
+.pn-left {
+  display: flex; align-items: center; gap: 10px;
+  font-size: clamp(.78rem,.86rem,.82rem); color: var(--txt2);
+}
+.pn-left strong { color: var(--txt); }
+.pn-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--lime); flex-shrink: 0;
+  box-shadow: 0 0 8px var(--lime); animation: pu 1.6s ease infinite;
+}
+.pn-spots {
+  font-family: 'Outfit', sans-serif; font-size: clamp(.72rem,.8rem,.76rem);
+  font-weight: 700; color: var(--lime); white-space: nowrap;
+  border: 1px solid rgba(200,240,0,.3);
+  padding: 3px 11px; border-radius: 50px;
+  background: rgba(200,240,0,.06);
+}
+[data-lang="ar"] .pn-spots,[data-lang="ar"] .pn-left { font-family: 'Cairo', sans-serif; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .demo-grid, .contact-grid { grid-template-columns: 1fr; }
+  .trial-box { grid-template-columns: 1fr; text-align: center; }
+  .trial-right { order: -1; }
+  .trial-checks { align-items: center; }
+  .results-grid { grid-template-columns: 1fr 1fr; }
+  .results-grid .res-cell:last-child { border-right: none; grid-column: 1/-1; border-top: 1px solid var(--bd); }
+  footer { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1/-1; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .price-cell { border-right: none; border-bottom: 1px solid var(--bd); }
+  .price-cell:last-child { border-bottom: none; }
+  .testi-grid { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:620px){
+  .nl { display: none; }
+  .feat-grid { grid-template-columns: 1fr; }
+  .feat-cell:nth-child(2n) { border-right: 1px solid var(--bd); }
+  .feat-cell { border-right: none; }
+  .results-grid { grid-template-columns: 1fr; }
+  .results-grid .res-cell { border-right: none; border-bottom: 1px solid var(--bd); grid-column: unset; }
+  .results-grid .res-cell:last-child { border-bottom: none; }
+  footer { grid-template-columns: 1fr; }
+  .hero-stat-row { position: static; border-top: none; padding-top: clamp(28px,5vw,40px); margin-top: 0; }
+  .hero { padding-bottom: clamp(24px,4vw,32px); }
+  .nc .nav-cta { display: none; }
+  .hero-actions { flex-direction: column; }
+  .hero-actions a { width: 100%; justify-content: center; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .ann-bar { font-size: .7rem; gap: 6px; }
+  .demo-grid { gap: clamp(20px,4vw,32px); }
+  .demo-phone-wrap { order: -1; }
+  .contact-grid { gap: clamp(24px,4vw,36px); }
+  .how-item { grid-template-columns: clamp(32px,5vw,44px) 1fr; gap: clamp(10px,2vw,18px); }
+  .sec { padding: clamp(36px,6vw,72px) clamp(14px,5vw,48px); }
+  .trial-box { padding: clamp(24px,5vw,40px) clamp(18px,5vw,32px); }
+  body.has-ann nav { top: var(--ann-h, 52px); }
+  body.has-ann .hero { padding-top: clamp(150px,20vw,190px); }
+}
+@media(max-width:380px){
+  .ls { display: none; }
+  .nc { gap: 5px; }
+  .ann-bar .ann-badge { display: none; }
+  .ann-bar { padding: 6px 10px; font-size: .68rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann-bar" id="annBar">
+  <span class="ann-badge"><span class="ari">🎉 عيد</span><span class="eni">🎉 EID</span></span>
+  <span class="ar">العرض لأول <strong>20 متجر فقط</strong> من بداية العيد — احجز مكانك الآن</span>
+  <span class="en">Offer for first <strong>20 stores only</strong> starting Eid — reserve your spot now</span>
+  <span class="ann-sep">|</span>
+  <a href="#contact" style="text-decoration:underline;color:inherit;font-weight:800"><span class="ari">ابدأ مجاناً ←</span><span class="eni">Start Free ←</span></a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="logo">
+    <div class="logo-dot"></div>
+    <span>Intelligence</span>
+  </div>
+  <ul class="nl">
+    <li><a href="#how"><span class="ari">كيف يشتغل</span><span class="eni">How it works</span></a></li>
+    <li><a href="#features"><span class="ari">المميزات</span><span class="eni">Features</span></a></li>
+    <li><a href="#testimonials"><span class="ari">العملاء</span><span class="eni">Clients</span></a></li>
+    <li><a href="#pricing"><span class="ari">الأسعار</span><span class="eni">Pricing</span></a></li>
+    <li><a href="#contact"><span class="ari">تواصل</span><span class="eni">Contact</span></a></li>
+  </ul>
+  <div class="nc">
+    <div class="ls">
+      <button class="lb active" id="bAr">AR</button>
+      <button class="lb" id="bEn">EN</button>
+    </div>
+    <label class="tt"><input type="checkbox" id="tTog"/><div class="tt-track"></div><div class="tt-thumb"></div></label>
+    <a href="#contact" class="nav-cta"><span class="ari">ابدأ مجاناً</span><span class="eni">Start Free</span></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow"><span>Intelligence Automation</span> — <span class="ari">أتمتة المبيعات</span><span class="eni">Sales Automation</span></div>
+  <h1 class="hero-title">
+    <span class="ar">متجرك يبيع.<br/><em>وانت مش موجود.</em></span>
+    <span class="en">Your store sells.<br/><em>Without you.</em></span>
+  </h1>
+  <p class="hero-sub">
+    <span class="ari">بوت ذكي يرد على عملاؤك، يجمع بياناتهم، ويقفل الصفقة — أوتوماتيك على مدار الساعة.</span>
+    <span class="eni">An intelligent bot that replies to customers, collects their data, and closes deals — automatically, around the clock.</span>
+  </p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-p"><span class="ari">جرّب 7 أيام مجاناً</span><span class="eni">Try Free for 7 Days</span></a>
+    <a href="#how" class="btn-s"><span class="ari">شوف كيف يشتغل</span><span class="eni">See how it works</span></a>
+  </div>
+  <div class="hero-stat-row">
+    <div class="hstat"><span class="hstat-n">24/7</span><span class="hstat-l"><span class="ari">متاح دايماً</span><span class="eni">Always available</span></span></div>
+    <div class="hstat"><span class="hstat-n">&lt; 1s</span><span class="hstat-l"><span class="ari">وقت الرد</span><span class="eni">Reply time</span></span></div>
+    <div class="hstat"><span class="hstat-n">3.2×</span><span class="hstat-l"><span class="ari">متوسط زيادة الإيرادات</span><span class="eni">Avg. revenue increase</span></span></div>
+    <div class="hstat"><span class="hstat-n">7</span><span class="hstat-l"><span class="ari">أيام مجاناً</span><span class="eni">Days free</span></span></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <div class="mitem">📦 <span class="ari">طلبات تُسجَّل تلقائياً</span><span class="eni">Orders logged automatically</span></div>
+    <div class="msep">—</div>
+    <div class="mitem"><strong>+47%</strong> <span class="ari">طلبات مكتملة</span><span class="eni">completed orders</span></div>
+    <div class="msep">—</div>
+    <div class="mitem">🌙 <span class="ari">يشتغل وانت نايم</span><span class="eni">Works while you sleep</span></div>
+    <div class="msep">—</div>
+    <div class="mitem"><strong>-80%</strong> <span class="ari">وقت ضايع</span><span class="eni">wasted time</span></div>
+    <div class="msep">—</div>
+    <div class="mitem">🤖 <span class="ari">ردود تبدو إنسانية</span><span class="eni">Human-like replies</span></div>
+    <div class="msep">—</div>
+    <div class="mitem"><strong>7 أيام</strong> <span class="ari">مجاناً</span><span class="eni">days free</span></div>
+    <div class="msep">—</div>
+    <!-- duplicate -->
+    <div class="mitem">📦 <span class="ari">طلبات تُسجَّل تلقائياً</span><span class="eni">Orders logged automatically</span></div>
+    <div class="msep">—</div>
+    <div class="mitem"><strong>+47%</strong> <span class="ari">طلبات مكتملة</span><span class="eni">completed orders</span></div>
+    <div class="msep">—</div>
+    <div class="mitem">🌙 <span class="ari">يشتغل وانت نايم</span><span class="eni">Works while you sleep</span></div>
+    <div class="msep">—</div>
+    <div class="mitem"><strong>-80%</strong> <span class="ari">وقت ضايع</span><span class="eni">wasted time</span></div>
+    <div class="msep">—</div>
+    <div class="mitem">🤖 <span class="ari">ردود تبدو إنسانية</span><span class="eni">Human-like replies</span></div>
+    <div class="msep">—</div>
+    <div class="mitem"><strong>7 أيام</strong> <span class="ari">مجاناً</span><span class="eni">days free</span></div>
+    <div class="msep">—</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="sec">
+  <div class="sec-tag rv"><span class="ari">كيف يشتغل</span><span class="eni">How It Works</span></div>
+  <h2 class="sec-title rv"><span class="ar">من أول رسالة لحد ما يدفع — بدون تدخل</span><span class="en">From first message to payment — without you.</span></h2>
+  <div class="how-list">
+    <div class="how-item rv"><div class="how-num">01</div><div class="how-content"><h3><span class="ari">العميل يبعت رسالة</span><span class="eni">Customer sends a message</span></h3><p><span class="ari">البوت يرد في أقل من ثانية بالأسعار، الصور، وطريقة الطلب — على أي منصة.</span><span class="eni">The bot replies in under a second with prices, photos, and ordering instructions — on any platform.</span></p></div></div>
+    <div class="how-item rv"><div class="how-num">02</div><div class="how-content"><h3><span class="ari">البوت يجمع البيانات</span><span class="eni">Bot collects customer data</span></h3><p><span class="ari">الاسم والرقم والعنوان — كله يتسجل أوتوماتيك في داشبورد منظم، من غير ما تحرك إصبع.</span><span class="eni">Name, phone, address — all logged automatically in a clean dashboard, without you lifting a finger.</span></p></div></div>
+    <div class="how-item rv"><div class="how-num">03</div><div class="how-content"><h3><span class="ari">Follow-up ذكي لو مردش</span><span class="eni">Smart follow-up if no reply</span></h3><p><span class="ari">البوت يتابع العميل في الوقت المناسب — ومش يزعقله — لحد ما يشتري.</span><span class="eni">The bot follows up at the right moment — persistently, not aggressively — until they buy.</span></p></div></div>
+    <div class="how-item rv"><div class="how-num">04</div><div class="how-content"><h3><span class="ari">بعد الشراء — Upsell تلقائي</span><span class="eni">After purchase — automatic upsell</span></h3><p><span class="ari">رسالة شكر + عرض مخصص للعميل تلقائياً. ده اللي بيضاعف الإيرادات من غير جهد.</span><span class="eni">Thank-you message + a personalized offer, automatically. This is what doubles revenue without effort.</span></p></div></div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section id="demo" class="sec" style="background:var(--bg2)">
+  <div class="sec-tag rv">// Demo</div>
+  <h2 class="sec-title rv"><span class="ar">شوف البوت بنفسك</span><span class="en">See the bot in action</span></h2>
+  <div class="demo-grid">
+    <div class="demo-phone-wrap rv">
+      <div class="demo-phone">
+        <div class="dp-header">
+          <div class="dp-av">IQ</div>
+          <div><div class="dp-name"><span class="ari">متجرك</span><span class="eni">Your Store</span></div><div class="dp-status">● <span class="ari">متصل</span><span class="eni">Online</span></div></div>
+        </div>
+        <div class="dp-body">
+          <div class="dm dm-u"><span class="ari">بكام المنتج؟</span><span class="eni">How much is it?</span><div class="dm-t">10:00</div></div>
+          <div class="dm dm-b d1">
+            <span class="ari">الأسعار 👇</span><span class="eni">Prices 👇</span>
+            <div class="dm-card">
+              <div class="dm-row"><span><span class="ari">أساسي</span><span class="eni">Basic</span></span><span class="dm-val">199 ج</span></div>
+              <div class="dm-row"><span>VIP</span><span class="dm-val">349 ج</span></div>
+              <div class="dm-row"><span><span class="ari">الشحن</span><span class="eni">Ship</span></span><span class="dm-val"><span class="ari">مجاني</span><span class="eni">Free</span></span></div>
+            </div>
+            <div class="dm-t">10:00 ✓✓</div>
+          </div>
+          <div class="dm dm-u"><span class="ari">عايز VIP</span><span class="eni">I want VIP</span><div class="dm-t">10:01</div></div>
+          <div class="dm dm-b d2"><span class="ari">اسمك؟</span><span class="eni">Your name?</span><div class="dm-t">10:01 ✓✓</div></div>
+          <div class="dm dm-u"><span class="ari">محمد</span><span class="eni">John</span><div class="dm-t">10:02</div></div>
+          <div class="dm dm-b d3"><span class="ari">✓ اتسجل يا محمد. هنتواصل قريباً.</span><span class="eni">✓ Confirmed, John. We'll reach out soon.</span><div class="dm-t">10:02 ✓✓</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="demo-steps rv">
+      <div class="dstep"><div class="dstep-icon">⚡</div><div><div class="dstep-n">Step 01</div><div class="dstep-t"><span class="ari">رد فوري</span><span class="eni">Instant reply</span></div><div class="dstep-d"><span class="ari">أقل من ثانية — على أي رسالة، أي وقت</span><span class="eni">Under a second — any message, any time</span></div></div></div>
+      <div class="dstep"><div class="dstep-icon">🗂</div><div><div class="dstep-n">Step 02</div><div class="dstep-t"><span class="ari">جمع البيانات</span><span class="eni">Data collection</span></div><div class="dstep-d"><span class="ari">اسم، رقم، طلب — كله في داشبورد بدون تدخل</span><span class="eni">Name, phone, order — all in dashboard without intervention</span></div></div></div>
+      <div class="dstep"><div class="dstep-icon">🔁</div><div><div class="dstep-n">Step 03</div><div class="dstep-t"><span class="ari">متابعة ذكية</span><span class="eni">Smart follow-up</span></div><div class="dstep-d"><span class="ari">لو مردش، البوت يكمل لحد ما يشتري</span><span class="eni">If no reply, bot continues until they buy</span></div></div></div>
+      <div class="dstep"><div class="dstep-icon">💰</div><div><div class="dstep-n">Step 04</div><div class="dstep-t"><span class="ari">Upsell أوتوماتيك</span><span class="eni">Automatic upsell</span></div><div class="dstep-d"><span class="ari">بعد الشراء — عرض جديد بدون ما تعمل حاجة</span><span class="eni">After purchase — new offer without doing anything</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="sec">
+  <div class="sec-tag rv"><span class="ari">النتايج</span><span class="eni">Results</span></div>
+  <h2 class="sec-title rv"><span class="ar">أرقام حقيقية من الأسبوع الأول</span><span class="en">Real numbers from week one</span></h2>
+  <div class="results-grid rv">
+    <div class="res-cell"><span class="res-num">+47%</span><div class="res-label"><span class="ari">زيادة في الطلبات المكتملة</span><span class="eni">Increase in completed orders</span></div></div>
+    <div class="res-cell"><span class="res-num">−80%</span><div class="res-label"><span class="ari">تقليل الوقت المهدر في الردود</span><span class="eni">Reduction in time wasted on replies</span></div></div>
+    <div class="res-cell"><span class="res-num">3.2×</span><div class="res-label"><span class="ari">متوسط مضاعفة الإيرادات</span><span class="eni">Average revenue multiplier</span></div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="sec" style="background:var(--bg2)">
+  <div class="sec-tag rv"><span class="ari">المميزات</span><span class="eni">Features</span></div>
+  <h2 class="sec-title rv"><span class="ar">كل حاجة محتاجها في مكان واحد</span><span class="en">Everything you need, in one place</span></h2>
+  <div class="feat-grid rv">
+    <div class="feat-cell"><div class="feat-icon">🤖</div><div class="feat-title"><span class="ari">ردود AI ذكية</span><span class="eni">Smart AI replies</span></div><div class="feat-desc"><span class="ari">بيفهم سؤال العميل ويرد بطريقة طبيعية — مش ردود جاهزة جامدة</span><span class="eni">Understands the question and responds naturally — not rigid canned messages</span></div></div>
+    <div class="feat-cell"><div class="feat-icon">📊</div><div class="feat-title"><span class="ari">داشبورد تحليلات</span><span class="eni">Analytics dashboard</span></div><div class="feat-desc"><span class="ari">شوف كل طلب وكل عميل وكل رقم في الوقت الفعلي</span><span class="eni">See every order, every customer, every number in real time</span></div></div>
+    <div class="feat-cell"><div class="feat-icon">🎯</div><div class="feat-title"><span class="ari">تقسيم العملاء</span><span class="eni">Customer segmentation</span></div><div class="feat-desc"><span class="ari">مهتم، اشترى، محتاج follow-up — كل واحد بيتعامل بطريقة مختلفة</span><span class="eni">Interested, purchased, needs follow-up — each treated differently</span></div></div>
+    <div class="feat-cell"><div class="feat-icon">🔐</div><div class="feat-title"><span class="ari">أمان كامل</span><span class="eni">Complete security</span></div><div class="feat-desc"><span class="ari">بيانات عملاؤك مش هتطلع لأي حد — ضمان كامل وبدون استثناء</span><span class="eni">Your customers' data goes nowhere — fully guaranteed, no exceptions</span></div></div>
+    <div class="feat-cell"><div class="feat-icon">⚡</div><div class="feat-title"><span class="ari">&lt;1 ثانية رد</span><span class="eni">&lt;1s reply time</span></div><div class="feat-desc"><span class="ari">الساعة 3 الصبح — البوت صاحي. مش محتاج تصحي تاني أبداً</span><span class="eni">3 AM — the bot is awake. You never have to be again, ever</span></div></div>
+    <div class="feat-cell"><div class="feat-icon">📱</div><div class="feat-title"><span class="ari">كل المنصات</span><span class="eni">All platforms</span></div><div class="feat-desc"><span class="ari">إنستا، واتساب، تيك توك — البوت شغّال عليهم كلهم</span><span class="eni">Instagram, WhatsApp, TikTok — the bot works on all of them</span></div></div>
+  </div>
+</section>
+
+<!-- TRIAL -->
+<section class="sec">
+  <div class="sec-tag rv"><span class="ari">التجربة المجانية</span><span class="eni">Free Trial</span></div>
+  <div class="trial-box rv">
+    <div class="trial-left">
+      <h2><span class="ar">جرّب بدون مخاطرة.</span><span class="en">Try with zero risk.</span></h2>
+      <p><span class="ari">هنركّبلك السيستم كامل وتشتغل عليه 7 أيام فعلية. لو ماشفتش فرق ملموس — مش هتدفع قرش. مضمون.</span><span class="eni">We'll set up the full system and you run it for 7 real days. If you don't see a tangible difference — you pay nothing. Guaranteed.</span></p>
+      <div class="trial-checks">
+        <div class="trial-check"><span class="ari">إعداد كامل بدون تقنية</span><span class="eni">Full setup, no tech needed</span></div>
+        <div class="trial-check"><span class="ari">Demo حقيقي قبل التشغيل</span><span class="eni">Real demo before going live</span></div>
+        <div class="trial-check"><span class="ari">دعم مباشر طول الوقت</span><span class="eni">Direct support at all times</span></div>
+        <div class="trial-check"><span class="ari">بدون بطاقة بنكية</span><span class="eni">No credit card required</span></div>
+      </div>
+    </div>
+    <div class="trial-right">
+      <span class="trial-days">7</span>
+      <div class="trial-days-label"><span class="ari">أيام مجاناً</span><span class="eni">days free</span></div>
+      <a href="#contact" class="btn-p"><span class="ari">ابدأ الآن</span><span class="eni">Start Now</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="sec">
+  <div class="sec-tag rv"><span class="ari">عملاؤنا</span><span class="eni">Our Clients</span></div>
+  <h2 class="sec-title rv"><span class="ar">عملاء استخدموا السيستم</span><span class="en">Clients Who Used the System</span></h2>
+  <p class="sec-sub rv"><span class="ari">ناس حقيقية. نتايج حقيقية. من أول أسبوع.</span><span class="eni">Real people. Real results. From week one.</span></p>
+  <div class="testi-grid">
+
+    <div class="testi-card rv">
+      <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="testi-quote">
+        <span class="ari">"في 3 أيام بس، مبيعاتي اتضاعفت. البوت بيرد على العملاء وأنا نايم — ومحدش فارق معاه الفرق."</span>
+        <span class="eni">"In just 3 days my sales doubled. The bot handles customers while I sleep — nobody even noticed the difference."</span>
+      </p>
+      <div class="testi-metric">⬆ 2x مبيعات في 3 أيام</div>
+      <div class="testi-author">
+        <div class="testi-avatar">AH</div>
+        <div>
+          <div class="testi-name"><span class="ari">أحمد حسن</span><span class="eni">Ahmed Hassan</span></div>
+          <div class="testi-role"><span class="ari">صاحب متجر ملابس — القاهرة</span><span class="eni">Clothing Store Owner — Cairo</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card rv">
+      <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="testi-quote">
+        <span class="ari">"كنت بارد على كل رسالة بإيدي وبقضي 5 ساعات في اليوم. دلوقتي صفر وقت ضايع والطلبات زادت."</span>
+        <span class="eni">"I used to reply manually and waste 5 hours a day. Now zero time wasted and orders increased."</span>
+      </p>
+      <div class="testi-metric">⬇ −80% وقت ضايع</div>
+      <div class="testi-author">
+        <div class="testi-avatar">SM</div>
+        <div>
+          <div class="testi-name"><span class="ari">سارة محمود</span><span class="eni">Sara Mahmoud</span></div>
+          <div class="testi-role"><span class="ari">متجر إكسسوارات — الإسكندرية</span><span class="eni">Accessories Store — Alexandria</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card rv">
+      <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="testi-quote">
+        <span class="ari">"أول أسبوع كمّلت 47 طلب ما كنتش هقدر أكمّلهم لو كنت بشتغل لوحدي. الـ ROI كان واضح من أول يوم."</span>
+        <span class="eni">"In the first week I completed 47 orders I wouldn't have managed alone. The ROI was clear from day one."</span>
+      </p>
+      <div class="testi-metric">✓ 47 طلب إضافي — الأسبوع الأول</div>
+      <div class="testi-author">
+        <div class="testi-avatar">KA</div>
+        <div>
+          <div class="testi-name"><span class="ari">كريم أشرف</span><span class="eni">Karim Ashraf</span></div>
+          <div class="testi-role"><span class="ari">متجر إلكترونيات — الجيزة</span><span class="eni">Electronics Store — Giza</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card rv">
+      <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="testi-quote">
+        <span class="ari">"بجد من أحسن قرارات اللي عملتها في المتجر. الإعداد خلص في ساعات والنتيجة ظهرت في نفس اليوم."</span>
+        <span class="eni">"Honestly one of the best decisions I made for my store. Setup took hours and results showed the same day."</span>
+      </p>
+      <div class="testi-metric">⚡ نتيجة من أول يوم</div>
+      <div class="testi-author">
+        <div class="testi-avatar">NO</div>
+        <div>
+          <div class="testi-name"><span class="ari">نور عمر</span><span class="eni">Nour Omar</span></div>
+          <div class="testi-role"><span class="ari">متجر عطور — المنصورة</span><span class="eni">Perfume Store — Mansoura</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card rv">
+      <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="testi-quote">
+        <span class="ari">"كنت خايف في الأول، بس الـ 7 أيام مجاناً خلتني أجرب بدون ضغط. دلوقتي مش تخيّل شغلي من غيره."</span>
+        <span class="eni">"I was scared at first, but the 7-day free trial let me try with no pressure. Now I can't imagine my work without it."</span>
+      </p>
+      <div class="testi-metric">🔁 تجديد تلقائي كل شهر</div>
+      <div class="testi-author">
+        <div class="testi-avatar">MR</div>
+        <div>
+          <div class="testi-name"><span class="ari">محمد رضا</span><span class="eni">Mohamed Reda</span></div>
+          <div class="testi-role"><span class="ari">متجر أحذية — طنطا</span><span class="eni">Shoes Store — Tanta</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card rv">
+      <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="testi-quote">
+        <span class="ari">"الـ upsell التلقائي وحده عمل فرق +30% في متوسط قيمة الطلب. ده مش كلام — ده رقم حقيقي من الداشبورد."</span>
+        <span class="eni">"The automatic upsell alone made a +30% difference in average order value. Not talk — real numbers from the dashboard."</span>
+      </p>
+      <div class="testi-metric">📈 +30% متوسط قيمة الطلب</div>
+      <div class="testi-author">
+        <div class="testi-avatar">HZ</div>
+        <div>
+          <div class="testi-name"><span class="ari">هبة زكي</span><span class="eni">Heba Zaki</span></div>
+          <div class="testi-role"><span class="ari">متجر تجميل — الشروق</span><span class="eni">Beauty Store — El Shorouk</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="sec" style="background:var(--bg2)">
+  <div class="sec-tag rv"><span class="ari">الأسعار</span><span class="eni">Pricing</span></div>
+  <h2 class="sec-title rv"><span class="ar">سعر واضح. بدون مفاجآت.</span><span class="en">Clear pricing. No surprises.</span></h2>
+  <div class="pricing-notice rv">
+    <div class="pn-left">
+      <span class="pn-dot"></span>
+      <span class="ar">العرض لأول <strong>20 متجر فقط</strong> — الأسعار بتتحدد قريباً</span>
+      <span class="en">Offer for first <strong>20 stores only</strong> — Prices finalized soon</span>
+    </div>
+    <div class="pn-spots">
+      <span class="ari">20 مكان متاح</span>
+      <span class="eni">20 spots left</span>
+    </div>
+  </div>
+  <div class="pricing-grid rv">
+    <div class="price-cell">
+      <div class="price-plan">Starter</div>
+      <div class="price-amount">X,XXX <sub><span class="ari">ج/شهر</span><span class="eni">EGP/mo</span></sub></div>
+      <p class="price-desc"><span class="ari">للمتاجر الصغيرة اللي بتبدأ</span><span class="eni">For small stores just starting out</span></p>
+      <ul class="price-features">
+        <li><span class="ari">ردود تلقائية على DMs</span><span class="eni">Auto DM replies</span></li>
+        <li><span class="ari">إرسال الأسعار والصور</span><span class="eni">Send prices & photos</span></li>
+        <li><span class="ari">جمع بيانات العملاء</span><span class="eni">Customer data collection</span></li>
+        <li>1,000 msg/mo</li>
+      </ul>
+      <a href="#contact" class="price-btn"><span class="ari">ابدأ</span><span class="eni">Get Started</span></a>
+    </div>
+    <div class="price-cell featured">
+      <div class="price-plan">Growth ★</div>
+      <div class="price-amount">X,XXX <sub><span class="ari">ج/شهر</span><span class="eni">EGP/mo</span></sub></div>
+      <p class="price-desc"><span class="ari">للمتاجر النشطة اللي عايزة تضاعف</span><span class="eni">For active stores looking to scale</span></p>
+      <ul class="price-features">
+        <li><span class="ari">كل مميزات Starter</span><span class="eni">Everything in Starter</span></li>
+        <li><span class="ari">Follow-up ذكي</span><span class="eni">Smart follow-up</span></li>
+        <li><span class="ari">Upsell تلقائي</span><span class="eni">Automatic upsell</span></li>
+        <li><span class="ari">داشبورد Analytics</span><span class="eni">Analytics dashboard</span></li>
+        <li>5,000 msg/mo</li>
+      </ul>
+      <a href="#contact" class="price-btn"><span class="ari">ابدأ</span><span class="eni">Get Started</span></a>
+    </div>
+    <div class="price-cell">
+      <div class="price-plan">Enterprise</div>
+      <div class="price-amount">Custom</div>
+      <p class="price-desc"><span class="ari">للشركات الكبيرة — حل مخصص كامل</span><span class="eni">For large businesses — fully custom</span></p>
+      <ul class="price-features">
+        <li><span class="ari">كل مميزات Growth</span><span class="eni">Everything in Growth</span></li>
+        <li><span class="ari">رسائل غير محدودة</span><span class="eni">Unlimited messages</span></li>
+        <li><span class="ari">مدير حساب مخصص</span><span class="eni">Dedicated account manager</span></li>
+        <li>Custom API + SLA</li>
+      </ul>
+      <a href="#contact" class="price-btn"><span class="ari">تكلمنا</span><span class="eni">Contact Us</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec">
+  <div class="sec-tag rv"><span class="ari">ابدأ</span><span class="eni">Get Started</span></div>
+  <h2 class="sec-title rv"><span class="ar">جاهز تبدأ؟ تكلمنا.</span><span class="en">Ready to start? Let's talk.</span></h2>
+  <p class="sec-sub rv"><span class="ari">ابعتلنا تفاصيلك وهنتواصل معاك خلال ساعتين.</span><span class="eni">Send us your details and we'll reach out within 2 hours.</span></p>
+  <div class="contact-grid">
+    <div class="contact-form rv">
+      <div class="fg"><label><span class="ari">الاسم</span><span class="eni">Name</span></label><input type="text" id="f-name" placeholder="..."/></div>
+      <div class="fg"><label><span class="ari">رقم الواتساب</span><span class="eni">WhatsApp</span></label><input type="tel" id="f-phone" placeholder="+20 1XX XXX XXXX" style="direction:ltr"/></div>
+      <div class="fg">
+        <label><span class="ari">نوع المتجر</span><span class="eni">Store type</span></label>
+        <select id="f-store">
+          <option value=""><span class="ari">اختار...</span><span class="eni">Select...</span></option>
+          <option value="fashion"><span class="ari">ملابس</span><span class="eni">Fashion</span></option>
+          <option value="electronics"><span class="ari">إلكترونيات</span><span class="eni">Electronics</span></option>
+          <option value="food"><span class="ari">غذاء</span><span class="eni">Food</span></option>
+          <option value="beauty"><span class="ari">تجميل</span><span class="eni">Beauty</span></option>
+          <option value="other"><span class="ari">أخرى</span><span class="eni">Other</span></option>
+        </select>
+      </div>
+      <div class="fg"><label><span class="ari">تفاصيل</span><span class="eni">Details</span></label><textarea id="f-msg" placeholder="..."></textarea></div>
+      <button class="btn-p" id="subBtn" style="border:none;width:100%;justify-content:center">
+        <span class="ari">ابعت الطلب</span><span class="eni">Send Request</span>
+      </button>
+      <div id="f-status"></div>
+    </div>
+    <div class="contact-info rv">
+      <div class="cinfo-item"><div class="cinfo-icon">💬</div><div><h4>WhatsApp</h4><p><span class="ari">تواصل مباشرة على واتساب</span><span class="eni">Message us directly on WhatsApp</span></p></div></div>
+      <div class="cinfo-item"><div class="cinfo-icon">📧</div><div><h4>Email</h4><p>info@intelligence.com</p></div></div>
+      <div class="cinfo-item"><div class="cinfo-icon">⏱</div><div><h4><span class="ari">وقت الرد</span><span class="eni">Response time</span></h4><p><span class="ari">أقل من ساعتين دايماً</span><span class="eni">Under 2 hours, always</span></p></div></div>
+      <div class="cinfo-item" style="border-color:var(--lime)">
+        <div class="cinfo-icon">→</div>
+        <div><h4><span class="ari">7 أيام مجاناً</span><span class="eni">7 days free</span></h4><p><span class="ari">بدون بطاقة. لو مرضيتش — مش هتدفع.</span><span class="eni">No card. Not satisfied — you don't pay.</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand rv">
+    <div class="logo"><div class="logo-dot"></div><span>Intelligence</span></div>
+    <p><span class="ari">نبني أنظمة أتمتة ذكية تخلي متجرك يبيع وانت مش موجود.</span><span class="eni">We build intelligent automation systems that make your store sell without you.</span></p>
+  </div>
+  <div class="footer-col rv">
+    <h5><span class="ari">المنتج</span><span class="eni">Product</span></h5>
+    <ul>
+      <li><a href="#how"><span class="ari">كيف يشتغل</span><span class="eni">How it works</span></a></li>
+      <li><a href="#features"><span class="ari">المميزات</span><span class="eni">Features</span></a></li>
+      <li><a href="#pricing"><span class="ari">الأسعار</span><span class="eni">Pricing</span></a></li>
+    </ul>
+  </div>
+  <div class="footer-col rv">
+    <h5><span class="ari">الشركة</span><span class="eni">Company</span></h5>
+    <ul>
+      <li><a href="#contact"><span class="ari">تواصل معنا</span><span class="eni">Contact</span></a></li>
+      <li><a href="login.html"><span class="ari">تسجيل الدخول</span><span class="eni">Login</span></a></li>
+      <li><a href="#contact"><span class="ari">ابدأ مجاناً</span><span class="eni">Start free</span></a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2026 Intelligence</span>
+  <a href="#contact"><span class="ari">ابدأ الآن →</span><span class="eni">Get started →</span></a>
+</div>
+
+<script>
+const R = document.documentElement;
+const API = 'http://127.0.0.1:8000/api';
+
+/* ANNOUNCEMENT BAR */
+document.body.classList.add('has-ann');
+function setAnnHeight(){
+  const annH = document.getElementById('annBar').offsetHeight;
+  document.documentElement.style.setProperty('--ann-h', annH + 'px');
+  document.getElementById('nav').style.top = annH + 'px';
+}
+setAnnHeight();
+window.addEventListener('resize', setAnnHeight, {passive:true});
+
+/* THEME */
+const tTog = document.getElementById('tTog');
+function setTheme(t){R.setAttribute('data-theme',t);tTog.checked=t==='light';localStorage.setItem('iq-theme',t)}
+setTheme(localStorage.getItem('iq-theme')||'dark');
+tTog.addEventListener('change',()=>setTheme(tTog.checked?'light':'dark'));
+
+/* LANGUAGE */
+const bAr=document.getElementById('bAr'),bEn=document.getElementById('bEn');
+function applyLang(l){
+  R.setAttribute('data-lang',l);R.setAttribute('lang',l);
+  R.setAttribute('dir',l==='ar'?'rtl':'ltr');
+  document.title=l==='ar'?'Intelligence — أتمتة مبيعاتك':'Intelligence — Automate Your Sales';
+  bAr.classList.toggle('active',l==='ar');bEn.classList.toggle('active',l==='en');
+  localStorage.setItem('iq-lang',l);
+}
+applyLang(localStorage.getItem('iq-lang')||'ar');
+bAr.addEventListener('click',()=>applyLang('ar'));
+bEn.addEventListener('click',()=>applyLang('en'));
+
+/* NAV SCROLL */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  nav.style.borderBottomColor=window.scrollY>40?'var(--bd2)':'var(--bd)';
+},{passive:true});
+
+/* REVEAL */
+const rvEls=document.querySelectorAll('.rv');
+const ro=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('on'),i*50);ro.unobserve(e.target)}});
+},{threshold:.07});
+rvEls.forEach(el=>ro.observe(el));
+
+/* FORM */
+document.getElementById('subBtn').addEventListener('click',async function(){
+  const l=R.getAttribute('data-lang');
+  const name=document.getElementById('f-name').value.trim();
+  const phone=document.getElementById('f-phone').value.trim();
+  const store=document.getElementById('f-store').value;
+  const msg=document.getElementById('f-msg').value.trim();
+  const status=document.getElementById('f-status');
+  if(!name||!phone){
+    status.className='err';status.style.display='block';
+    status.textContent=l==='ar'?'⚠ الاسم والرقم مطلوبين':'⚠ Name and phone are required';return;
+  }
+  this.disabled=true;
+  this.innerHTML=l==='ar'?'جاري الإرسال...':'Sending...';
+  try{
+    const res=await fetch(`${API}/contact`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name,phone,store_type:store,message:msg})});
+    const data=await res.json();
+    if(data.success){
+      this.innerHTML=l==='ar'?'✓ تم الإرسال':'✓ Sent';
+      status.className='ok';status.style.display='block';
+      status.textContent=l==='ar'?'هنتواصل معاك خلال ساعتين.':'We\'ll reach out within 2 hours.';
+    }else throw new Error();
+  }catch{
+    this.disabled=false;
+    this.innerHTML=l==='ar'?'ابعت الطلب':'Send Request';
+    status.className='err';status.style.display='block';
+    status.textContent=l==='ar'?'⚠ في مشكلة، جرب تاني أو تواصل على واتساب.':'⚠ Something went wrong. Try again or contact us on WhatsApp.';
+  }
+});
+</script>
+</body>
+</html>

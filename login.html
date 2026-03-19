@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark" data-lang="ar">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Intelligence — تسجيل الدخول</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--spd:.28s;--acc:#00c8ff;--acc2:#0044dd;--acc3:#8822ff;--grn:#00e87a;--rad:12px}
+[data-theme="dark"]{--bg:#03050a;--su:#0b1422;--su2:#0f1c2e;--bd:#1a2e48;--txt:#e4eeff;--mu:#5a7898;--sh:rgba(0,0,0,.6);--nb:rgba(3,5,10,.95)}
+[data-theme="light"]{--bg:#eef2ff;--su:#fff;--su2:#f4f7ff;--bd:#c2d4ee;--txt:#08152a;--mu:#4a6485;--sh:rgba(0,20,80,.1);--nb:rgba(238,242,255,.95)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Cairo',sans-serif;min-height:100svh;display:flex;flex-direction:column;transition:background var(--spd),color var(--spd);overflow-x:hidden;min-width:300px}
+[data-lang="en"] body{font-family:'Inter',sans-serif}
+.ar{display:block}.en{display:none}.ari{display:inline}.eni{display:none}
+[data-lang="en"] .ar{display:none!important}[data-lang="en"] .en{display:block!important}
+[data-lang="en"] .ari{display:none!important}[data-lang="en"] .eni{display:inline!important}
+
+/* BG */
+.gbg{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(0,200,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,.022) 1px,transparent 1px);
+  background-size:48px 48px}
+[data-theme="light"] .gbg{background-image:linear-gradient(rgba(0,60,200,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(0,60,200,.028) 1px,transparent 1px)}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0}
+.o1{width:min(500px,100vw);height:min(500px,100vw);top:-15%;left:50%;transform:translateX(-50%);background:radial-gradient(circle,rgba(0,200,255,.09),transparent 70%);animation:fl1 9s ease-in-out infinite}
+.o2{width:min(350px,80vw);height:min(350px,80vw);bottom:0;right:-10%;background:radial-gradient(circle,rgba(136,34,255,.08),transparent 70%);animation:fl2 11s ease-in-out infinite}
+@keyframes fl1{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-20px)}}
+@keyframes fl2{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+
+/* TOPBAR */
+.topbar{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:clamp(12px,2vw,18px) clamp(16px,4vw,32px);background:var(--nb);border-bottom:1px solid var(--bd);backdrop-filter:blur(18px)}
+.logo{font-family:'Space Mono',monospace;font-size:clamp(.85rem,2vw,1rem);font-weight:700;color:var(--acc);text-decoration:none}
+.logo b{color:var(--txt)}
+.tb-right{display:flex;align-items:center;gap:8px}
+.ls{display:flex;align-items:center;background:var(--su);border:1px solid var(--bd);border-radius:50px;padding:3px;gap:2px}
+.lb{padding:3px 10px;border-radius:50px;font-size:.65rem;font-weight:700;cursor:pointer;color:var(--mu);border:none;background:transparent;font-family:inherit;transition:background .2s,color .2s,transform .2s}
+.lb.active{background:var(--acc);color:#000;transform:scale(1.05)}
+.tt{position:relative;width:46px;height:24px;cursor:pointer;flex-shrink:0}
+.tt input{opacity:0;width:0;height:0;position:absolute}
+.tt-track{position:absolute;inset:0;border-radius:50px;background:var(--su2);border:1px solid var(--bd);transition:background var(--spd)}
+[data-theme="light"] .tt-track{background:#d8eeff;border-color:#99bce8}
+.tt-thumb{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,#fcd34d,#f97316);transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .3s;display:flex;align-items:center;justify-content:center;font-size:8px;box-shadow:0 2px 5px rgba(0,0,0,.3)}
+[data-theme="light"] .tt-thumb{transform:translateX(22px);background:linear-gradient(135deg,#1e3a8a,#3b82f6)}
+.tt-thumb::before{content:'☀️'}[data-theme="light"] .tt-thumb::before{content:'🌙'}
+
+/* MAIN */
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(24px,5vw,48px) clamp(16px,4vw,24px);position:relative;z-index:1}
+.login-wrap{width:100%;max-width:420px;animation:fu .5s ease both}
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+.login-card{background:var(--su);border:1px solid var(--bd);border-radius:20px;padding:clamp(24px,5vw,40px) clamp(20px,5vw,36px);box-shadow:0 24px 64px var(--sh),0 0 40px rgba(0,200,255,.05);transition:background var(--spd),border-color var(--spd)}
+
+.login-logo{text-align:center;margin-bottom:clamp(20px,4vw,28px)}
+.login-logo .icon{width:clamp(48px,10vw,60px);height:clamp(48px,10vw,60px);background:linear-gradient(135deg,var(--acc2),var(--acc3));border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:clamp(1.4rem,3vw,1.8rem);box-shadow:0 8px 24px rgba(0,68,221,.35)}
+.login-logo h1{font-size:clamp(1.2rem,3vw,1.5rem);font-weight:900;margin-bottom:4px}
+.login-logo p{font-size:clamp(.76rem,.85rem,.82rem);color:var(--mu)}
+
+/* TABS */
+.tabs{display:flex;background:var(--su2);border:1px solid var(--bd);border-radius:10px;padding:3px;gap:3px;margin-bottom:clamp(16px,3vw,24px)}
+.tab{flex:1;padding:8px;border-radius:8px;border:none;background:transparent;color:var(--mu);font-family:inherit;font-size:clamp(.78rem,.85rem,.82rem);font-weight:600;cursor:pointer;transition:background .2s,color .2s}
+.tab.active{background:var(--acc);color:#000;box-shadow:0 0 12px rgba(0,200,255,.3)}
+
+/* FORM */
+.fg{margin-bottom:clamp(12px,2vw,16px)}
+.fg label{display:block;font-size:clamp(.76rem,.83rem,.8rem);font-weight:600;margin-bottom:6px;color:var(--txt)}
+.inp-wrap{position:relative}
+.inp-wrap .ico{position:absolute;top:50%;transform:translateY(-50%);font-size:.9rem;color:var(--mu);pointer-events:none}
+[data-lang="ar"] .inp-wrap .ico{right:12px}
+[data-lang="en"] .inp-wrap .ico{left:12px}
+.inp-wrap input{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:clamp(10px,2vw,12px) 38px;color:var(--txt);font-family:inherit;font-size:clamp(.84rem,.9rem,.88rem);outline:none;transition:border-color .2s,box-shadow .2s,background var(--spd);direction:ltr}
+[data-lang="ar"] .inp-wrap input{text-align:right;padding-right:38px;padding-left:38px}
+.inp-wrap input:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(0,200,255,.12)}
+.inp-wrap input.err{border-color:#ff6b6b;box-shadow:0 0 0 3px rgba(255,107,107,.12)}
+.show-pw{position:absolute;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--mu);font-size:.85rem;transition:color .2s;padding:4px}
+[data-lang="ar"] .show-pw{left:10px}
+[data-lang="en"] .show-pw{right:10px}
+.show-pw:hover{color:var(--acc)}
+
+.forgot{text-align:left;margin-bottom:clamp(14px,2vw,18px)}
+[data-lang="ar"] .forgot{text-align:right}
+.forgot a{font-size:clamp(.74rem,.8rem,.78rem);color:var(--acc);text-decoration:none;transition:opacity .2s}
+.forgot a:hover{opacity:.75}
+
+/* SUBMIT */
+.btn-submit{width:100%;background:linear-gradient(135deg,var(--acc2),var(--acc3));color:#fff;border:none;padding:clamp(12px,2.5vw,14px);border-radius:9px;font-family:inherit;font-size:clamp(.88rem,1vw,.96rem);font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s;box-shadow:0 0 24px rgba(0,68,221,.28)}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(0,68,221,.45)}
+.btn-submit:disabled{opacity:.7;cursor:not-allowed;transform:none}
+
+/* STATUS */
+.status-msg{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:clamp(.78rem,.84rem,.82rem);text-align:center;display:none}
+.status-msg.err{background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.3);color:#ff8585}
+.status-msg.ok{background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.3);color:var(--grn)}
+
+/* DIVIDER */
+.or-div{display:flex;align-items:center;gap:10px;margin:clamp(14px,2vw,18px) 0;color:var(--mu);font-size:.76rem}
+.or-div::before,.or-div::after{content:'';flex:1;height:1px;background:var(--bd)}
+
+/* REGISTER FORM (hidden by default) */
+.form-section{display:none}
+.form-section.active{display:block}
+
+/* BACK LINK */
+.back-link{text-align:center;margin-top:clamp(14px,2vw,18px);font-size:clamp(.76rem,.82rem,.8rem);color:var(--mu)}
+.back-link a{color:var(--acc);text-decoration:none;font-weight:600}
+.back-link a:hover{text-decoration:underline}
+
+/* PASSWORD STRENGTH */
+.pw-strength{margin-top:6px;height:3px;border-radius:2px;background:var(--bd);overflow:hidden;display:none}
+.pw-strength-bar{height:100%;border-radius:2px;transition:width .3s,background .3s;width:0}
+
+/* FOOTER */
+footer{position:relative;z-index:1;text-align:center;padding:clamp(12px,2vw,16px);font-size:clamp(.7rem,.76rem,.74rem);color:var(--mu);border-top:1px solid var(--bd);background:var(--nb);backdrop-filter:blur(12px)}
+footer a{color:var(--acc);text-decoration:none}
+
+/* LOADING SPINNER */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle;margin-left:6px}
+[data-lang="ar"] .spinner{margin-left:0;margin-right:6px}
+
+/* 2FA INPUT */
+.otp-grid{display:flex;gap:8px;justify-content:center;margin:clamp(14px,2vw,18px) 0}
+.otp-input{width:clamp(38px,10vw,46px);height:clamp(44px,11vw,52px);text-align:center;background:var(--bg);border:1px solid var(--bd);border-radius:9px;color:var(--txt);font-family:'Space Mono',monospace;font-size:clamp(1.1rem,2vw,1.3rem);font-weight:700;outline:none;transition:border-color .2s,box-shadow .2s}
+.otp-input:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(0,200,255,.12)}
+</style>
+</head>
+<body>
+<div class="gbg"></div>
+<div class="orb o1"></div>
+<div class="orb o2"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="index.html" class="logo">INTEL<b>LIGENCE</b></a>
+  <div class="tb-right">
+    <div class="ls">
+      <button class="lb active" id="bAr">عربي</button>
+      <button class="lb" id="bEn">EN</button>
+    </div>
+    <label class="tt">
+      <input type="checkbox" id="tTog"/>
+      <div class="tt-track"></div>
+      <div class="tt-thumb"></div>
+    </label>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+  <div class="login-wrap">
+    <div class="login-card">
+
+      <!-- LOGO -->
+      <div class="login-logo">
+        <div class="icon">🤖</div>
+        <h1><span class="ari">مرحباً بك</span><span class="eni">Welcome Back</span></h1>
+        <p><span class="ari">سجّل دخولك للوصول للداشبورد</span><span class="eni">Sign in to access your dashboard</span></p>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab active" id="tab-login" onclick="switchTab('login')">
+          <span class="ari">دخول</span><span class="eni">Login</span>
+        </button>
+        <button class="tab" id="tab-register" onclick="switchTab('register')">
+          <span class="ari">حساب جديد</span><span class="eni">Register</span>
+        </button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div class="form-section active" id="section-login">
+        <div class="fg">
+          <label><span class="ari">البريد الإلكتروني</span><span class="eni">Email Address</span></label>
+          <div class="inp-wrap">
+            <span class="ico">📧</span>
+            <input type="email" id="l-email" placeholder="example@mail.com" autocomplete="email"/>
+          </div>
+        </div>
+        <div class="fg">
+          <label><span class="ari">كلمة المرور</span><span class="eni">Password</span></label>
+          <div class="inp-wrap">
+            <span class="ico">🔒</span>
+            <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password"/>
+            <button class="show-pw" onclick="togglePw('l-pass',this)" type="button">👁️</button>
+          </div>
+        </div>
+        <div class="forgot"><a href="#"><span class="ari">نسيت كلمة المرور؟</span><span class="eni">Forgot password?</span></a></div>
+        <button class="btn-submit" id="btn-login" onclick="doLogin()">
+          <span class="ari">دخول للداشبورد</span><span class="eni">Sign In to Dashboard</span>
+        </button>
+        <div class="status-msg" id="login-status"></div>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div class="form-section" id="section-register">
+        <div class="fg">
+          <label><span class="ari">الاسم الكامل</span><span class="eni">Full Name</span></label>
+          <div class="inp-wrap">
+            <span class="ico">👤</span>
+            <input type="text" id="r-name" placeholder="..." autocomplete="name"/>
+          </div>
+        </div>
+        <div class="fg">
+          <label><span class="ari">البريد الإلكتروني</span><span class="eni">Email Address</span></label>
+          <div class="inp-wrap">
+            <span class="ico">📧</span>
+            <input type="email" id="r-email" placeholder="example@mail.com" autocomplete="email"/>
+          </div>
+        </div>
+        <div class="fg">
+          <label><span class="ari">كلمة المرور</span><span class="eni">Password</span></label>
+          <div class="inp-wrap">
+            <span class="ico">🔒</span>
+            <input type="password" id="r-pass" placeholder="••••••••" autocomplete="new-password" oninput="checkStrength(this.value)"/>
+            <button class="show-pw" onclick="togglePw('r-pass',this)" type="button">👁️</button>
+          </div>
+          <div class="pw-strength" id="pw-bar-wrap"><div class="pw-strength-bar" id="pw-bar"></div></div>
+        </div>
+        <div class="fg">
+          <label><span class="ari">تأكيد كلمة المرور</span><span class="eni">Confirm Password</span></label>
+          <div class="inp-wrap">
+            <span class="ico">🔒</span>
+            <input type="password" id="r-pass2" placeholder="••••••••" autocomplete="new-password"/>
+            <button class="show-pw" onclick="togglePw('r-pass2',this)" type="button">👁️</button>
+          </div>
+        </div>
+        <button class="btn-submit" id="btn-register" onclick="doRegister()">
+          <span class="ari">إنشاء الحساب</span><span class="eni">Create Account</span>
+        </button>
+        <div class="status-msg" id="register-status"></div>
+      </div>
+
+    </div>
+
+    <div class="back-link">
+      <span class="ari">← <a href="index.html">العودة للموقع</a></span>
+      <span class="eni"><a href="index.html">← Back to website</a></span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>© 2025 Intelligence — </span>
+  <a href="index.html"><span class="ari">الرئيسية</span><span class="eni">Home</span></a>
+</footer>
+
+<script>
+const R = document.documentElement;
+const API = 'http://127.0.0.1:8000/api';
+
+/* THEME */
+const tTog = document.getElementById('tTog');
+function setTheme(t){R.setAttribute('data-theme',t);tTog.checked=t==='light';localStorage.setItem('iq-theme',t)}
+setTheme(localStorage.getItem('iq-theme')||'dark');
+tTog.addEventListener('change',()=>setTheme(tTog.checked?'light':'dark'));
+
+/* LANGUAGE */
+const bAr=document.getElementById('bAr'),bEn=document.getElementById('bEn');
+function applyLang(l){R.setAttribute('data-lang',l);R.setAttribute('lang',l);R.setAttribute('dir',l==='ar'?'rtl':'ltr');document.title=l==='ar'?'Intelligence — تسجيل الدخول':'Intelligence — Login';bAr.classList.toggle('active',l==='ar');bEn.classList.toggle('active',l==='en');localStorage.setItem('iq-lang',l)}
+applyLang(localStorage.getItem('iq-lang')||'ar');
+bAr.addEventListener('click',()=>applyLang('ar'));
+bEn.addEventListener('click',()=>applyLang('en'));
+
+/* TABS */
+function switchTab(t){
+  document.getElementById('tab-login').classList.toggle('active',t==='login');
+  document.getElementById('tab-register').classList.toggle('active',t==='register');
+  document.getElementById('section-login').classList.toggle('active',t==='login');
+  document.getElementById('section-register').classList.toggle('active',t==='register');
+  ['login-status','register-status'].forEach(id=>{const el=document.getElementById(id);el.style.display='none'});
+}
+
+/* SHOW/HIDE PASSWORD */
+function togglePw(id,btn){
+  const inp=document.getElementById(id);
+  inp.type=inp.type==='password'?'text':'password';
+  btn.textContent=inp.type==='password'?'👁️':'🙈';
+}
+
+/* PASSWORD STRENGTH */
+function checkStrength(v){
+  const bar=document.getElementById('pw-bar');
+  const wrap=document.getElementById('pw-bar-wrap');
+  wrap.style.display='block';
+  let score=0;
+  if(v.length>=8)score++;
+  if(/[A-Z]/.test(v))score++;
+  if(/[0-9]/.test(v))score++;
+  if(/[^A-Za-z0-9]/.test(v))score++;
+  const w=['0%','30%','55%','78%','100%'];
+  const c=['#ff6b6b','#ffa94d','#ffe066','#69db7c','#00e87a'];
+  bar.style.width=w[score];bar.style.background=c[score];
+}
+
+/* STATUS HELPER */
+function showStatus(id,msg,type){
+  const el=document.getElementById(id);
+  el.textContent=msg;el.className='status-msg '+type;el.style.display='block';
+}
+
+/* LOGIN */
+async function doLogin(){
+  const l=R.getAttribute('data-lang');
+  const email=document.getElementById('l-email').value.trim();
+  const pass=document.getElementById('l-pass').value;
+  if(!email||!pass){showStatus('login-status',l==='ar'?'⚠️ ادخل الإيميل وكلمة المرور':'⚠️ Enter email and password','err');return}
+  const btn=document.getElementById('btn-login');
+  btn.disabled=true;
+  btn.innerHTML=l==='ar'?'<span class="spinner"></span> جاري الدخول...':'<span class="spinner"></span> Signing in...';
+  try{
+    const res=await fetch(`${API}/login`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({email,password:pass})});
+    const data=await res.json();
+    if(res.ok&&data.token){
+      localStorage.setItem('iq-token',data.token);
+      localStorage.setItem('iq-user',JSON.stringify(data.user));
+      showStatus('login-status',l==='ar'?'✅ تم الدخول! جاري التحويل...':'✅ Logged in! Redirecting...','ok');
+      setTimeout(()=>window.location.href='dashboard.html',1000);
+    }else{
+      throw new Error(data.message||'failed');
+    }
+  }catch(e){
+    showStatus('login-status',l==='ar'?'❌ إيميل أو كلمة مرور غلط':'❌ Invalid email or password','err');
+    btn.disabled=false;
+    btn.innerHTML=l==='ar'?'دخول للداشبورد':'Sign In to Dashboard';
+  }
+}
+
+/* REGISTER */
+async function doRegister(){
+  const l=R.getAttribute('data-lang');
+  const name=document.getElementById('r-name').value.trim();
+  const email=document.getElementById('r-email').value.trim();
+  const pass=document.getElementById('r-pass').value;
+  const pass2=document.getElementById('r-pass2').value;
+  if(!name||!email||!pass){showStatus('register-status',l==='ar'?'⚠️ ادخل كل البيانات':'⚠️ Fill in all fields','err');return}
+  if(pass!==pass2){showStatus('register-status',l==='ar'?'⚠️ كلمتا المرور مش متطابقتين':'⚠️ Passwords don\'t match','err');return}
+  if(pass.length<8){showStatus('register-status',l==='ar'?'⚠️ كلمة المرور أقل من 8 حروف':'⚠️ Password must be at least 8 characters','err');return}
+  const btn=document.getElementById('btn-register');
+  btn.disabled=true;
+  btn.innerHTML=l==='ar'?'<span class="spinner"></span> جاري الإنشاء...':'<span class="spinner"></span> Creating account...';
+  try{
+    const res=await fetch(`${API}/register`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name,email,password:pass,password_confirmation:pass2})});
+    const data=await res.json();
+    if(res.ok&&data.token){
+      localStorage.setItem('iq-token',data.token);
+      localStorage.setItem('iq-user',JSON.stringify(data.user));
+      showStatus('register-status',l==='ar'?'✅ تم إنشاء الحساب! جاري التحويل...':'✅ Account created! Redirecting...','ok');
+      setTimeout(()=>window.location.href='dashboard.html',1000);
+    }else{
+      const msg=data.errors?Object.values(data.errors).flat().join(' • '):(data.message||'failed');
+      throw new Error(msg);
+    }
+  }catch(e){
+    showStatus('register-status','❌ '+e.message,'err');
+    btn.disabled=false;
+    btn.innerHTML=l==='ar'?'إنشاء الحساب':'Create Account';
+  }
+}
+
+/* ENTER KEY */
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  const active=document.querySelector('.form-section.active').id;
+  if(active==='section-login')doLogin();
+  else doRegister();
+});
+
+/* CHECK IF ALREADY LOGGED IN */
+if(localStorage.getItem('iq-token')){
+  window.location.href='dashboard.html';
+}
+</script>
+</body>
+</html>
