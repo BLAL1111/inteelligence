@@ -79,17 +79,22 @@ nav {
   backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
   transition: background var(--spd), border-color var(--spd);
 }
+/* ── LOGO (image-based) ── */
 .logo {
   font-family: 'Outfit', sans-serif; font-weight: 800;
   font-size: clamp(.88rem, 2.2vw, 1.05rem);
   letter-spacing: -.02em; color: var(--txt); flex-shrink: 0;
   display: flex; align-items: center; gap: 8px;
+  text-decoration: none;
 }
-.logo-dot {
-  width: 8px; height: 8px; background: var(--lime); border-radius: 50%;
-  box-shadow: 0 0 10px var(--lime); animation: pu 1.6s ease infinite;
+.logo-img {
+  width: 34px; height: 34px; border-radius: 9px;
+  object-fit: contain; flex-shrink: 0;
+  filter: drop-shadow(0 0 10px rgba(200,240,0,.25));
+  transition: filter .22s, transform .22s;
 }
-@keyframes pu { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
+.logo:hover .logo-img { transform: scale(1.06); filter: drop-shadow(0 0 16px rgba(200,240,0,.4)); }
+[data-theme="light"] .logo-img { filter: drop-shadow(0 2px 6px rgba(0,0,0,.12)); }
 
 .nl { display: flex; align-items: center; list-style: none; gap: clamp(16px,2.5vw,28px); }
 .nl a { color: var(--mu); font-size: clamp(.76rem,1.3vw,.88rem); font-weight: 500; transition: color .18s; letter-spacing: .01em; }
@@ -129,7 +134,74 @@ nav {
 }
 .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(200,240,0,.3); }
 
+/* ── MOBILE NAV MENU ── */
+.nav-hamburger {
+  display: none; width: 36px; height: 36px; border-radius: 8px;
+  background: var(--su2); border: 1px solid var(--bd);
+  align-items: center; justify-content: center;
+  cursor: pointer; color: var(--txt2); flex-shrink: 0;
+  transition: background .15s, color .15s;
+}
+.nav-hamburger:hover { background: var(--bd); color: var(--txt); }
+.nav-hamburger svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; }
+/* mobile drawer */
+.mob-nav-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  z-index: 888; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.mob-nav-overlay.open { display: block; animation: ovIn .22s ease; }
+@keyframes ovIn { from{opacity:0} to{opacity:1} }
+.mob-nav-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(300px, 88vw);
+  background: var(--su); border-left: 1px solid var(--bd);
+  z-index: 889; display: flex; flex-direction: column;
+  transform: translateX(110%);
+  transition: transform .3s cubic-bezier(.32,.72,0,1);
+  box-shadow: -8px 0 40px rgba(0,0,0,.45);
+}
+[data-lang="en"] .mob-nav-drawer { right: auto; left: 0; border-left: none; border-right: 1px solid var(--bd); transform: translateX(-110%); }
+.mob-nav-drawer.open { transform: translateX(0); }
+[data-theme="light"] .mob-nav-drawer { box-shadow: -4px 0 24px rgba(0,0,0,.1); }
+/* drawer header */
+.mnd-head {
+  padding: 16px 18px; border-bottom: 1px solid var(--bd);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.mnd-logo { display: flex; align-items: center; gap: 8px; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: .96rem; letter-spacing: -.02em; color: var(--txt); }
+.mnd-logo-img { width: 32px; height: 32px; border-radius: 8px; object-fit: contain; filter: drop-shadow(0 1px 6px rgba(200,240,0,.2)); }
+.mnd-close {
+  width: 30px; height: 30px; border-radius: 7px;
+  background: var(--su2); border: 1px solid var(--bd);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: .8rem; color: var(--mu);
+  transition: background .15s, color .15s;
+}
+.mnd-close:hover { background: var(--bd2); color: var(--txt); }
+/* drawer links */
+.mnd-links { flex: 1; padding: 12px 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
+.mnd-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px; border-radius: 8px; color: var(--txt2);
+  font-size: .9rem; font-weight: 600; text-decoration: none;
+  transition: background .15s, color .15s;
+}
+.mnd-link:hover { background: var(--su2); color: var(--txt); }
+/* drawer footer */
+.mnd-foot {
+  padding: 14px 18px; border-top: 1px solid var(--bd);
+  display: flex; align-items: center; gap: 8px;
+}
+.mnd-cta {
+  flex: 1; padding: 10px 0; text-align: center; border-radius: 8px;
+  background: var(--lime); color: #080808 !important;
+  font-family: 'Outfit', sans-serif; font-weight: 700; font-size: .84rem;
+  transition: box-shadow .18s, transform .18s;
+}
+[data-theme="light"] .mnd-cta { background: var(--lime2); }
+.mnd-cta:hover { box-shadow: 0 4px 16px rgba(200,240,0,.3); transform: translateY(-1px); }
+
 /* ── HERO ── */
+
 .hero {
   position: relative; min-height: min(100svh, 900px);
   display: flex; flex-direction: column; justify-content: space-between;
@@ -798,6 +870,8 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
 }
 @media(max-width:620px){
   .nl { display: none; }
+  .nav-hamburger { display: flex; }
+  .nc .nav-cta { display: none; }
   .feat-grid { grid-template-columns: 1fr; }
   .feat-cell:nth-child(2n) { border-right: 1px solid var(--bd); }
   .feat-cell { border-right: none; }
@@ -849,7 +923,256 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
   .ann-bar .ann-badge { display: none; }
   .ann-bar { padding: 6px 10px; font-size: .68rem; }
 }
+
+/* ══════════════════════════════
+   FLEXIBLE PLANS SECTION
+══════════════════════════════ */
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.5vw, 24px);
+  margin-top: clamp(32px, 5vw, 52px);
+}
+.plan-card {
+  background: var(--su); border: 1px solid var(--bd);
+  border-radius: 16px; padding: clamp(22px, 3vw, 32px);
+  display: flex; flex-direction: column; gap: 0;
+  position: relative; transition: border-color .22s, box-shadow .22s, transform .22s;
+}
+.plan-card:hover {
+  border-color: var(--bd2); transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.18);
+}
+[data-theme="light"] .plan-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,.1); }
+.plan-card-featured {
+  border-color: var(--lime); background: var(--lime);
+}
+[data-theme="light"] .plan-card-featured { border-color: var(--lime2); background: var(--lime2); }
+.plan-card-featured:hover { border-color: var(--lime); box-shadow: 0 12px 40px rgba(200,240,0,.3); }
+.plan-badge {
+  position: absolute; top: -12px; right: clamp(16px,3vw,24px);
+  background: #0a0a08; color: var(--lime);
+  font-size: .6rem; font-weight: 700; letter-spacing: .08em;
+  padding: 4px 12px; border-radius: 100px;
+  font-family: 'Outfit', sans-serif; text-transform: uppercase;
+  border: 1px solid rgba(200,240,0,.4);
+}
+[data-lang="en"] .plan-badge { right: auto; left: clamp(16px,3vw,24px); }
+[data-theme="light"] .plan-badge { background: #141210; }
+.plan-icon { font-size: 1.6rem; margin-bottom: 12px; }
+.plan-name {
+  font-family: 'Outfit', sans-serif; font-weight: 700;
+  font-size: .62rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mu); margin-bottom: 10px;
+}
+.plan-card-featured .plan-name { color: rgba(0,0,0,.55); }
+.plan-desc {
+  font-size: clamp(.76rem, .84rem, .82rem); color: var(--mu);
+  line-height: 1.6; margin-bottom: 20px;
+}
+.plan-card-featured .plan-desc { color: rgba(0,0,0,.65); }
+.plan-feats {
+  list-style: none; display: flex; flex-direction: column;
+  gap: 10px; flex: 1; margin-bottom: 24px;
+}
+.plan-feats li {
+  font-size: clamp(.76rem, .84rem, .82rem);
+  display: flex; align-items: flex-start; gap: 8px; color: var(--txt2);
+}
+.plan-feats li::before { content: '→'; color: var(--lime); font-weight: 700; flex-shrink: 0; font-family: 'Outfit', sans-serif; }
+.plan-card-featured .plan-feats li { color: rgba(0,0,0,.75); }
+.plan-card-featured .plan-feats li::before { color: rgba(0,0,0,.5); }
+.plan-btn {
+  display: block; width: 100%; text-align: center;
+  padding: 11px 0; border-radius: 10px;
+  font-size: .82rem; font-weight: 700; letter-spacing: -.01em;
+  transition: transform .18s, box-shadow .18s;
+  font-family: 'Outfit', sans-serif;
+}
+[data-lang="ar"] .plan-btn { font-family: 'Cairo', sans-serif; }
+.plan-btn:hover { transform: translateY(-2px); }
+.plan-btn-prime {
+  background: #0a0a08; color: var(--lime) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,.3);
+}
+[data-theme="light"] .plan-btn-prime { background: #141210; }
+.plan-btn-prime:hover { box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+.plan-btn-sec {
+  background: var(--su2); color: var(--txt) !important;
+  border: 1px solid var(--bd);
+}
+.plan-btn-sec:hover { background: var(--bd); box-shadow: none; }
+.plans-note {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: clamp(20px, 3vw, 32px);
+  font-size: clamp(.74rem, .82rem, .8rem); color: var(--mu);
+  text-align: center;
+}
+.plans-note strong { color: var(--txt2); }
+.plans-note-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 8px var(--lime); flex-shrink: 0; }
+[data-theme="light"] .plans-note-dot { background: var(--lime2); box-shadow: 0 0 6px var(--lime2); }
+@media(max-width:900px){ .plans-grid { grid-template-columns: 1fr; max-width: 440px; margin-inline: auto; } }
+@media(max-width:480px){ .plans-grid { max-width: 100%; } }
+
+/* ══════════════════════════════
+   CLIENTS SECTION
+══════════════════════════════ */
+.clients-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: clamp(14px, 2vw, 20px);
+  margin-top: clamp(32px, 5vw, 52px);
+}
+.client-card {
+  background: var(--su); border: 1px solid var(--bd);
+  border-radius: 14px; padding: clamp(18px, 2.5vw, 26px);
+  display: flex; gap: 14px; align-items: flex-start;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.client-card:hover { border-color: var(--bd2); transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,.15); }
+[data-theme="light"] .client-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+.client-avatar {
+  width: 42px; height: 42px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif; font-weight: 800; font-size: .9rem;
+  flex-shrink: 0; border: 1px solid;
+}
+.client-body { flex: 1; min-width: 0; }
+.client-quote {
+  font-size: clamp(.78rem, .86rem, .84rem); color: var(--txt2);
+  line-height: 1.7; margin-bottom: 12px;
+  font-style: italic;
+}
+[data-lang="ar"] .client-quote { font-style: normal; }
+.client-meta { border-top: 1px solid var(--bd); padding-top: 10px; }
+.client-name { font-size: .76rem; font-weight: 700; color: var(--txt); margin-bottom: 4px; }
+.client-stat {
+  font-size: .7rem; color: var(--lime); font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+}
+[data-theme="light"] .client-stat { color: var(--lime2); }
+@media(max-width:900px){ .clients-grid { grid-template-columns: 1fr; } }
+@media(max-width:600px){ .client-card { flex-direction: column; gap: 10px; } .client-avatar { width: 36px; height: 36px; } }
+
+/* ══════════════════════════════
+   TRY WITHOUT RISK SECTION
+══════════════════════════════ */
+.risk-sec { padding-block: clamp(48px, 8vw, 96px); }
+.risk-wrap {
+  border: 1px solid var(--lime-border, rgba(200,240,0,.2));
+  border-radius: 20px; padding: clamp(28px, 5vw, 56px);
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: clamp(20px, 4vw, 48px); align-items: center;
+  background: linear-gradient(135deg, rgba(200,240,0,.04) 0%, transparent 60%);
+  position: relative; overflow: hidden;
+}
+[data-theme="light"] .risk-wrap { background: linear-gradient(135deg, rgba(168,204,0,.06) 0%, var(--su) 60%); border-color: rgba(168,204,0,.3); }
+.risk-wrap::before {
+  content: ''; position: absolute; top: -60px; right: -60px;
+  width: 240px; height: 240px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,240,0,.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+[data-lang="en"] .risk-wrap::before { right: auto; left: -60px; }
+.risk-icon { font-size: clamp(2rem, 5vw, 3.5rem); flex-shrink: 0; }
+.risk-title {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(1.5rem, 3.5vw, 2.6rem); letter-spacing: -.03em;
+  line-height: 1.15; margin-bottom: clamp(10px, 1.5vw, 14px); color: var(--txt);
+}
+[data-lang="ar"] .risk-title { font-family: 'Cairo', sans-serif; font-weight: 900; letter-spacing: -.01em; line-height: 1.35; }
+.risk-sub { font-size: clamp(.82rem, 1vw, .95rem); color: var(--mu); line-height: 1.75; margin-bottom: clamp(16px, 2vw, 22px); max-width: 540px; }
+.risk-checks { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-bottom: clamp(20px, 2.5vw, 28px); }
+.risk-check { display: flex; align-items: center; gap: 8px; font-size: clamp(.78rem, .86rem, .84rem); color: var(--txt2); }
+.risk-tick { color: var(--lime); font-weight: 700; font-family: 'Outfit', sans-serif; font-size: .88rem; }
+[data-theme="light"] .risk-tick { color: var(--lime2); }
+.risk-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; }
+.risk-badge-wrap { flex-shrink: 0; }
+.risk-badge {
+  width: clamp(110px, 14vw, 140px); height: clamp(110px, 14vw, 140px);
+  border-radius: 50%;
+  border: 2px solid var(--lime); border-style: dashed;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 16px;
+  background: var(--lime-bg, rgba(200,240,0,.08));
+  position: relative;
+  animation: badgeSpin 20s linear infinite;
+}
+@keyframes badgeSpin {
+  from { border-spacing: 0; }
+  to { transform: rotate(360deg); }
+}
+.risk-badge > * { animation: badgeCounterSpin 20s linear infinite; }
+@keyframes badgeCounterSpin { to { transform: rotate(-360deg); } }
+[data-theme="light"] .risk-badge { border-color: var(--lime2); background: rgba(168,204,0,.08); }
+.risk-badge-num {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(2.2rem, 4vw, 3rem); line-height: 1; letter-spacing: -.05em;
+  color: var(--lime);
+}
+[data-theme="light"] .risk-badge-num { color: var(--lime2); }
+.risk-badge-label { font-size: clamp(.65rem, .72rem, .7rem); color: var(--txt); font-weight: 700; line-height: 1.3; }
+.risk-badge-sub { font-size: clamp(.6rem, .65rem, .62rem); color: var(--mu); font-family: 'Outfit', sans-serif; margin-top: 2px; }
+@media(max-width:900px){
+  .risk-wrap { grid-template-columns: auto 1fr; }
+  .risk-badge-wrap { display: none; }
+}
+@media(max-width:600px){
+  .risk-wrap { grid-template-columns: 1fr; text-align: center; }
+  .risk-icon { font-size: 2.4rem; }
+  .risk-checks { justify-content: center; }
+  .risk-cta { width: 100%; justify-content: center; }
+  .risk-sub { max-width: 100%; }
+}
+
+/* ══════════════════════════════
+   REAL NUMBERS SECTION
+══════════════════════════════ */
+.realnum-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0; margin-top: clamp(32px, 5vw, 56px);
+  border: 1px solid var(--bd); border-radius: 16px; overflow: hidden;
+}
+.realnum-card {
+  padding: clamp(28px, 4vw, 48px) clamp(18px, 3vw, 28px);
+  background: var(--su); border-left: 1px solid var(--bd);
+  text-align: center; transition: background .18s;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+}
+.realnum-card:last-child { border-left: none; }
+[data-lang="en"] .realnum-card { border-left: none; border-right: 1px solid var(--bd); }
+[data-lang="en"] .realnum-card:last-child { border-right: none; }
+.realnum-card:hover { background: var(--su2); }
+.realnum-card-accent { background: var(--su2); }
+.realnum-num {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(2.4rem, 5vw, 4rem); letter-spacing: -.05em;
+  color: var(--lime); line-height: 1;
+}
+[data-theme="light"] .realnum-num { color: var(--lime2); }
+.realnum-unit { font-size: .55em; letter-spacing: 0; opacity: .8; }
+.realnum-label {
+  font-size: clamp(.8rem, .9rem, .88rem); font-weight: 700;
+  color: var(--txt); line-height: 1.4;
+}
+[data-lang="ar"] .realnum-label { font-family: 'Cairo', sans-serif; }
+.realnum-note { font-size: clamp(.68rem, .74rem, .72rem); color: var(--mu); line-height: 1.4; }
+@media(max-width:760px){
+  .realnum-grid { grid-template-columns: repeat(2,1fr); }
+  .realnum-card:nth-child(2) { border-left: none; }
+  [data-lang="en"] .realnum-card:nth-child(2) { border-right: none; }
+  .realnum-card:nth-child(3) { border-top: 1px solid var(--bd); }
+  .realnum-card:nth-child(4) { border-top: 1px solid var(--bd); border-left: none; }
+  [data-lang="en"] .realnum-card:nth-child(3) { border-left: none; }
+  [data-lang="en"] .realnum-card:nth-child(4) { border-right: none; }
+}
+@media(max-width:420px){
+  .realnum-grid { grid-template-columns: 1fr; }
+  .realnum-card { border-left: none !important; border-right: none !important; border-top: 1px solid var(--bd); }
+  .realnum-card:first-child { border-top: none; }
+  .realnum-num { font-size: 2.8rem; }
+}
 </style>
+
 </head>
 <body>
 
@@ -864,10 +1187,10 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="logo">
-    <div class="logo-dot"></div>
-    <span>Intelligence</span>
-  </div>
+  <a href="#" class="logo">
+    <img src="Logo.png" class="logo-img" alt="Intelligence"/>
+    Intelligence
+  </a>
   <ul class="nl">
     <li><a href="#how"><span class="ari">كيف يشتغل</span><span class="eni">How it works</span></a></li>
     <li><a href="#features"><span class="ari">المميزات</span><span class="eni">Features</span></a></li>
@@ -882,8 +1205,48 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
     </div>
     <label class="tt"><input type="checkbox" id="tTog"/><div class="tt-track"></div><div class="tt-thumb"></div></label>
     <a href="#contact" class="nav-cta"><span class="ari">ابدأ مجاناً</span><span class="eni">Start Free</span></a>
+    <button class="nav-hamburger" onclick="openMobNav()" aria-label="Menu">
+      <svg viewBox="0 0 20 20"><line x1="2" y1="5" x2="18" y2="5"/><line x1="2" y1="10" x2="18" y2="10"/><line x1="2" y1="15" x2="18" y2="15"/></svg>
+    </button>
   </div>
 </nav>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="mob-nav-overlay" id="mobNavOverlay" onclick="closeMobNav()"></div>
+<div class="mob-nav-drawer" id="mobNavDrawer">
+  <div class="mnd-head">
+    <div class="mnd-logo">
+      <img src="Logo.png" class="mnd-logo-img" alt="Intelligence"/>
+      Intelligence
+    </div>
+    <button class="mnd-close" onclick="closeMobNav()">✕</button>
+  </div>
+  <div class="mnd-links">
+    <a href="#how" class="mnd-link" onclick="closeMobNav()">
+      <span>⚙</span><span class="ari">كيف يشتغل</span><span class="eni">How it works</span>
+    </a>
+    <a href="#features" class="mnd-link" onclick="closeMobNav()">
+      <span>✦</span><span class="ari">المميزات</span><span class="eni">Features</span>
+    </a>
+    <a href="#testimonials" class="mnd-link" onclick="closeMobNav()">
+      <span>👥</span><span class="ari">العملاء</span><span class="eni">Clients</span>
+    </a>
+    <a href="#pricing" class="mnd-link" onclick="closeMobNav()">
+      <span>💎</span><span class="ari">الأسعار</span><span class="eni">Pricing</span>
+    </a>
+    <a href="#contact" class="mnd-link" onclick="closeMobNav()">
+      <span>✉</span><span class="ari">تواصل معنا</span><span class="eni">Contact</span>
+    </a>
+    <a href="login.html" class="mnd-link">
+      <span>→</span><span class="ari">تسجيل الدخول</span><span class="eni">Sign In</span>
+    </a>
+  </div>
+  <div class="mnd-foot">
+    <a href="#contact" class="mnd-cta" onclick="closeMobNav()">
+      <span class="ari">ابدأ مجاناً ←</span><span class="eni">Start Free →</span>
+    </a>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1262,6 +1625,159 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
   </div>
 </section>
 
+<!-- ════════════════════════════════
+     SECTION: FLEXIBLE PLANS
+════════════════════════════════ -->
+<section class="sec plans-sec">
+  <div class="sec-tag rv"><span class="ari">الباقات</span><span class="eni">Plans</span></div>
+  <h2 class="sec-title rv"><span class="ar">باقات مرنة.<br><em>بدون إلزام.</em></span><span class="en">Flexible plans.<br><em>No commitments.</em></span></h2>
+  <p class="sec-sub rv"><span class="ari">السعر بيتحدد معاك شخصياً بعد التجربة — مفيش عقود، مفيش دفع مقدم.</span><span class="eni">Pricing is set with you personally after the trial — no contracts, no upfront payment.</span></p>
+  <div class="plans-grid rv">
+    <div class="plan-card">
+      <div class="plan-icon">🌱</div>
+      <div class="plan-name">Starter</div>
+      <p class="plan-desc"><span class="ari">للمتاجر الصغيرة اللي بتبدأ أول خطوة</span><span class="eni">For small stores taking their first steps</span></p>
+      <ul class="plan-feats">
+        <li><span class="ari">ردود تلقائية على الرسائل</span><span class="eni">Auto DM replies</span></li>
+        <li><span class="ari">إرسال الأسعار والصور</span><span class="eni">Send prices &amp; photos</span></li>
+        <li><span class="ari">جمع بيانات العملاء</span><span class="eni">Collect customer data</span></li>
+        <li><span class="ari">١٬٠٠٠ رسالة / شهر</span><span class="eni">1,000 messages / mo</span></li>
+      </ul>
+      <a href="#contact" class="plan-btn plan-btn-sec"><span class="ari">ابدأ مجاناً</span><span class="eni">Start Free</span></a>
+    </div>
+    <div class="plan-card plan-card-featured">
+      <div class="plan-badge"><span class="ari">الأكثر اختياراً</span><span class="eni">Most Popular</span></div>
+      <div class="plan-icon">🚀</div>
+      <div class="plan-name">Growth</div>
+      <p class="plan-desc"><span class="ari">للمتاجر النشطة اللي عايزة تضاعف إيراداتها</span><span class="eni">For active stores ready to scale revenue</span></p>
+      <ul class="plan-feats">
+        <li><span class="ari">كل مميزات Starter</span><span class="eni">Everything in Starter</span></li>
+        <li><span class="ari">متابعة ذكية تلقائية</span><span class="eni">Smart auto follow-up</span></li>
+        <li><span class="ari">عروض ما بعد الشراء</span><span class="eni">Post-purchase upsell</span></li>
+        <li><span class="ari">داشبورد تحليلات</span><span class="eni">Analytics dashboard</span></li>
+        <li><span class="ari">٥٬٠٠٠ رسالة / شهر</span><span class="eni">5,000 messages / mo</span></li>
+      </ul>
+      <a href="#contact" class="plan-btn plan-btn-prime"><span class="ari">ابدأ — الأفضل قيمةً</span><span class="eni">Start — Best Value</span></a>
+    </div>
+    <div class="plan-card">
+      <div class="plan-icon">🏢</div>
+      <div class="plan-name">Enterprise</div>
+      <p class="plan-desc"><span class="ari">للشركات الكبيرة — حل مخصص كامل</span><span class="eni">For large businesses — fully custom solution</span></p>
+      <ul class="plan-feats">
+        <li><span class="ari">كل مميزات Growth</span><span class="eni">Everything in Growth</span></li>
+        <li><span class="ari">رسائل غير محدودة</span><span class="eni">Unlimited messages</span></li>
+        <li><span class="ari">مدير حساب مخصص</span><span class="eni">Dedicated account manager</span></li>
+        <li><span class="ari">API خاص + ضمان أداء</span><span class="eni">Custom API + SLA</span></li>
+      </ul>
+      <a href="#contact" class="plan-btn plan-btn-sec"><span class="ari">تكلمنا</span><span class="eni">Contact Us</span></a>
+    </div>
+  </div>
+  <div class="plans-note rv">
+    <span class="plans-note-dot"></span>
+    <span class="ari">السعر يتحدد بعد التجربة المجانية — أول <strong>20 متجر</strong> بشروط خاصة</span>
+    <span class="eni">Price set after free trial — first <strong>20 stores</strong> get special terms</span>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     SECTION: SOCIAL PROOF — REAL CLIENTS
+════════════════════════════════ -->
+<section class="sec clients-sec" style="background:var(--bg2)">
+  <div class="sec-tag rv"><span class="ari">عملاؤنا</span><span class="eni">Our Clients</span></div>
+  <h2 class="sec-title rv"><span class="ar">عملاء استخدموا السيستم<br><em>وشافوا النتيجة.</em></span><span class="en">Clients who used the system<br><em>and saw results.</em></span></h2>
+  <div class="clients-grid rv">
+    <div class="client-card">
+      <div class="client-avatar" style="background:#c8f00022;color:#c8f000;border-color:#c8f00044">م</div>
+      <div class="client-body">
+        <div class="client-quote"><span class="ari">«البوت رد على ٤٧ رسالة وأنا نايم. الصبح صحيت على ٣ طلبات جاهزة.»</span><span class="eni">"The bot replied to 47 messages while I slept. I woke up to 3 ready orders."</span></div>
+        <div class="client-meta">
+          <div class="client-name"><span class="ari">محمد — متجر ملابس</span><span class="eni">Mohamed — Fashion Store</span></div>
+          <div class="client-stat"><span class="ari">+34% مبيعات في أسبوع</span><span class="eni">+34% sales in one week</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="client-card">
+      <div class="client-avatar" style="background:#74c0fc22;color:#74c0fc;border-color:#74c0fc44">س</div>
+      <div class="client-body">
+        <div class="client-quote"><span class="ari">«كنت باخسر عملاء لأني مش بارد على طول — دلوقتي مفيش واحد بيسأل من غير رد.»</span><span class="eni">"I was losing clients because I couldn't always reply — now no message goes unanswered."</span></div>
+        <div class="client-meta">
+          <div class="client-name"><span class="ari">سارة — إكسسوارات يدوية</span><span class="eni">Sara — Handmade Accessories</span></div>
+          <div class="client-stat"><span class="ari">وقت الرد: من ٦ ساعات → ٣ ثواني</span><span class="eni">Reply time: 6 hours → 3 seconds</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="client-card">
+      <div class="client-avatar" style="background:#da77f222;color:#da77f2;border-color:#da77f244">ن</div>
+      <div class="client-body">
+        <div class="client-quote"><span class="ari">«أحسن استثمار عملته لمتجري — السيستم بيرد أحسن مني في ٩٠٪ من الحالات.»</span><span class="eni">"Best investment I made for my store — the system replies better than me in 90% of cases."</span></div>
+        <div class="client-meta">
+          <div class="client-name"><span class="ari">نورا — تجميل وعناية</span><span class="eni">Nora — Beauty &amp; Care</span></div>
+          <div class="client-stat"><span class="ari">معدل التحويل: 47%</span><span class="eni">Conversion rate: 47%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     SECTION: TRY WITHOUT RISK
+════════════════════════════════ -->
+<section class="sec risk-sec">
+  <div class="risk-wrap rv">
+    <div class="risk-icon">🛡</div>
+    <div class="risk-content">
+      <div class="sec-tag" style="margin-bottom:14px"><span class="ari">ضمان كامل</span><span class="eni">Full Guarantee</span></div>
+      <h2 class="risk-title"><span class="ar">جرّب بدون مخاطرة.</span><span class="en">Try without risk.</span></h2>
+      <p class="risk-sub"><span class="ari">٣ أيام مجاناً — بدون بطاقة ائتمان، بدون عقد، بدون أي التزام. لو السيستم مرضيكش خالص مش هتدفع فلس.</span><span class="eni">3 days free — no credit card, no contract, no obligation. If the system doesn't satisfy you, you pay nothing.</span></p>
+      <div class="risk-checks">
+        <div class="risk-check"><span class="risk-tick">✓</span><span class="ari">لا بطاقة مطلوبة</span><span class="eni">No card required</span></div>
+        <div class="risk-check"><span class="risk-tick">✓</span><span class="ari">لا عقود أو التزامات</span><span class="eni">No contracts or obligations</span></div>
+        <div class="risk-check"><span class="risk-tick">✓</span><span class="ari">إلغاء في أي وقت</span><span class="eni">Cancel anytime</span></div>
+        <div class="risk-check"><span class="risk-tick">✓</span><span class="ari">ضمان استرداد كامل</span><span class="eni">Full money-back guarantee</span></div>
+      </div>
+      <a href="#contact" class="btn-p risk-cta"><span class="ari">ابدأ تجربتك المجانية ←</span><span class="eni">Start your free trial →</span></a>
+    </div>
+    <div class="risk-badge-wrap">
+      <div class="risk-badge">
+        <div class="risk-badge-num">3</div>
+        <div class="risk-badge-label"><span class="ari">أيام مجاناً</span><span class="eni">days free</span></div>
+        <div class="risk-badge-sub"><span class="ari">بدون مخاطرة</span><span class="eni">zero risk</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     SECTION: REAL NUMBERS WEEK 1
+════════════════════════════════ -->
+<section class="sec realnum-sec" style="background:var(--bg2)">
+  <div class="sec-tag rv"><span class="ari">بيانات حقيقية</span><span class="eni">Real Data</span></div>
+  <h2 class="sec-title rv"><span class="ar">أرقام حقيقية.<br><em>من الأسبوع الأول.</em></span><span class="en">Real numbers.<br><em>From week one.</em></span></h2>
+  <p class="sec-sub rv" style="margin-bottom:0"><span class="ari">هذه النتائج من متاجر حقيقية في أول أسبوع فعلي مع السيستم.</span><span class="eni">These results are from real stores in their first actual week with the system.</span></p>
+  <div class="realnum-grid rv">
+    <div class="realnum-card">
+      <div class="realnum-num">+47<span class="realnum-unit">%</span></div>
+      <div class="realnum-label"><span class="ari">زيادة في الطلبات</span><span class="eni">Increase in orders</span></div>
+      <div class="realnum-note"><span class="ari">متوسط عبر جميع المتاجر</span><span class="eni">Average across all stores</span></div>
+    </div>
+    <div class="realnum-card realnum-card-accent">
+      <div class="realnum-num">&lt;3<span class="realnum-unit">s</span></div>
+      <div class="realnum-label"><span class="ari">وقت الرد على العميل</span><span class="eni">Customer reply time</span></div>
+      <div class="realnum-note"><span class="ari">مقارنةً بـ ٦ ساعات يدوياً</span><span class="eni">vs. 6 hours manually</span></div>
+    </div>
+    <div class="realnum-card">
+      <div class="realnum-num">3.2<span class="realnum-unit">×</span></div>
+      <div class="realnum-label"><span class="ari">متوسط زيادة الإيرادات</span><span class="eni">Average revenue increase</span></div>
+      <div class="realnum-note"><span class="ari">خلال أول ٣٠ يوم</span><span class="eni">Within the first 30 days</span></div>
+    </div>
+    <div class="realnum-card">
+      <div class="realnum-num">24<span class="realnum-unit">/7</span></div>
+      <div class="realnum-label"><span class="ari">متجرك شغال دايماً</span><span class="eni">Your store always open</span></div>
+      <div class="realnum-note"><span class="ari">حتى وأنت نايم</span><span class="eni">Even while you sleep</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact" class="sec">
   <div class="sec-tag rv"><span class="ari">ابدأ</span><span class="eni">Get Started</span></div>
@@ -1303,7 +1819,7 @@ body.has-ann .hero { padding-top: clamp(100px,14vw,150px); }
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand rv">
-    <div class="logo"><div class="logo-dot"></div><span>Intelligence</span></div>
+    <div class="logo"><img src="Logo.png" class="logo-img" alt="Intelligence" style="width:28px;height:28px"/><span>Intelligence</span></div>
     <p><span class="ari">نبني أنظمة أتمتة ذكية تخلي متجرك يبيع وانت مش موجود.</span><span class="eni">We build intelligent automation systems that make your store sell without you.</span></p>
   </div>
   <div class="footer-col rv">
@@ -1356,19 +1872,23 @@ function applyLang(l){
   document.title=l==='ar'?'Intelligence — أتمتة مبيعاتك':'Intelligence — Automate Your Sales';
   bAr.classList.toggle('active',l==='ar');bEn.classList.toggle('active',l==='en');
   localStorage.setItem('iq-lang',l);
-  // Force visibility — belt + suspenders for inline spans
-  document.querySelectorAll('.ari,.eni').forEach(el=>{
-    const isAr=el.classList.contains('ari');
-    el.style.display=(l==='ar'?isAr:!isAr)?'inline':'none';
-  });
-  document.querySelectorAll('.ar,.en').forEach(el=>{
-    const isAr=el.classList.contains('ar');
-    el.style.display=(l==='ar'?isAr:!isAr)?'block':'none';
-  });
 }
 applyLang(localStorage.getItem('iq-lang')||'ar');
 bAr.addEventListener('click',()=>applyLang('ar'));
 bEn.addEventListener('click',()=>applyLang('en'));
+
+/* MOBILE NAV */
+function openMobNav(){
+  document.getElementById('mobNavOverlay').classList.add('open');
+  document.getElementById('mobNavDrawer').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeMobNav(){
+  document.getElementById('mobNavOverlay').classList.remove('open');
+  document.getElementById('mobNavDrawer').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobNav()});
 
 /* NAV SCROLL */
 const nav=document.getElementById('nav');
