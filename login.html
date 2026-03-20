@@ -70,19 +70,11 @@ a{text-decoration:none;color:inherit}
   letter-spacing:-.03em;color:var(--txt);
   display:flex;align-items:center;gap:8px;flex-shrink:0;
 }
-.logo-icon{
-  width:28px;height:28px;border-radius:8px;
-  background:var(--lime);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  box-shadow:0 0 16px var(--lime-glow);
-  position:relative;overflow:hidden;
+.logo-img{
+  width:32px;height:32px;border-radius:9px;
+  object-fit:contain;flex-shrink:0;
+  filter:drop-shadow(0 0 10px var(--lime-glow));
 }
-.logo-icon::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,.3) 0%,transparent 60%);
-}
-.logo-icon svg{width:14px;height:14px;fill:#0a0a0a;position:relative;z-index:1}
 .tb-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 
 /* LANG TOGGLE */
@@ -358,8 +350,14 @@ main{
   .auth-right{padding:32px 20px}
 }
 @media(max-width:480px){
-  .topbar{height:auto;min-height:54px;padding:8px 16px}
+  .topbar{height:auto;min-height:54px;padding:8px 16px;flex-wrap:wrap;gap:8px}
   .tb-right{gap:6px}
+  .logo-img{width:26px;height:26px}
+  .logo{font-size:.85rem}
+  .auth-right{padding:24px 16px}
+}
+@media(max-width:360px){
+  .auth-card{padding:20px 14px}
 }
 </style>
 </head>
@@ -370,9 +368,7 @@ main{
 <!-- TOPBAR -->
 <div class="topbar">
   <a href="index.html" class="logo">
-    <div class="logo-icon">
-      <svg viewBox="0 0 16 16"><path d="M8 1L1 5v6l7 4 7-4V5L8 1zm0 2l5 2.8V10L8 12.8 3 10V5.8L8 3z"/></svg>
-    </div>
+    <img src="Logo.png" class="logo-img" alt="Intelligence Logo" />
     Intelligence
   </a>
   <div class="tb-right">

@@ -68,31 +68,30 @@ a{text-decoration:none;color:inherit}
 [data-lang="en"] .sidebar{right:auto;left:0;border-left:none;border-right:1px solid var(--bd)}
 
 .sb-logo{
-  padding:20px 20px 0;
-  display:flex;align-items:center;gap:8px;
+  padding:16px 20px;
+  display:flex;align-items:center;gap:10px;
   border-bottom:1px solid var(--bd);
-  padding-bottom:20px;
   flex-shrink:0;
 }
-.sb-logo-mark{
-  width:30px;height:30px;border-radius:8px;
-  background:var(--lime);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
+.sb-logo-img{
+  width:36px;height:36px;border-radius:10px;
+  object-fit:contain;flex-shrink:0;
+  filter:drop-shadow(0 0 8px var(--lime-glow));
 }
-.sb-logo-mark svg{width:14px;height:14px;fill:#080808}
+.sb-logo-info{
+  display:flex;flex-direction:column;gap:1px;min-width:0;
+}
 .sb-logo-text{
   font-family:'Outfit',sans-serif;font-weight:800;
   font-size:.96rem;letter-spacing:-.03em;color:var(--txt);
+  white-space:nowrap;
 }
-.sb-logo-badge{
-  margin-right:auto;
-  font-family:'DM Mono',monospace;font-size:.56rem;
-  color:var(--lime);background:var(--lime-bg);
-  border:1px solid var(--lime-border);
-  border-radius:4px;padding:2px 6px;
+.sb-logo-sub{
+  font-size:.62rem;font-weight:600;letter-spacing:.04em;
+  color:var(--lime);opacity:.85;
+  font-family:'DM Mono',monospace;
+  white-space:nowrap;
 }
-[data-lang="en"] .sb-logo-badge{margin-right:0;margin-left:auto}
 
 /* NAV */
 .sb-nav{flex:1;padding:12px 10px;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
@@ -461,11 +460,12 @@ tbody td{
   .sidebar{
     transform:translateX(100%);
     box-shadow:-4px 0 30px rgba(0,0,0,.4);
+    width:260px!important;
   }
   [data-lang="en"] .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)!important}
   .main{margin-right:0!important;margin-left:0!important}
-  .topbar{padding:0 16px}
+  .topbar{padding:0 16px;height:54px}
   .hamburger{display:flex}
   .row-3-1,.row-2{grid-template-columns:1fr}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
@@ -476,10 +476,18 @@ tbody td{
   [data-lang="en"] .stat-card:nth-child(2){border-right:none;border-left:none}
   [data-lang="en"] .stat-card:nth-child(3),.stat-card:nth-child(4){border-right:1px solid var(--bd);border-left:none}
 }
-@media(max-width:520px){
+@media(max-width:600px){
   .stats-grid{grid-template-columns:1fr 1fr}
-  .page{padding:16px}
+  .page{padding:14px}
   .tb-btn span{display:none}
+  .sb-logo-img{width:30px;height:30px}
+  .sb-logo-text{font-size:.88rem}
+  .sb-logo-sub{display:none}
+}
+@media(max-width:380px){
+  .stats-grid{grid-template-columns:1fr}
+  .stat-card:nth-child(n){border:none;border-bottom:1px solid var(--bd)}
+  .tb-btn{padding:0 8px}
 }
 .hamburger{
   display:none;width:36px;height:36px;border-radius:8px;
@@ -504,11 +512,11 @@ tbody td{
   <aside class="sidebar" id="sidebar">
 
     <div class="sb-logo">
-      <div class="sb-logo-mark">
-        <svg viewBox="0 0 16 16"><path d="M8 1L1 5v6l7 4 7-4V5L8 1zm0 2l5 2.8V10L8 12.8 3 10V5.8L8 3z"/></svg>
+      <img src="Logo.png" class="sb-logo-img" alt="Intelligence Logo" />
+      <div class="sb-logo-info">
+        <span class="sb-logo-text">Intelligence</span>
+        <span class="sb-logo-sub"><span class="ari">نظرة عامة</span><span class="eni">Overview</span></span>
       </div>
-      <span class="sb-logo-text">Intelligence</span>
-      <span class="sb-logo-badge"><span class="ari">الإصدار</span><span class="eni">v</span>1.0</span>
     </div>
 
     <nav class="sb-nav">
@@ -783,10 +791,31 @@ function closeSidebar(){
   document.getElementById('overlay').classList.remove('open');
 }
 
-/* ── PAGE NAV (stub) ── */
+/* ── PAGE NAV ── */
+const pageLabels={
+  overview:  {ar:'نظرة عامة',   en:'Overview'},
+  contacts:  {ar:'العملاء',      en:'Contacts'},
+  conversations:{ar:'المحادثات',en:'Conversations'},
+  orders:    {ar:'الطلبات',      en:'Orders'},
+  bot:       {ar:'إعداد البوت', en:'Bot Setup'},
+  analytics: {ar:'التحليلات',   en:'Analytics'},
+  settings:  {ar:'الإعدادات',   en:'Settings'},
+};
 function setPage(p){
   document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
   event.currentTarget.classList.add('active');
+  const lang=document.body.getAttribute('data-lang')||'ar';
+  const lbl=pageLabels[p]||pageLabels.overview;
+  // update topbar title
+  const pt=document.getElementById('pageTitle');
+  if(pt){
+    pt.innerHTML=`<span class="ari">${lbl.ar}</span><span class="eni">${lbl.en}</span>`;
+  }
+  // update sidebar logo subtitle
+  const sub=document.querySelector('.sb-logo-sub');
+  if(sub){
+    sub.innerHTML=`<span class="ari">${lbl.ar}</span><span class="eni">${lbl.en}</span>`;
+  }
   closeSidebar();
 }
 
